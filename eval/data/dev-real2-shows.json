@@ -1,0 +1,1108 @@
+{
+  "shows": [
+    {
+      "id": "dev2-lotlb",
+      "source": "mIY0jyivfPE",
+      "name": "US comic book auction + claim sale (Lords of the Long Box)",
+      "locale": "en-US",
+      "current": "1",
+      "note": "Unnumbered books shown one at a time; part silent auction (bare numbers are bids), part first-to-claim. Item '1' stands for the book on screen.",
+      "items": [
+        {
+          "code": "1",
+          "title": "Comic on screen",
+          "priceCents": 2500,
+          "variants": [
+            {
+              "sku": "1-COMIC",
+              "qty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dev2-hbt",
+      "source": "PtpDsumZ2ws",
+      "name": "AU TCG slab claim sale + games (HBT Collectables)",
+      "locale": "en-AU",
+      "current": "1",
+      "note": "First to type CLAIM gets the slab on screen; number picks are for a game, not claims. Item '1' is the slab on screen.",
+      "items": [
+        {
+          "code": "1",
+          "title": "Slab on screen",
+          "priceCents": 6000,
+          "variants": [
+            {
+              "sku": "1-SLAB",
+              "qty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dev2-ebony",
+      "source": "x1Iv_mLmbXg",
+      "name": "US Pokemon rip-n-ship claim sale (Ebony Unicorn)",
+      "locale": "en-US",
+      "current": "1",
+      "note": "Cards and packs shown one at a time; first to claim. Item '1' is the card or pack on screen.",
+      "items": [
+        {
+          "code": "1",
+          "title": "Card on screen",
+          "priceCents": 2000,
+          "variants": [
+            {
+              "sku": "1-CARD",
+              "qty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dev2-anita",
+      "source": "QvVLIBeEH-A",
+      "name": "India saree live, Hinglish (Anita Jain Fashions)",
+      "locale": "en-IN",
+      "current": "1",
+      "note": "One saree/lehenga at a time, no numbers; booking via WhatsApp screenshot. Item '1' is whatever is on screen, in the colours listed.",
+      "items": [
+        {
+          "code": "1",
+          "title": "Saree on screen",
+          "priceCents": 120000,
+          "variants": [
+            {
+              "sku": "1-BLACK",
+              "qty": 2,
+              "color": "black"
+            },
+            {
+              "sku": "1-BLUE",
+              "qty": 2,
+              "color": "blue"
+            },
+            {
+              "sku": "1-GREEN",
+              "qty": 2,
+              "color": "green"
+            },
+            {
+              "sku": "1-GREY",
+              "qty": 2,
+              "color": "grey"
+            },
+            {
+              "sku": "1-MAROON",
+              "qty": 2,
+              "color": "maroon"
+            },
+            {
+              "sku": "1-MULTI",
+              "qty": 2,
+              "color": "multi"
+            },
+            {
+              "sku": "1-OFFWHITE",
+              "qty": 2,
+              "color": "off white"
+            },
+            {
+              "sku": "1-ORANGE",
+              "qty": 2,
+              "color": "orange"
+            },
+            {
+              "sku": "1-PEACH",
+              "qty": 2,
+              "color": "peach"
+            },
+            {
+              "sku": "1-PINK",
+              "qty": 2,
+              "color": "pink"
+            },
+            {
+              "sku": "1-PURPLE",
+              "qty": 2,
+              "color": "purple"
+            },
+            {
+              "sku": "1-RED",
+              "qty": 2,
+              "color": "red"
+            },
+            {
+              "sku": "1-WHITE",
+              "qty": 2,
+              "color": "white"
+            },
+            {
+              "sku": "1-WINE",
+              "qty": 2,
+              "color": "wine"
+            },
+            {
+              "sku": "1-YELLOW",
+              "qty": 2,
+              "color": "yellow"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dev2-siya",
+      "source": "r_LZwZLwAgY",
+      "name": "India saree live, Hinglish/Hindi (Siya Saree Sensations)",
+      "locale": "en-IN",
+      "current": "1",
+      "note": "One saree at a time, no numbers; booking via WhatsApp. Item '1' is the saree on screen.",
+      "items": [
+        {
+          "code": "1",
+          "title": "Saree on screen",
+          "priceCents": 120000,
+          "variants": [
+            {
+              "sku": "1-BLACK",
+              "qty": 2,
+              "color": "black"
+            },
+            {
+              "sku": "1-BLUE",
+              "qty": 2,
+              "color": "blue"
+            },
+            {
+              "sku": "1-GREEN",
+              "qty": 2,
+              "color": "green"
+            },
+            {
+              "sku": "1-GREY",
+              "qty": 2,
+              "color": "grey"
+            },
+            {
+              "sku": "1-MAROON",
+              "qty": 2,
+              "color": "maroon"
+            },
+            {
+              "sku": "1-MULTI",
+              "qty": 2,
+              "color": "multi"
+            },
+            {
+              "sku": "1-OFFWHITE",
+              "qty": 2,
+              "color": "off white"
+            },
+            {
+              "sku": "1-ORANGE",
+              "qty": 2,
+              "color": "orange"
+            },
+            {
+              "sku": "1-PEACH",
+              "qty": 2,
+              "color": "peach"
+            },
+            {
+              "sku": "1-PINK",
+              "qty": 2,
+              "color": "pink"
+            },
+            {
+              "sku": "1-PURPLE",
+              "qty": 2,
+              "color": "purple"
+            },
+            {
+              "sku": "1-RED",
+              "qty": 2,
+              "color": "red"
+            },
+            {
+              "sku": "1-WHITE",
+              "qty": 2,
+              "color": "white"
+            },
+            {
+              "sku": "1-WINE",
+              "qty": 2,
+              "color": "wine"
+            },
+            {
+              "sku": "1-YELLOW",
+              "qty": 2,
+              "color": "yellow"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dev2-instyle",
+      "source": "TPOhSWMsE6s",
+      "name": "India suits live, Hindi/Hinglish (Instyle Fashion Delhi)",
+      "locale": "en-IN",
+      "current": "1",
+      "note": "One suit at a time, sizes M to 3XL (host); booking via WhatsApp screenshot. Item '1' is the suit on screen.",
+      "items": [
+        {
+          "code": "1",
+          "title": "Suit on screen",
+          "priceCents": 90000,
+          "variants": [
+            {
+              "sku": "1-BLACK-M",
+              "qty": 2,
+              "size": "M",
+              "color": "black"
+            },
+            {
+              "sku": "1-BLACK-L",
+              "qty": 2,
+              "size": "L",
+              "color": "black"
+            },
+            {
+              "sku": "1-BLACK-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "black"
+            },
+            {
+              "sku": "1-BLACK-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "black"
+            },
+            {
+              "sku": "1-BLACK-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "black"
+            },
+            {
+              "sku": "1-BLACK-38",
+              "qty": 2,
+              "size": "38",
+              "color": "black"
+            },
+            {
+              "sku": "1-BLACK-40",
+              "qty": 2,
+              "size": "40",
+              "color": "black"
+            },
+            {
+              "sku": "1-BLACK-42",
+              "qty": 2,
+              "size": "42",
+              "color": "black"
+            },
+            {
+              "sku": "1-BLACK-44",
+              "qty": 2,
+              "size": "44",
+              "color": "black"
+            },
+            {
+              "sku": "1-BLACK-46",
+              "qty": 2,
+              "size": "46",
+              "color": "black"
+            },
+            {
+              "sku": "1-BLUE-M",
+              "qty": 2,
+              "size": "M",
+              "color": "blue"
+            },
+            {
+              "sku": "1-BLUE-L",
+              "qty": 2,
+              "size": "L",
+              "color": "blue"
+            },
+            {
+              "sku": "1-BLUE-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "blue"
+            },
+            {
+              "sku": "1-BLUE-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "blue"
+            },
+            {
+              "sku": "1-BLUE-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "blue"
+            },
+            {
+              "sku": "1-BLUE-38",
+              "qty": 2,
+              "size": "38",
+              "color": "blue"
+            },
+            {
+              "sku": "1-BLUE-40",
+              "qty": 2,
+              "size": "40",
+              "color": "blue"
+            },
+            {
+              "sku": "1-BLUE-42",
+              "qty": 2,
+              "size": "42",
+              "color": "blue"
+            },
+            {
+              "sku": "1-BLUE-44",
+              "qty": 2,
+              "size": "44",
+              "color": "blue"
+            },
+            {
+              "sku": "1-BLUE-46",
+              "qty": 2,
+              "size": "46",
+              "color": "blue"
+            },
+            {
+              "sku": "1-GREEN-M",
+              "qty": 2,
+              "size": "M",
+              "color": "green"
+            },
+            {
+              "sku": "1-GREEN-L",
+              "qty": 2,
+              "size": "L",
+              "color": "green"
+            },
+            {
+              "sku": "1-GREEN-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "green"
+            },
+            {
+              "sku": "1-GREEN-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "green"
+            },
+            {
+              "sku": "1-GREEN-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "green"
+            },
+            {
+              "sku": "1-GREEN-38",
+              "qty": 2,
+              "size": "38",
+              "color": "green"
+            },
+            {
+              "sku": "1-GREEN-40",
+              "qty": 2,
+              "size": "40",
+              "color": "green"
+            },
+            {
+              "sku": "1-GREEN-42",
+              "qty": 2,
+              "size": "42",
+              "color": "green"
+            },
+            {
+              "sku": "1-GREEN-44",
+              "qty": 2,
+              "size": "44",
+              "color": "green"
+            },
+            {
+              "sku": "1-GREEN-46",
+              "qty": 2,
+              "size": "46",
+              "color": "green"
+            },
+            {
+              "sku": "1-MAROON-M",
+              "qty": 2,
+              "size": "M",
+              "color": "maroon"
+            },
+            {
+              "sku": "1-MAROON-L",
+              "qty": 2,
+              "size": "L",
+              "color": "maroon"
+            },
+            {
+              "sku": "1-MAROON-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "maroon"
+            },
+            {
+              "sku": "1-MAROON-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "maroon"
+            },
+            {
+              "sku": "1-MAROON-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "maroon"
+            },
+            {
+              "sku": "1-MAROON-38",
+              "qty": 2,
+              "size": "38",
+              "color": "maroon"
+            },
+            {
+              "sku": "1-MAROON-40",
+              "qty": 2,
+              "size": "40",
+              "color": "maroon"
+            },
+            {
+              "sku": "1-MAROON-42",
+              "qty": 2,
+              "size": "42",
+              "color": "maroon"
+            },
+            {
+              "sku": "1-MAROON-44",
+              "qty": 2,
+              "size": "44",
+              "color": "maroon"
+            },
+            {
+              "sku": "1-MAROON-46",
+              "qty": 2,
+              "size": "46",
+              "color": "maroon"
+            },
+            {
+              "sku": "1-MEHNDI-M",
+              "qty": 2,
+              "size": "M",
+              "color": "mehndi"
+            },
+            {
+              "sku": "1-MEHNDI-L",
+              "qty": 2,
+              "size": "L",
+              "color": "mehndi"
+            },
+            {
+              "sku": "1-MEHNDI-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "mehndi"
+            },
+            {
+              "sku": "1-MEHNDI-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "mehndi"
+            },
+            {
+              "sku": "1-MEHNDI-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "mehndi"
+            },
+            {
+              "sku": "1-MEHNDI-38",
+              "qty": 2,
+              "size": "38",
+              "color": "mehndi"
+            },
+            {
+              "sku": "1-MEHNDI-40",
+              "qty": 2,
+              "size": "40",
+              "color": "mehndi"
+            },
+            {
+              "sku": "1-MEHNDI-42",
+              "qty": 2,
+              "size": "42",
+              "color": "mehndi"
+            },
+            {
+              "sku": "1-MEHNDI-44",
+              "qty": 2,
+              "size": "44",
+              "color": "mehndi"
+            },
+            {
+              "sku": "1-MEHNDI-46",
+              "qty": 2,
+              "size": "46",
+              "color": "mehndi"
+            },
+            {
+              "sku": "1-MULTI-M",
+              "qty": 2,
+              "size": "M",
+              "color": "multi"
+            },
+            {
+              "sku": "1-MULTI-L",
+              "qty": 2,
+              "size": "L",
+              "color": "multi"
+            },
+            {
+              "sku": "1-MULTI-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "multi"
+            },
+            {
+              "sku": "1-MULTI-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "multi"
+            },
+            {
+              "sku": "1-MULTI-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "multi"
+            },
+            {
+              "sku": "1-MULTI-38",
+              "qty": 2,
+              "size": "38",
+              "color": "multi"
+            },
+            {
+              "sku": "1-MULTI-40",
+              "qty": 2,
+              "size": "40",
+              "color": "multi"
+            },
+            {
+              "sku": "1-MULTI-42",
+              "qty": 2,
+              "size": "42",
+              "color": "multi"
+            },
+            {
+              "sku": "1-MULTI-44",
+              "qty": 2,
+              "size": "44",
+              "color": "multi"
+            },
+            {
+              "sku": "1-MULTI-46",
+              "qty": 2,
+              "size": "46",
+              "color": "multi"
+            },
+            {
+              "sku": "1-ORANGE-M",
+              "qty": 2,
+              "size": "M",
+              "color": "orange"
+            },
+            {
+              "sku": "1-ORANGE-L",
+              "qty": 2,
+              "size": "L",
+              "color": "orange"
+            },
+            {
+              "sku": "1-ORANGE-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "orange"
+            },
+            {
+              "sku": "1-ORANGE-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "orange"
+            },
+            {
+              "sku": "1-ORANGE-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "orange"
+            },
+            {
+              "sku": "1-ORANGE-38",
+              "qty": 2,
+              "size": "38",
+              "color": "orange"
+            },
+            {
+              "sku": "1-ORANGE-40",
+              "qty": 2,
+              "size": "40",
+              "color": "orange"
+            },
+            {
+              "sku": "1-ORANGE-42",
+              "qty": 2,
+              "size": "42",
+              "color": "orange"
+            },
+            {
+              "sku": "1-ORANGE-44",
+              "qty": 2,
+              "size": "44",
+              "color": "orange"
+            },
+            {
+              "sku": "1-ORANGE-46",
+              "qty": 2,
+              "size": "46",
+              "color": "orange"
+            },
+            {
+              "sku": "1-PEACH-M",
+              "qty": 2,
+              "size": "M",
+              "color": "peach"
+            },
+            {
+              "sku": "1-PEACH-L",
+              "qty": 2,
+              "size": "L",
+              "color": "peach"
+            },
+            {
+              "sku": "1-PEACH-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "peach"
+            },
+            {
+              "sku": "1-PEACH-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "peach"
+            },
+            {
+              "sku": "1-PEACH-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "peach"
+            },
+            {
+              "sku": "1-PEACH-38",
+              "qty": 2,
+              "size": "38",
+              "color": "peach"
+            },
+            {
+              "sku": "1-PEACH-40",
+              "qty": 2,
+              "size": "40",
+              "color": "peach"
+            },
+            {
+              "sku": "1-PEACH-42",
+              "qty": 2,
+              "size": "42",
+              "color": "peach"
+            },
+            {
+              "sku": "1-PEACH-44",
+              "qty": 2,
+              "size": "44",
+              "color": "peach"
+            },
+            {
+              "sku": "1-PEACH-46",
+              "qty": 2,
+              "size": "46",
+              "color": "peach"
+            },
+            {
+              "sku": "1-PINK-M",
+              "qty": 2,
+              "size": "M",
+              "color": "pink"
+            },
+            {
+              "sku": "1-PINK-L",
+              "qty": 2,
+              "size": "L",
+              "color": "pink"
+            },
+            {
+              "sku": "1-PINK-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "pink"
+            },
+            {
+              "sku": "1-PINK-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "pink"
+            },
+            {
+              "sku": "1-PINK-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "pink"
+            },
+            {
+              "sku": "1-PINK-38",
+              "qty": 2,
+              "size": "38",
+              "color": "pink"
+            },
+            {
+              "sku": "1-PINK-40",
+              "qty": 2,
+              "size": "40",
+              "color": "pink"
+            },
+            {
+              "sku": "1-PINK-42",
+              "qty": 2,
+              "size": "42",
+              "color": "pink"
+            },
+            {
+              "sku": "1-PINK-44",
+              "qty": 2,
+              "size": "44",
+              "color": "pink"
+            },
+            {
+              "sku": "1-PINK-46",
+              "qty": 2,
+              "size": "46",
+              "color": "pink"
+            },
+            {
+              "sku": "1-PURPLE-M",
+              "qty": 2,
+              "size": "M",
+              "color": "purple"
+            },
+            {
+              "sku": "1-PURPLE-L",
+              "qty": 2,
+              "size": "L",
+              "color": "purple"
+            },
+            {
+              "sku": "1-PURPLE-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "purple"
+            },
+            {
+              "sku": "1-PURPLE-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "purple"
+            },
+            {
+              "sku": "1-PURPLE-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "purple"
+            },
+            {
+              "sku": "1-PURPLE-38",
+              "qty": 2,
+              "size": "38",
+              "color": "purple"
+            },
+            {
+              "sku": "1-PURPLE-40",
+              "qty": 2,
+              "size": "40",
+              "color": "purple"
+            },
+            {
+              "sku": "1-PURPLE-42",
+              "qty": 2,
+              "size": "42",
+              "color": "purple"
+            },
+            {
+              "sku": "1-PURPLE-44",
+              "qty": 2,
+              "size": "44",
+              "color": "purple"
+            },
+            {
+              "sku": "1-PURPLE-46",
+              "qty": 2,
+              "size": "46",
+              "color": "purple"
+            },
+            {
+              "sku": "1-RED-M",
+              "qty": 2,
+              "size": "M",
+              "color": "red"
+            },
+            {
+              "sku": "1-RED-L",
+              "qty": 2,
+              "size": "L",
+              "color": "red"
+            },
+            {
+              "sku": "1-RED-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "red"
+            },
+            {
+              "sku": "1-RED-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "red"
+            },
+            {
+              "sku": "1-RED-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "red"
+            },
+            {
+              "sku": "1-RED-38",
+              "qty": 2,
+              "size": "38",
+              "color": "red"
+            },
+            {
+              "sku": "1-RED-40",
+              "qty": 2,
+              "size": "40",
+              "color": "red"
+            },
+            {
+              "sku": "1-RED-42",
+              "qty": 2,
+              "size": "42",
+              "color": "red"
+            },
+            {
+              "sku": "1-RED-44",
+              "qty": 2,
+              "size": "44",
+              "color": "red"
+            },
+            {
+              "sku": "1-RED-46",
+              "qty": 2,
+              "size": "46",
+              "color": "red"
+            },
+            {
+              "sku": "1-RUST-M",
+              "qty": 2,
+              "size": "M",
+              "color": "rust"
+            },
+            {
+              "sku": "1-RUST-L",
+              "qty": 2,
+              "size": "L",
+              "color": "rust"
+            },
+            {
+              "sku": "1-RUST-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "rust"
+            },
+            {
+              "sku": "1-RUST-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "rust"
+            },
+            {
+              "sku": "1-RUST-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "rust"
+            },
+            {
+              "sku": "1-RUST-38",
+              "qty": 2,
+              "size": "38",
+              "color": "rust"
+            },
+            {
+              "sku": "1-RUST-40",
+              "qty": 2,
+              "size": "40",
+              "color": "rust"
+            },
+            {
+              "sku": "1-RUST-42",
+              "qty": 2,
+              "size": "42",
+              "color": "rust"
+            },
+            {
+              "sku": "1-RUST-44",
+              "qty": 2,
+              "size": "44",
+              "color": "rust"
+            },
+            {
+              "sku": "1-RUST-46",
+              "qty": 2,
+              "size": "46",
+              "color": "rust"
+            },
+            {
+              "sku": "1-WHITE-M",
+              "qty": 2,
+              "size": "M",
+              "color": "white"
+            },
+            {
+              "sku": "1-WHITE-L",
+              "qty": 2,
+              "size": "L",
+              "color": "white"
+            },
+            {
+              "sku": "1-WHITE-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "white"
+            },
+            {
+              "sku": "1-WHITE-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "white"
+            },
+            {
+              "sku": "1-WHITE-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "white"
+            },
+            {
+              "sku": "1-WHITE-38",
+              "qty": 2,
+              "size": "38",
+              "color": "white"
+            },
+            {
+              "sku": "1-WHITE-40",
+              "qty": 2,
+              "size": "40",
+              "color": "white"
+            },
+            {
+              "sku": "1-WHITE-42",
+              "qty": 2,
+              "size": "42",
+              "color": "white"
+            },
+            {
+              "sku": "1-WHITE-44",
+              "qty": 2,
+              "size": "44",
+              "color": "white"
+            },
+            {
+              "sku": "1-WHITE-46",
+              "qty": 2,
+              "size": "46",
+              "color": "white"
+            },
+            {
+              "sku": "1-YELLOW-M",
+              "qty": 2,
+              "size": "M",
+              "color": "yellow"
+            },
+            {
+              "sku": "1-YELLOW-L",
+              "qty": 2,
+              "size": "L",
+              "color": "yellow"
+            },
+            {
+              "sku": "1-YELLOW-XL",
+              "qty": 2,
+              "size": "XL",
+              "color": "yellow"
+            },
+            {
+              "sku": "1-YELLOW-XXL",
+              "qty": 2,
+              "size": "XXL",
+              "color": "yellow"
+            },
+            {
+              "sku": "1-YELLOW-3XL",
+              "qty": 2,
+              "size": "3XL",
+              "color": "yellow"
+            },
+            {
+              "sku": "1-YELLOW-38",
+              "qty": 2,
+              "size": "38",
+              "color": "yellow"
+            },
+            {
+              "sku": "1-YELLOW-40",
+              "qty": 2,
+              "size": "40",
+              "color": "yellow"
+            },
+            {
+              "sku": "1-YELLOW-42",
+              "qty": 2,
+              "size": "42",
+              "color": "yellow"
+            },
+            {
+              "sku": "1-YELLOW-44",
+              "qty": 2,
+              "size": "44",
+              "color": "yellow"
+            },
+            {
+              "sku": "1-YELLOW-46",
+              "qty": 2,
+              "size": "46",
+              "color": "yellow"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

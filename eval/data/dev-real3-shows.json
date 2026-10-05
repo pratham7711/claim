@@ -1,0 +1,2677 @@
+{
+ "shows": [
+  {
+   "id": "dev3-woodies",
+   "source": "3CeuBjgfCTo",
+   "name": "US rock & mineral live sale, numbered items one at a time (Woodies Rock Shop)",
+   "locale": "en-US",
+   "current": null,
+   "note": "Owner description: type 'sold' with the item number or price. Items 1-58 recovered from host speech in the auto-captions (number, description, price); numbers 34, 35 and 38 are inferred from the running sequence, not heard. Items 1 and 58 were auctions (viewers bid amounts; item 1 used bid code 'B'). Prices of 14, 41 and 49 were not heard (priceCents 0). A lightning round from about 1:41:50 to 1:50:40 re-offers unsold items 4,5,8,9,10,12,15,18,21,22,23,25,28,29,31,40,41,42,46,50,52,53,55,57. Unnumbered spinning-mirror lights ($16.65) were also sold ('sold 2 mirrors') and are not in the catalogue. Host mentions roughly 25-28 s stream lag. Item 10 qty 3 is nominal (several carved bones offered). current per comment is taken from caption timing in eval/raw/heldout-v2/timelines.json.",
+   "items": [
+    {
+     "code": "1",
+     "title": "#1 Geode, auctioned under bid code B (sold at $25)",
+     "priceCents": 2500,
+     "variants": [
+      {
+       "sku": "1",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "2",
+     "title": "#2 Pink calcite",
+     "priceCents": 700,
+     "variants": [
+      {
+       "sku": "2",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "3",
+     "title": "#3 Pink calcite spray",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "3",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "4",
+     "title": "#4 Black agate",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "4",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "5",
+     "title": "#5 Mahogany obsidian",
+     "priceCents": 3300,
+     "variants": [
+      {
+       "sku": "5",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "6",
+     "title": "#6 Sparkly quartz geode",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "6",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "7",
+     "title": "#7 Strawberry aventurine (as named on stream)",
+     "priceCents": 3600,
+     "variants": [
+      {
+       "sku": "7",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "8",
+     "title": "#8 Petrified wood limb cast",
+     "priceCents": 1100,
+     "variants": [
+      {
+       "sku": "8",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "9",
+     "title": "#9 Polished petrified wood",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "9",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "10",
+     "title": "#10 Carved dinosaur bone (each; 3 for $25)",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "10",
+       "qty": 3
+      }
+     ]
+    },
+    {
+     "code": "11",
+     "title": "#11 Peacock ore",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "11",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "12",
+     "title": "#12 Raw rainbow fluorite",
+     "priceCents": 400,
+     "variants": [
+      {
+       "sku": "12",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "13",
+     "title": "#13 As-is geode",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "13",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "14",
+     "title": "#14 Red tiger eye 'alien head' (price not heard)",
+     "priceCents": 0,
+     "variants": [
+      {
+       "sku": "14",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "15",
+     "title": "#15 Jasper point on cord with antler",
+     "priceCents": 2000,
+     "variants": [
+      {
+       "sku": "15",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "16",
+     "title": "#16 Chunker's delight, 4 pieces",
+     "priceCents": 888,
+     "variants": [
+      {
+       "sku": "16",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "17",
+     "title": "#17 Garnet on matrix",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "17",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "18",
+     "title": "#18 Inyo smoky quartz cluster",
+     "priceCents": 1400,
+     "variants": [
+      {
+       "sku": "18",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "19",
+     "title": "#19 Ocean breeze jasper",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "19",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "20",
+     "title": "#20 As-is geode",
+     "priceCents": 1800,
+     "variants": [
+      {
+       "sku": "20",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "21",
+     "title": "#21 California light smoky quartz",
+     "priceCents": 1500,
+     "variants": [
+      {
+       "sku": "21",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "22",
+     "title": "#22 Geode half (test hole 2)",
+     "priceCents": 1600,
+     "variants": [
+      {
+       "sku": "22",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "23",
+     "title": "#23 Pair of cabochons",
+     "priceCents": 2300,
+     "variants": [
+      {
+       "sku": "23",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "24",
+     "title": "#24 Drilled pair",
+     "priceCents": 400,
+     "variants": [
+      {
+       "sku": "24",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "25",
+     "title": "#25 Cold water agate cabochon",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "25",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "26",
+     "title": "#26 Large cabochon",
+     "priceCents": 1700,
+     "variants": [
+      {
+       "sku": "26",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "27",
+     "title": "#27 Dark smoky quartz blossom",
+     "priceCents": 1400,
+     "variants": [
+      {
+       "sku": "27",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "28",
+     "title": "#28 Botryoidal hematite",
+     "priceCents": 1400,
+     "variants": [
+      {
+       "sku": "28",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "29",
+     "title": "#29 Broken pyrite geode, as-is",
+     "priceCents": 300,
+     "variants": [
+      {
+       "sku": "29",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "30",
+     "title": "#30 Triple-polished brown calcite geode",
+     "priceCents": 25500,
+     "variants": [
+      {
+       "sku": "30",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "31",
+     "title": "#31 Rhodochrosite earring and pendant set",
+     "priceCents": 3000,
+     "variants": [
+      {
+       "sku": "31",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "32",
+     "title": "#32 Pink dogtooth calcite geode set",
+     "priceCents": 2100,
+     "variants": [
+      {
+       "sku": "32",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "33",
+     "title": "#33 Nevada mineral",
+     "priceCents": 1100,
+     "variants": [
+      {
+       "sku": "33",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "34",
+     "title": "#34 Nevada mineral (number inferred from sequence)",
+     "priceCents": 700,
+     "variants": [
+      {
+       "sku": "34",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "35",
+     "title": "#35 Geode pair 'snowball', test hole 2 (number inferred)",
+     "priceCents": 4500,
+     "variants": [
+      {
+       "sku": "35",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "36",
+     "title": "#36 Possible petrified coral",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "36",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "37",
+     "title": "#37 Dolomite with malachite",
+     "priceCents": 4200,
+     "variants": [
+      {
+       "sku": "37",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "38",
+     "title": "#38 Lace agate pendant on silver (number inferred)",
+     "priceCents": 2500,
+     "variants": [
+      {
+       "sku": "38",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "39",
+     "title": "#39 Lace agate piece",
+     "priceCents": 900,
+     "variants": [
+      {
+       "sku": "39",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "40",
+     "title": "#40 California quartz",
+     "priceCents": 818,
+     "variants": [
+      {
+       "sku": "40",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "41",
+     "title": "#41 Inyo smoky quartz plate (price not heard)",
+     "priceCents": 0,
+     "variants": [
+      {
+       "sku": "41",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "42",
+     "title": "#42 Petrified dinosaur coprolite slice",
+     "priceCents": 3200,
+     "variants": [
+      {
+       "sku": "42",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "43",
+     "title": "#43 Petrified squid freeform",
+     "priceCents": 1600,
+     "variants": [
+      {
+       "sku": "43",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "44",
+     "title": "#44 Pink calcite",
+     "priceCents": 300,
+     "variants": [
+      {
+       "sku": "44",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "45",
+     "title": "#45 Blue barite, as-is",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "45",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "46",
+     "title": "#46 Druzy calcite on quartz (Snowcaps mine)",
+     "priceCents": 1400,
+     "variants": [
+      {
+       "sku": "46",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "47",
+     "title": "#47 Geode pair",
+     "priceCents": 1445,
+     "variants": [
+      {
+       "sku": "47",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "48",
+     "title": "#48 Green dinosaur coprolite",
+     "priceCents": 4100,
+     "variants": [
+      {
+       "sku": "48",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "49",
+     "title": "#49 Polished citrine geode (price not heard)",
+     "priceCents": 0,
+     "variants": [
+      {
+       "sku": "49",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "50",
+     "title": "#50 Ocean breeze jasper statement piece",
+     "priceCents": 19500,
+     "variants": [
+      {
+       "sku": "50",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "51",
+     "title": "#51 Fossil plate with clams",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "51",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "52",
+     "title": "#52 Ocean breeze jasper, blue-green skin",
+     "priceCents": 5200,
+     "variants": [
+      {
+       "sku": "52",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "53",
+     "title": "#53 Polished chert",
+     "priceCents": 2100,
+     "variants": [
+      {
+       "sku": "53",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "54",
+     "title": "#54 Red-skin geode conglomeration",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "54",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "55",
+     "title": "#55 Fluorite with needles",
+     "priceCents": 3000,
+     "variants": [
+      {
+       "sku": "55",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "56",
+     "title": "#56 Brown fluorite with white needles",
+     "priceCents": 4100,
+     "variants": [
+      {
+       "sku": "56",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "57",
+     "title": "#57 Polished turritella",
+     "priceCents": 4700,
+     "variants": [
+      {
+       "sku": "57",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "58",
+     "title": "#58 As-is geode, auctioned (sold at $35)",
+     "priceCents": 3500,
+     "variants": [
+      {
+       "sku": "58",
+       "qty": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dev3-nifty",
+   "source": "GZ_57kAPBuc",
+   "name": "US vintage claim sale, numbered items in random order (Real Nifty Vintage)",
+   "locale": "en-US",
+   "current": null,
+   "note": "Title says 75 items. Numbers 1-81 are shown out of order; viewers claim by typing the bare number and the host then says 'number N goes to <viewer>'. Catalogue recovered from host speech in the auto-captions ('<price> dollars number N'); 67-70 were never announced and are omitted. 13 is the green tiki glass the host first read out as 31 and then corrected. 5's description was not caught; prices of 5, 39, 73, 74 and 77 were not heard (priceCents 0). Several unsold items were re-offered at a lower price in the last 25 minutes (see timelines.json). 17 had two pieces (qty 2). Bare numbers in chat are claims, not prices or bids.",
+   "items": [
+    {
+     "code": "1",
+     "title": "#1 Czechoslovakia lusterware sugar and creamer",
+     "priceCents": 1600,
+     "variants": [
+      {
+       "sku": "1",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "2",
+     "title": "#2 Japan salt & pepper, squirrel in wash tub",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "2",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "3",
+     "title": "#3 Florida flamingo wood-pulp box",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "3",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "4",
+     "title": "#4 Pair of ceramic hippos",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "4",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "5",
+     "title": "#5 Item 5 (description not recovered)",
+     "priceCents": 0,
+     "variants": [
+      {
+       "sku": "5",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "6",
+     "title": "#6 Moon & stars amber glass",
+     "priceCents": 2800,
+     "variants": [
+      {
+       "sku": "6",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "7",
+     "title": "#7 Pair of plastic frogs (Hong Kong)",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "7",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "8",
+     "title": "#8 Enamel Siamese cat picture frame",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "8",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "9",
+     "title": "#9 Old quilt-pattern piece",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "9",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "10",
+     "title": "#10 Purple cow salt & pepper (Japan)",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "10",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "11",
+     "title": "#11 Cat-in-shoe toothpick holder",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "11",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "12",
+     "title": "#12 Raccoon figurine",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "12",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "13",
+     "title": "#13 Green tiki toothpick holder / shot glass (host first read it as 31)",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "13",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "14",
+     "title": "#14 Pair of Tupperware berry bowls",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "14",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "15",
+     "title": "#15 Cherry napkin holder (Taiwan)",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "15",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "16",
+     "title": "#16 EAPG butterfly toy mug",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "16",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "17",
+     "title": "#17 Cracked-egg planter (2 available)",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "17",
+       "qty": 2
+      }
+     ]
+    },
+    {
+     "code": "18",
+     "title": "#18 Hand-blown ruffled amberina vase",
+     "priceCents": 2800,
+     "variants": [
+      {
+       "sku": "18",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "19",
+     "title": "#19 Buddha-style figure with cobalt glass insert",
+     "priceCents": 1800,
+     "variants": [
+      {
+       "sku": "19",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "20",
+     "title": "#20 Apple and half-apple salt & pepper",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "20",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "21",
+     "title": "#21 Wooden accordion wall rack",
+     "priceCents": 1800,
+     "variants": [
+      {
+       "sku": "21",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "22",
+     "title": "#22 Blue blown-glass pig",
+     "priceCents": 1400,
+     "variants": [
+      {
+       "sku": "22",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "23",
+     "title": "#23 Bisque hummingbird",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "23",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "24",
+     "title": "#24 Three corn cobs in dish",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "24",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "25",
+     "title": "#25 Round flower doily",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "25",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "26",
+     "title": "#26 Delft blue piece (Holland)",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "26",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "27",
+     "title": "#27 Italian gold-tone metal vase",
+     "priceCents": 1400,
+     "variants": [
+      {
+       "sku": "27",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "28",
+     "title": "#28 Cherry enamel mug / utensil holder",
+     "priceCents": 1400,
+     "variants": [
+      {
+       "sku": "28",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "29",
+     "title": "#29 Twin flat sheet",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "29",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "30",
+     "title": "#30 Granny-square afghan",
+     "priceCents": 2000,
+     "variants": [
+      {
+       "sku": "30",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "31",
+     "title": "#31 Tastemaker tomato handled mug",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "31",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "32",
+     "title": "#32 Owl latch-hook wall hanging 20x27",
+     "priceCents": 2000,
+     "variants": [
+      {
+       "sku": "32",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "33",
+     "title": "#33 Mallard duck latch-hook wall hanging (later marked down to $18, then $12)",
+     "priceCents": 2000,
+     "variants": [
+      {
+       "sku": "33",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "34",
+     "title": "#34 Blushing apple cookie jar",
+     "priceCents": 1800,
+     "variants": [
+      {
+       "sku": "34",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "35",
+     "title": "#35 Trio of Homco fairy-garden figures",
+     "priceCents": 2000,
+     "variants": [
+      {
+       "sku": "35",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "36",
+     "title": "#36 Pair of chalkware koi fish wall plaques (Miller Studio 1977)",
+     "priceCents": 2200,
+     "variants": [
+      {
+       "sku": "36",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "37",
+     "title": "#37 Three 1970s Tupperware cups",
+     "priceCents": 900,
+     "variants": [
+      {
+       "sku": "37",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "38",
+     "title": "#38 White ceramic poodle",
+     "priceCents": 1800,
+     "variants": [
+      {
+       "sku": "38",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "39",
+     "title": "#39 Boxer dog figurine (price not heard)",
+     "priceCents": 0,
+     "variants": [
+      {
+       "sku": "39",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "40",
+     "title": "#40 Metal box with SK Tools plaque",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "40",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "41",
+     "title": "#41 Italian pottery pitcher",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "41",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "42",
+     "title": "#42 Noritake whipped-cream bowl with chip",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "42",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "43",
+     "title": "#43 Set of poker chips",
+     "priceCents": 700,
+     "variants": [
+      {
+       "sku": "43",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "44",
+     "title": "#44 Occupied Japan strawberry salt & pepper",
+     "priceCents": 1600,
+     "variants": [
+      {
+       "sku": "44",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "45",
+     "title": "#45 Cat shaker",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "45",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "46",
+     "title": "#46 Carnival chalkware puppy",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "46",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "47",
+     "title": "#47 Holland windmill bell",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "47",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "48",
+     "title": "#48 Clear McDonald's mug",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "48",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "49",
+     "title": "#49 Brown Morton pottery bulldog planter",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "49",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "50",
+     "title": "#50 Italian green floral toothpick holder / shot glass",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "50",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "51",
+     "title": "#51 Skunk bell",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "51",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "52",
+     "title": "#52 Pair of Occupied Japan figurines",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "52",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "53",
+     "title": "#53 Five aluminium rainbow coasters",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "53",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "54",
+     "title": "#54 Pottery skunk",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "54",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "55",
+     "title": "#55 Owl toothpick holder",
+     "priceCents": 900,
+     "variants": [
+      {
+       "sku": "55",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "56",
+     "title": "#56 Bisque Frozen Charlotte",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "56",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "57",
+     "title": "#57 Fish salt & pepper, black and white",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "57",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "58",
+     "title": "#58 Green swan",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "58",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "59",
+     "title": "#59 Redware bear (Japan)",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "59",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "60",
+     "title": "#60 Occupied Japan fish-tank ornament",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "60",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "61",
+     "title": "#61 Three owls: covered sugar, shaker, creamer",
+     "priceCents": 1800,
+     "variants": [
+      {
+       "sku": "61",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "62",
+     "title": "#62 Donkey pulling cart",
+     "priceCents": 1600,
+     "variants": [
+      {
+       "sku": "62",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "63",
+     "title": "#63 Brown drip-glaze bowl, made in USA",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "63",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "64",
+     "title": "#64 Brass winged covered coin dish",
+     "priceCents": 2000,
+     "variants": [
+      {
+       "sku": "64",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "65",
+     "title": "#65 Sugar dish with spoon (Japan)",
+     "priceCents": 1400,
+     "variants": [
+      {
+       "sku": "65",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "66",
+     "title": "#66 Pair of butterfly towels",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "66",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "71",
+     "title": "#71 Hawaii surfer mini vase",
+     "priceCents": 1400,
+     "variants": [
+      {
+       "sku": "71",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "72",
+     "title": "#72 Moon & stars footed glass",
+     "priceCents": 2000,
+     "variants": [
+      {
+       "sku": "72",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "73",
+     "title": "#73 Moon & stars amberina piece (price not heard)",
+     "priceCents": 0,
+     "variants": [
+      {
+       "sku": "73",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "74",
+     "title": "#74 Homco owl (price not heard)",
+     "priceCents": 0,
+     "variants": [
+      {
+       "sku": "74",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "75",
+     "title": "#75 Pair of hand-painted birds in cups (Japan)",
+     "priceCents": 1500,
+     "variants": [
+      {
+       "sku": "75",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "76",
+     "title": "#76 Occupied Japan couple figurines",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "76",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "77",
+     "title": "#77 Pair of Trader Vic's tiki figures (price not heard)",
+     "priceCents": 0,
+     "variants": [
+      {
+       "sku": "77",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "78",
+     "title": "#78 Thanksgiving pair",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "78",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "79",
+     "title": "#79 Pair of green apple salt & pepper (later $5)",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "79",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "80",
+     "title": "#80 Heart pillow",
+     "priceCents": 1400,
+     "variants": [
+      {
+       "sku": "80",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "81",
+     "title": "#81 Owl wall dish",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "81",
+       "qty": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dev3-minthunter",
+   "source": "It9LqtC_E64",
+   "name": "US comic claim sale, lettered grid A-J refilled through the show (Mint-Hunter Comics)",
+   "locale": "en-US",
+   "current": null,
+   "note": "Books (often full runs) sit in ten slots, top row A-E and bottom row F-J, and the host refills the grid throughout, announcing prices per slot ('20 bucks on C'); prices range roughly $8-$150. Viewers claim with 'claim <letter>'. The book in each slot changes, so items are slots, not titles. Some claims name a title or a whole row ('claim top row'); these cannot be placed on a slot. Whole-row claims earn a free book. No offers this week. priceCents is nominal.",
+   "items": [
+    {
+     "code": "A",
+     "title": "Slot A (top row; the book on it changes through the show)",
+     "priceCents": 4000,
+     "variants": [
+      {
+       "sku": "A",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "B",
+     "title": "Slot B (top row; the book on it changes through the show)",
+     "priceCents": 4000,
+     "variants": [
+      {
+       "sku": "B",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "C",
+     "title": "Slot C (top row; the book on it changes through the show)",
+     "priceCents": 4000,
+     "variants": [
+      {
+       "sku": "C",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "D",
+     "title": "Slot D (top row; the book on it changes through the show)",
+     "priceCents": 4000,
+     "variants": [
+      {
+       "sku": "D",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "E",
+     "title": "Slot E (top row; the book on it changes through the show)",
+     "priceCents": 4000,
+     "variants": [
+      {
+       "sku": "E",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "F",
+     "title": "Slot F (bottom row; the book on it changes through the show)",
+     "priceCents": 4000,
+     "variants": [
+      {
+       "sku": "F",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "G",
+     "title": "Slot G (bottom row; the book on it changes through the show)",
+     "priceCents": 4000,
+     "variants": [
+      {
+       "sku": "G",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "H",
+     "title": "Slot H (bottom row; the book on it changes through the show)",
+     "priceCents": 4000,
+     "variants": [
+      {
+       "sku": "H",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "I",
+     "title": "Slot I (bottom row; the book on it changes through the show)",
+     "priceCents": 4000,
+     "variants": [
+      {
+       "sku": "I",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "J",
+     "title": "Slot J (bottom row; the book on it changes through the show)",
+     "priceCents": 4000,
+     "variants": [
+      {
+       "sku": "J",
+       "qty": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dev3-neeraj",
+   "source": "TmuaD8QFLxo",
+   "name": "India handloom suits live, numbered suits, Hindi/Hinglish (Pure Handloom by Neeraj)",
+   "locale": "en-IN",
+   "current": null,
+   "note": "Host announces 'suit number N' (captions: 'सूट नंबर ...') and shows suits 1-36 in order; viewers book in chat ('pls book 13', 'suit no19 book ker do') and on WhatsApp, and sometimes book ahead of the suit on screen. Suit 22 is never announced (host goes from 21 to 23) and is omitted. Price is 4590 + 100 shipping for most suits; 36 is 5290; 35 was sold without its bottom at 4590. Suit 20 had two pieces. From about 1:33 the host reconciles bookings and cancels (e.g. 'cancel kar do number seven'); current is null there.",
+   "items": [
+    {
+     "code": "1",
+     "title": "Suit 1, Sindhi handwork handloom khadi cotton, pink",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "1",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "2",
+     "title": "Suit 2, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "2",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "3",
+     "title": "Suit 3, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "3",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "4",
+     "title": "Suit 4, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "4",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "5",
+     "title": "Suit 5, Sindhi handwork handloom khadi cotton, natural white, tone-on-tone thread",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "5",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "6",
+     "title": "Suit 6, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "6",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "7",
+     "title": "Suit 7, Sindhi handwork handloom khadi cotton, cherry-maroon thread",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "7",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "8",
+     "title": "Suit 8, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "8",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "9",
+     "title": "Suit 9, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "9",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "10",
+     "title": "Suit 10, Sindhi handwork handloom khadi cotton, firoza sky blue / ivory mirror",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "10",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "11",
+     "title": "Suit 11, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "11",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "12",
+     "title": "Suit 12, Sindhi handwork handloom khadi cotton, mushroom, winter fabric",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "12",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "13",
+     "title": "Suit 13, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "13",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "14",
+     "title": "Suit 14, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "14",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "15",
+     "title": "Suit 15, Sindhi handwork handloom khadi cotton, white with light and dark grey",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "15",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "16",
+     "title": "Suit 16, Sindhi handwork handloom khadi cotton, ice blue",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "16",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "17",
+     "title": "Suit 17, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "17",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "18",
+     "title": "Suit 18, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "18",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "19",
+     "title": "Suit 19, Sindhi handwork handloom khadi cotton, ivory",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "19",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "20",
+     "title": "Suit 20, Sindhi handwork handloom khadi cotton, two pieces, different mirror colours",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "20",
+       "qty": 2
+      }
+     ]
+    },
+    {
+     "code": "21",
+     "title": "Suit 21, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "21",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "23",
+     "title": "Suit 23, Sindhi handwork handloom khadi cotton, cherry thread",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "23",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "24",
+     "title": "Suit 24, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "24",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "25",
+     "title": "Suit 25, Sindhi handwork handloom khadi cotton, heavy work",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "25",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "26",
+     "title": "Suit 26, Sindhi handwork handloom khadi cotton, ice blue",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "26",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "27",
+     "title": "Suit 27, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "27",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "28",
+     "title": "Suit 28, Sindhi handwork handloom khadi cotton, yellow",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "28",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "29",
+     "title": "Suit 29, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "29",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "30",
+     "title": "Suit 30, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "30",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "31",
+     "title": "Suit 31, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "31",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "32",
+     "title": "Suit 32, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "32",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "33",
+     "title": "Suit 33, Sindhi handwork handloom khadi cotton",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "33",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "34",
+     "title": "Suit 34, Sindhi handwork handloom khadi cotton, Sindhi work on linen",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "34",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "35",
+     "title": "Suit 35, Sindhi handwork handloom khadi cotton, sold without its bottom (wrong bottom supplied)",
+     "priceCents": 459000,
+     "variants": [
+      {
+       "sku": "35",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "36",
+     "title": "Suit 36, Sindhi handwork handloom khadi cotton, last piece",
+     "priceCents": 529000,
+     "variants": [
+      {
+       "sku": "36",
+       "qty": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dev3-preet",
+   "source": "ib1kjIn7TpY",
+   "name": "India jewellery live, pieces one at a time, Hindi/Hinglish (Preet Collection)",
+   "locale": "en-IN",
+   "current": "1",
+   "note": "Artificial jewellery (bangles, mangalsutra, necklace sets, jhumki, rings) shown one piece or tray at a time; the host says the price aloud (from about ₹150 to ₹6550) and viewers refer to pieces by price ('750 wale kangan', '1550 wala lena hain') or by what she is wearing. Booking is officially by WhatsApp, so much of chat is questions, complaints and 'like share done'. Item '1' stands for the piece on screen. Variants are the bangle sizes the host names (2.2, 2.4, 2.6, 2.8) plus ONE-SIZE for unsized pieces. priceCents and qty are nominal.",
+   "items": [
+    {
+     "code": "1",
+     "title": "Jewellery piece on screen (price varies)",
+     "priceCents": 75000,
+     "variants": [
+      {
+       "sku": "1-2.2",
+       "qty": 1,
+       "size": "2.2"
+      },
+      {
+       "sku": "1-2.4",
+       "qty": 1,
+       "size": "2.4"
+      },
+      {
+       "sku": "1-2.6",
+       "qty": 1,
+       "size": "2.6"
+      },
+      {
+       "sku": "1-2.8",
+       "qty": 1,
+       "size": "2.8"
+      },
+      {
+       "sku": "1-ONESIZE",
+       "qty": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dev3-radhika",
+   "source": "BASI1oHQ450",
+   "name": "India saree & suit live, one at a time, Hindi/Haryanvi (Radhika Family)",
+   "locale": "en-IN",
+   "current": "1",
+   "note": "Sarees and suits shown one design at a time; claims are by colour ('red book kr dijiye', 'pink book', 'ye mera book kr do'). Prices vary by design (roughly ₹300-₹3650). Item '1' stands for the design on screen; variants are the colours the host names across the show. Stock per colour is not stated, so qty is nominal.",
+   "items": [
+    {
+     "code": "1",
+     "title": "Saree or suit on screen (price varies)",
+     "priceCents": 135000,
+     "variants": [
+      {
+       "sku": "1-RED",
+       "qty": 1,
+       "color": "red"
+      },
+      {
+       "sku": "1-PINK",
+       "qty": 1,
+       "color": "pink"
+      },
+      {
+       "sku": "1-RANI PINK",
+       "qty": 1,
+       "color": "rani pink"
+      },
+      {
+       "sku": "1-YELLOW",
+       "qty": 1,
+       "color": "yellow"
+      },
+      {
+       "sku": "1-FIROZI",
+       "qty": 1,
+       "color": "firozi"
+      },
+      {
+       "sku": "1-GREEN",
+       "qty": 1,
+       "color": "green"
+      },
+      {
+       "sku": "1-PURPLE",
+       "qty": 1,
+       "color": "purple"
+      },
+      {
+       "sku": "1-BLUE",
+       "qty": 1,
+       "color": "blue"
+      },
+      {
+       "sku": "1-MAROON",
+       "qty": 1,
+       "color": "maroon"
+      },
+      {
+       "sku": "1-WINE",
+       "qty": 1,
+       "color": "wine"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dev3-aaliya",
+   "source": "z__A_rn1GkM",
+   "name": "India suit & kurti clearance live, one at a time, Hindi/Hinglish (Aaliya's Collection)",
+   "locale": "en-IN",
+   "current": "1",
+   "note": "Clearance sale of suits, kurtis and kaftans shown one design at a time; claims are 'book for me', 'book black for me', 'book for me 40 size pink', 'book design no 2'. Prices mostly ₹2900-₹5100. Item '1' stands for the design on screen; the colour and size grid is the union of colours and sizes the host names across the show, and any one design has only some of them. qty is nominal.",
+   "items": [
+    {
+     "code": "1",
+     "title": "Suit / kurti on screen (price varies)",
+     "priceCents": 340000,
+     "variants": [
+      {
+       "sku": "1-PINK-36",
+       "qty": 1,
+       "size": "36",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-38",
+       "qty": 1,
+       "size": "38",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-40",
+       "qty": 1,
+       "size": "40",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-42",
+       "qty": 1,
+       "size": "42",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-44",
+       "qty": 1,
+       "size": "44",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-46",
+       "qty": 1,
+       "size": "46",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-48",
+       "qty": 1,
+       "size": "48",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-50",
+       "qty": 1,
+       "size": "50",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PURPLE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-48",
+       "qty": 1,
+       "size": "48",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-50",
+       "qty": 1,
+       "size": "50",
+       "color": "purple"
+      },
+      {
+       "sku": "1-BLUE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-48",
+       "qty": 1,
+       "size": "48",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-50",
+       "qty": 1,
+       "size": "50",
+       "color": "blue"
+      },
+      {
+       "sku": "1-GREEN-36",
+       "qty": 1,
+       "size": "36",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-38",
+       "qty": 1,
+       "size": "38",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-40",
+       "qty": 1,
+       "size": "40",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-42",
+       "qty": 1,
+       "size": "42",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-44",
+       "qty": 1,
+       "size": "44",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-46",
+       "qty": 1,
+       "size": "46",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-48",
+       "qty": 1,
+       "size": "48",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-50",
+       "qty": 1,
+       "size": "50",
+       "color": "green"
+      },
+      {
+       "sku": "1-BROWN-36",
+       "qty": 1,
+       "size": "36",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-38",
+       "qty": 1,
+       "size": "38",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-40",
+       "qty": 1,
+       "size": "40",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-42",
+       "qty": 1,
+       "size": "42",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-44",
+       "qty": 1,
+       "size": "44",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-46",
+       "qty": 1,
+       "size": "46",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-48",
+       "qty": 1,
+       "size": "48",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-50",
+       "qty": 1,
+       "size": "50",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BLACK-36",
+       "qty": 1,
+       "size": "36",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-38",
+       "qty": 1,
+       "size": "38",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-40",
+       "qty": 1,
+       "size": "40",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-42",
+       "qty": 1,
+       "size": "42",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-44",
+       "qty": 1,
+       "size": "44",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-46",
+       "qty": 1,
+       "size": "46",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-48",
+       "qty": 1,
+       "size": "48",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-50",
+       "qty": 1,
+       "size": "50",
+       "color": "black"
+      },
+      {
+       "sku": "1-MAROON-36",
+       "qty": 1,
+       "size": "36",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-38",
+       "qty": 1,
+       "size": "38",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-40",
+       "qty": 1,
+       "size": "40",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-42",
+       "qty": 1,
+       "size": "42",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-44",
+       "qty": 1,
+       "size": "44",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-46",
+       "qty": 1,
+       "size": "46",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-48",
+       "qty": 1,
+       "size": "48",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-50",
+       "qty": 1,
+       "size": "50",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-YELLOW-36",
+       "qty": 1,
+       "size": "36",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-38",
+       "qty": 1,
+       "size": "38",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-40",
+       "qty": 1,
+       "size": "40",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-42",
+       "qty": 1,
+       "size": "42",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-44",
+       "qty": 1,
+       "size": "44",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-46",
+       "qty": 1,
+       "size": "46",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-48",
+       "qty": 1,
+       "size": "48",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-50",
+       "qty": 1,
+       "size": "50",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-ORANGE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-48",
+       "qty": 1,
+       "size": "48",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-50",
+       "qty": 1,
+       "size": "50",
+       "color": "orange"
+      },
+      {
+       "sku": "1-RED-36",
+       "qty": 1,
+       "size": "36",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-38",
+       "qty": 1,
+       "size": "38",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-40",
+       "qty": 1,
+       "size": "40",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-42",
+       "qty": 1,
+       "size": "42",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-44",
+       "qty": 1,
+       "size": "44",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-46",
+       "qty": 1,
+       "size": "46",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-48",
+       "qty": 1,
+       "size": "48",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-50",
+       "qty": 1,
+       "size": "50",
+       "color": "red"
+      },
+      {
+       "sku": "1-WHITE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-48",
+       "qty": 1,
+       "size": "48",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-50",
+       "qty": 1,
+       "size": "50",
+       "color": "white"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

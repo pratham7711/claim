@@ -1,0 +1,3955 @@
+{
+ "shows": [
+  {
+   "id": "bella",
+   "name": "Bella Rose Boutique (US, tops and dresses)",
+   "locale": "en-US",
+   "items": [
+    {
+     "code": "1",
+     "title": "Ribbed square-neck tank",
+     "priceCents": 2200,
+     "variants": [
+      {
+       "sku": "1-BLAC-S",
+       "qty": 2,
+       "size": "S",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLAC-M",
+       "qty": 2,
+       "size": "M",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLAC-L",
+       "qty": 2,
+       "size": "L",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLAC-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "black"
+      },
+      {
+       "sku": "1-WHIT-S",
+       "qty": 2,
+       "size": "S",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHIT-M",
+       "qty": 2,
+       "size": "M",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHIT-L",
+       "qty": 2,
+       "size": "L",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHIT-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "white"
+      },
+      {
+       "sku": "1-SAGE-S",
+       "qty": 2,
+       "size": "S",
+       "color": "sage"
+      },
+      {
+       "sku": "1-SAGE-M",
+       "qty": 2,
+       "size": "M",
+       "color": "sage"
+      },
+      {
+       "sku": "1-SAGE-L",
+       "qty": 2,
+       "size": "L",
+       "color": "sage"
+      },
+      {
+       "sku": "1-SAGE-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "sage"
+      }
+     ]
+    },
+    {
+     "code": "2",
+     "title": "Floral tiered midi dress",
+     "priceCents": 4800,
+     "variants": [
+      {
+       "sku": "2-BLUS-S",
+       "qty": 2,
+       "size": "S",
+       "color": "blush"
+      },
+      {
+       "sku": "2-BLUS-M",
+       "qty": 2,
+       "size": "M",
+       "color": "blush"
+      },
+      {
+       "sku": "2-BLUS-L",
+       "qty": 2,
+       "size": "L",
+       "color": "blush"
+      },
+      {
+       "sku": "2-BLUS-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "blush"
+      },
+      {
+       "sku": "2-NAVY-S",
+       "qty": 2,
+       "size": "S",
+       "color": "navy"
+      },
+      {
+       "sku": "2-NAVY-M",
+       "qty": 2,
+       "size": "M",
+       "color": "navy"
+      },
+      {
+       "sku": "2-NAVY-L",
+       "qty": 2,
+       "size": "L",
+       "color": "navy"
+      },
+      {
+       "sku": "2-NAVY-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "navy"
+      }
+     ]
+    },
+    {
+     "code": "3",
+     "title": "Waffle knit henley",
+     "priceCents": 3200,
+     "variants": [
+      {
+       "sku": "3-OATM-S",
+       "qty": 2,
+       "size": "S",
+       "color": "oatmeal"
+      },
+      {
+       "sku": "3-OATM-M",
+       "qty": 2,
+       "size": "M",
+       "color": "oatmeal"
+      },
+      {
+       "sku": "3-OATM-L",
+       "qty": 2,
+       "size": "L",
+       "color": "oatmeal"
+      },
+      {
+       "sku": "3-OATM-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "oatmeal"
+      },
+      {
+       "sku": "3-RUST-S",
+       "qty": 2,
+       "size": "S",
+       "color": "rust"
+      },
+      {
+       "sku": "3-RUST-M",
+       "qty": 2,
+       "size": "M",
+       "color": "rust"
+      },
+      {
+       "sku": "3-RUST-L",
+       "qty": 2,
+       "size": "L",
+       "color": "rust"
+      },
+      {
+       "sku": "3-RUST-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "rust"
+      }
+     ]
+    },
+    {
+     "code": "4",
+     "title": "Satin slip skirt",
+     "priceCents": 3800,
+     "variants": [
+      {
+       "sku": "4-CHAM-S",
+       "qty": 2,
+       "size": "S",
+       "color": "champagne"
+      },
+      {
+       "sku": "4-CHAM-M",
+       "qty": 2,
+       "size": "M",
+       "color": "champagne"
+      },
+      {
+       "sku": "4-CHAM-L",
+       "qty": 2,
+       "size": "L",
+       "color": "champagne"
+      },
+      {
+       "sku": "4-CHAM-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "champagne"
+      },
+      {
+       "sku": "4-BLAC-S",
+       "qty": 2,
+       "size": "S",
+       "color": "black"
+      },
+      {
+       "sku": "4-BLAC-M",
+       "qty": 2,
+       "size": "M",
+       "color": "black"
+      },
+      {
+       "sku": "4-BLAC-L",
+       "qty": 2,
+       "size": "L",
+       "color": "black"
+      },
+      {
+       "sku": "4-BLAC-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "5",
+     "title": "Puff-sleeve blouse",
+     "priceCents": 3600,
+     "variants": [
+      {
+       "sku": "5-WHIT-S",
+       "qty": 2,
+       "size": "S",
+       "color": "white"
+      },
+      {
+       "sku": "5-WHIT-M",
+       "qty": 2,
+       "size": "M",
+       "color": "white"
+      },
+      {
+       "sku": "5-WHIT-L",
+       "qty": 2,
+       "size": "L",
+       "color": "white"
+      },
+      {
+       "sku": "5-WHIT-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "code": "6",
+     "title": "Wide-leg linen pants",
+     "priceCents": 4400,
+     "variants": [
+      {
+       "sku": "6-TAN-S",
+       "qty": 2,
+       "size": "S",
+       "color": "tan"
+      },
+      {
+       "sku": "6-TAN-M",
+       "qty": 2,
+       "size": "M",
+       "color": "tan"
+      },
+      {
+       "sku": "6-TAN-L",
+       "qty": 2,
+       "size": "L",
+       "color": "tan"
+      },
+      {
+       "sku": "6-TAN-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "tan"
+      },
+      {
+       "sku": "6-OLIV-S",
+       "qty": 2,
+       "size": "S",
+       "color": "olive"
+      },
+      {
+       "sku": "6-OLIV-M",
+       "qty": 2,
+       "size": "M",
+       "color": "olive"
+      },
+      {
+       "sku": "6-OLIV-L",
+       "qty": 2,
+       "size": "L",
+       "color": "olive"
+      },
+      {
+       "sku": "6-OLIV-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "olive"
+      }
+     ]
+    },
+    {
+     "code": "7",
+     "title": "Leopard cardigan",
+     "priceCents": 4600,
+     "variants": [
+      {
+       "sku": "7-S",
+       "qty": 2,
+       "size": "S"
+      },
+      {
+       "sku": "7-M",
+       "qty": 2,
+       "size": "M"
+      },
+      {
+       "sku": "7-L",
+       "qty": 2,
+       "size": "L"
+      },
+      {
+       "sku": "7-XL",
+       "qty": 2,
+       "size": "XL"
+      }
+     ]
+    },
+    {
+     "code": "8",
+     "title": "Smocked maxi dress",
+     "priceCents": 5400,
+     "variants": [
+      {
+       "sku": "8-MUST-S",
+       "qty": 2,
+       "size": "S",
+       "color": "mustard"
+      },
+      {
+       "sku": "8-MUST-M",
+       "qty": 2,
+       "size": "M",
+       "color": "mustard"
+      },
+      {
+       "sku": "8-MUST-L",
+       "qty": 2,
+       "size": "L",
+       "color": "mustard"
+      },
+      {
+       "sku": "8-MUST-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "mustard"
+      },
+      {
+       "sku": "8-TEAL-S",
+       "qty": 2,
+       "size": "S",
+       "color": "teal"
+      },
+      {
+       "sku": "8-TEAL-M",
+       "qty": 2,
+       "size": "M",
+       "color": "teal"
+      },
+      {
+       "sku": "8-TEAL-L",
+       "qty": 2,
+       "size": "L",
+       "color": "teal"
+      },
+      {
+       "sku": "8-TEAL-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "teal"
+      }
+     ]
+    },
+    {
+     "code": "9",
+     "title": "Gold hoop earrings",
+     "priceCents": 1800,
+     "variants": [
+      {
+       "sku": "9",
+       "qty": 6
+      }
+     ]
+    },
+    {
+     "code": "10",
+     "title": "Denim jacket",
+     "priceCents": 5800,
+     "variants": [
+      {
+       "sku": "10-LIGH-S",
+       "qty": 2,
+       "size": "S",
+       "color": "light wash"
+      },
+      {
+       "sku": "10-LIGH-M",
+       "qty": 2,
+       "size": "M",
+       "color": "light wash"
+      },
+      {
+       "sku": "10-LIGH-L",
+       "qty": 2,
+       "size": "L",
+       "color": "light wash"
+      },
+      {
+       "sku": "10-LIGH-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "light wash"
+      },
+      {
+       "sku": "10-DARK-S",
+       "qty": 2,
+       "size": "S",
+       "color": "dark wash"
+      },
+      {
+       "sku": "10-DARK-M",
+       "qty": 2,
+       "size": "M",
+       "color": "dark wash"
+      },
+      {
+       "sku": "10-DARK-L",
+       "qty": 2,
+       "size": "L",
+       "color": "dark wash"
+      },
+      {
+       "sku": "10-DARK-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "dark wash"
+      }
+     ]
+    },
+    {
+     "code": "11",
+     "title": "Graphic tee 'Coffee First'",
+     "priceCents": 2800,
+     "variants": [
+      {
+       "sku": "11-HEAT-S",
+       "qty": 2,
+       "size": "S",
+       "color": "heather grey"
+      },
+      {
+       "sku": "11-HEAT-M",
+       "qty": 2,
+       "size": "M",
+       "color": "heather grey"
+      },
+      {
+       "sku": "11-HEAT-L",
+       "qty": 2,
+       "size": "L",
+       "color": "heather grey"
+      },
+      {
+       "sku": "11-HEAT-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "heather grey"
+      }
+     ]
+    },
+    {
+     "code": "12",
+     "title": "Wrap dress",
+     "priceCents": 5200,
+     "variants": [
+      {
+       "sku": "12-RED-S",
+       "qty": 2,
+       "size": "S",
+       "color": "red"
+      },
+      {
+       "sku": "12-RED-M",
+       "qty": 2,
+       "size": "M",
+       "color": "red"
+      },
+      {
+       "sku": "12-RED-L",
+       "qty": 2,
+       "size": "L",
+       "color": "red"
+      },
+      {
+       "sku": "12-RED-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "red"
+      },
+      {
+       "sku": "12-EMER-S",
+       "qty": 2,
+       "size": "S",
+       "color": "emerald"
+      },
+      {
+       "sku": "12-EMER-M",
+       "qty": 2,
+       "size": "M",
+       "color": "emerald"
+      },
+      {
+       "sku": "12-EMER-L",
+       "qty": 2,
+       "size": "L",
+       "color": "emerald"
+      },
+      {
+       "sku": "12-EMER-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "emerald"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lonestar",
+   "name": "Lone Star Threads (US western, numeric sizes)",
+   "locale": "en-US",
+   "items": [
+    {
+     "code": "1",
+     "title": "Bootcut jeans",
+     "priceCents": 6400,
+     "variants": [
+      {
+       "sku": "1-DARK-24",
+       "qty": 2,
+       "size": "24",
+       "color": "dark wash"
+      },
+      {
+       "sku": "1-DARK-26",
+       "qty": 2,
+       "size": "26",
+       "color": "dark wash"
+      },
+      {
+       "sku": "1-DARK-28",
+       "qty": 2,
+       "size": "28",
+       "color": "dark wash"
+      },
+      {
+       "sku": "1-DARK-30",
+       "qty": 2,
+       "size": "30",
+       "color": "dark wash"
+      },
+      {
+       "sku": "1-DARK-32",
+       "qty": 2,
+       "size": "32",
+       "color": "dark wash"
+      }
+     ]
+    },
+    {
+     "code": "2",
+     "title": "Fringe suede vest",
+     "priceCents": 7200,
+     "variants": [
+      {
+       "sku": "2-TAN-S",
+       "qty": 2,
+       "size": "S",
+       "color": "tan"
+      },
+      {
+       "sku": "2-TAN-M",
+       "qty": 2,
+       "size": "M",
+       "color": "tan"
+      },
+      {
+       "sku": "2-TAN-L",
+       "qty": 2,
+       "size": "L",
+       "color": "tan"
+      }
+     ]
+    },
+    {
+     "code": "3",
+     "title": "Turquoise squash-blossom necklace",
+     "priceCents": 9500,
+     "variants": [
+      {
+       "sku": "3",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "4",
+     "title": "Ankle boots",
+     "priceCents": 12000,
+     "variants": [
+      {
+       "sku": "4-BROW-6",
+       "qty": 2,
+       "size": "6",
+       "color": "brown"
+      },
+      {
+       "sku": "4-BROW-7",
+       "qty": 2,
+       "size": "7",
+       "color": "brown"
+      },
+      {
+       "sku": "4-BROW-8",
+       "qty": 2,
+       "size": "8",
+       "color": "brown"
+      },
+      {
+       "sku": "4-BROW-9",
+       "qty": 2,
+       "size": "9",
+       "color": "brown"
+      },
+      {
+       "sku": "4-BROW-10",
+       "qty": 2,
+       "size": "10",
+       "color": "brown"
+      },
+      {
+       "sku": "4-BLAC-6",
+       "qty": 2,
+       "size": "6",
+       "color": "black"
+      },
+      {
+       "sku": "4-BLAC-7",
+       "qty": 2,
+       "size": "7",
+       "color": "black"
+      },
+      {
+       "sku": "4-BLAC-8",
+       "qty": 2,
+       "size": "8",
+       "color": "black"
+      },
+      {
+       "sku": "4-BLAC-9",
+       "qty": 2,
+       "size": "9",
+       "color": "black"
+      },
+      {
+       "sku": "4-BLAC-10",
+       "qty": 2,
+       "size": "10",
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "5",
+     "title": "Aztec print shacket",
+     "priceCents": 5600,
+     "variants": [
+      {
+       "sku": "5-CREA-S",
+       "qty": 2,
+       "size": "S",
+       "color": "cream"
+      },
+      {
+       "sku": "5-CREA-M",
+       "qty": 2,
+       "size": "M",
+       "color": "cream"
+      },
+      {
+       "sku": "5-CREA-L",
+       "qty": 2,
+       "size": "L",
+       "color": "cream"
+      },
+      {
+       "sku": "5-CREA-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "cream"
+      }
+     ]
+    },
+    {
+     "code": "6",
+     "title": "Wrap midi dress",
+     "priceCents": 5800,
+     "variants": [
+      {
+       "sku": "6-BURG-2",
+       "qty": 2,
+       "size": "2",
+       "color": "burgundy"
+      },
+      {
+       "sku": "6-BURG-4",
+       "qty": 2,
+       "size": "4",
+       "color": "burgundy"
+      },
+      {
+       "sku": "6-BURG-6",
+       "qty": 2,
+       "size": "6",
+       "color": "burgundy"
+      },
+      {
+       "sku": "6-BURG-8",
+       "qty": 2,
+       "size": "8",
+       "color": "burgundy"
+      },
+      {
+       "sku": "6-BURG-10",
+       "qty": 2,
+       "size": "10",
+       "color": "burgundy"
+      },
+      {
+       "sku": "6-BURG-12",
+       "qty": 2,
+       "size": "12",
+       "color": "burgundy"
+      },
+      {
+       "sku": "6-BURG-14",
+       "qty": 2,
+       "size": "14",
+       "color": "burgundy"
+      }
+     ]
+    },
+    {
+     "code": "7",
+     "title": "Pearl snap shirt",
+     "priceCents": 4200,
+     "variants": [
+      {
+       "sku": "7-WHIT-S",
+       "qty": 2,
+       "size": "S",
+       "color": "white"
+      },
+      {
+       "sku": "7-WHIT-M",
+       "qty": 2,
+       "size": "M",
+       "color": "white"
+      },
+      {
+       "sku": "7-WHIT-L",
+       "qty": 2,
+       "size": "L",
+       "color": "white"
+      },
+      {
+       "sku": "7-DENI-S",
+       "qty": 2,
+       "size": "S",
+       "color": "denim"
+      },
+      {
+       "sku": "7-DENI-M",
+       "qty": 2,
+       "size": "M",
+       "color": "denim"
+      },
+      {
+       "sku": "7-DENI-L",
+       "qty": 2,
+       "size": "L",
+       "color": "denim"
+      }
+     ]
+    },
+    {
+     "code": "8",
+     "title": "Felt cowboy hat",
+     "priceCents": 8500,
+     "variants": [
+      {
+       "sku": "8-BLAC-S/M",
+       "qty": 2,
+       "size": "S/M",
+       "color": "black"
+      },
+      {
+       "sku": "8-BLAC-L/XL",
+       "qty": 2,
+       "size": "L/XL",
+       "color": "black"
+      },
+      {
+       "sku": "8-CAME-S/M",
+       "qty": 2,
+       "size": "S/M",
+       "color": "camel"
+      },
+      {
+       "sku": "8-CAME-L/XL",
+       "qty": 2,
+       "size": "L/XL",
+       "color": "camel"
+      }
+     ]
+    },
+    {
+     "code": "9",
+     "title": "Concho belt",
+     "priceCents": 4800,
+     "variants": [
+      {
+       "sku": "9-S",
+       "qty": 2,
+       "size": "S"
+      },
+      {
+       "sku": "9-M",
+       "qty": 2,
+       "size": "M"
+      },
+      {
+       "sku": "9-L",
+       "qty": 2,
+       "size": "L"
+      }
+     ]
+    },
+    {
+     "code": "10",
+     "title": "Flare jeans",
+     "priceCents": 6800,
+     "variants": [
+      {
+       "sku": "10-MEDI-24",
+       "qty": 2,
+       "size": "24",
+       "color": "medium wash"
+      },
+      {
+       "sku": "10-MEDI-26",
+       "qty": 2,
+       "size": "26",
+       "color": "medium wash"
+      },
+      {
+       "sku": "10-MEDI-28",
+       "qty": 2,
+       "size": "28",
+       "color": "medium wash"
+      },
+      {
+       "sku": "10-MEDI-30",
+       "qty": 2,
+       "size": "30",
+       "color": "medium wash"
+      }
+     ]
+    },
+    {
+     "code": "11",
+     "title": "Embroidered tunic",
+     "priceCents": 4600,
+     "variants": [
+      {
+       "sku": "11-IVOR-S",
+       "qty": 2,
+       "size": "S",
+       "color": "ivory"
+      },
+      {
+       "sku": "11-IVOR-M",
+       "qty": 2,
+       "size": "M",
+       "color": "ivory"
+      },
+      {
+       "sku": "11-IVOR-L",
+       "qty": 2,
+       "size": "L",
+       "color": "ivory"
+      }
+     ]
+    },
+    {
+     "code": "12",
+     "title": "Sheath dress",
+     "priceCents": 6200,
+     "variants": [
+      {
+       "sku": "12-BLAC-4",
+       "qty": 2,
+       "size": "4",
+       "color": "black"
+      },
+      {
+       "sku": "12-BLAC-6",
+       "qty": 2,
+       "size": "6",
+       "color": "black"
+      },
+      {
+       "sku": "12-BLAC-8",
+       "qty": 2,
+       "size": "8",
+       "color": "black"
+      },
+      {
+       "sku": "12-BLAC-10",
+       "qty": 2,
+       "size": "10",
+       "color": "black"
+      },
+      {
+       "sku": "12-BLAC-12",
+       "qty": 2,
+       "size": "12",
+       "color": "black"
+      },
+      {
+       "sku": "12-BLAC-14",
+       "qty": 2,
+       "size": "14",
+       "color": "black"
+      },
+      {
+       "sku": "12-BLAC-16",
+       "qty": 2,
+       "size": "16",
+       "color": "black"
+      },
+      {
+       "sku": "12-COBA-4",
+       "qty": 2,
+       "size": "4",
+       "color": "cobalt"
+      },
+      {
+       "sku": "12-COBA-6",
+       "qty": 2,
+       "size": "6",
+       "color": "cobalt"
+      },
+      {
+       "sku": "12-COBA-8",
+       "qty": 2,
+       "size": "8",
+       "color": "cobalt"
+      },
+      {
+       "sku": "12-COBA-10",
+       "qty": 2,
+       "size": "10",
+       "color": "cobalt"
+      },
+      {
+       "sku": "12-COBA-12",
+       "qty": 2,
+       "size": "12",
+       "color": "cobalt"
+      },
+      {
+       "sku": "12-COBA-14",
+       "qty": 2,
+       "size": "14",
+       "color": "cobalt"
+      },
+      {
+       "sku": "12-COBA-16",
+       "qty": 2,
+       "size": "16",
+       "color": "cobalt"
+      }
+     ]
+    },
+    {
+     "code": "13",
+     "title": "Leather crossbody bag",
+     "priceCents": 7800,
+     "variants": [
+      {
+       "sku": "13-COGN",
+       "qty": 2,
+       "color": "cognac"
+      },
+      {
+       "sku": "13-BLAC",
+       "qty": 2,
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "14",
+     "title": "Fair Isle sweater",
+     "priceCents": 5400,
+     "variants": [
+      {
+       "sku": "14-RED-S",
+       "qty": 2,
+       "size": "S",
+       "color": "red"
+      },
+      {
+       "sku": "14-RED-M",
+       "qty": 2,
+       "size": "M",
+       "color": "red"
+      },
+      {
+       "sku": "14-RED-L",
+       "qty": 2,
+       "size": "L",
+       "color": "red"
+      },
+      {
+       "sku": "14-RED-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "red"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "curvy",
+   "name": "Curvy Closet Co (US plus-size, 1X-3X)",
+   "locale": "en-US",
+   "items": [
+    {
+     "code": "1",
+     "title": "Ruched bodycon dress",
+     "priceCents": 4800,
+     "variants": [
+      {
+       "sku": "1-BLAC-1X",
+       "qty": 2,
+       "size": "1X",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLAC-2X",
+       "qty": 2,
+       "size": "2X",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLAC-3X",
+       "qty": 2,
+       "size": "3X",
+       "color": "black"
+      },
+      {
+       "sku": "1-WINE-1X",
+       "qty": 2,
+       "size": "1X",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-2X",
+       "qty": 2,
+       "size": "2X",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-3X",
+       "qty": 2,
+       "size": "3X",
+       "color": "wine"
+      }
+     ]
+    },
+    {
+     "code": "2",
+     "title": "Button-front cardigan",
+     "priceCents": 4200,
+     "variants": [
+      {
+       "sku": "2-MOCH-1X",
+       "qty": 2,
+       "size": "1X",
+       "color": "mocha"
+      },
+      {
+       "sku": "2-MOCH-2X",
+       "qty": 2,
+       "size": "2X",
+       "color": "mocha"
+      },
+      {
+       "sku": "2-MOCH-3X",
+       "qty": 2,
+       "size": "3X",
+       "color": "mocha"
+      },
+      {
+       "sku": "2-CREA-1X",
+       "qty": 2,
+       "size": "1X",
+       "color": "cream"
+      },
+      {
+       "sku": "2-CREA-2X",
+       "qty": 2,
+       "size": "2X",
+       "color": "cream"
+      },
+      {
+       "sku": "2-CREA-3X",
+       "qty": 2,
+       "size": "3X",
+       "color": "cream"
+      }
+     ]
+    },
+    {
+     "code": "3",
+     "title": "High-rise mom jeans",
+     "priceCents": 5800,
+     "variants": [
+      {
+       "sku": "3-14",
+       "qty": 2,
+       "size": "14"
+      },
+      {
+       "sku": "3-16",
+       "qty": 2,
+       "size": "16"
+      },
+      {
+       "sku": "3-18",
+       "qty": 2,
+       "size": "18"
+      },
+      {
+       "sku": "3-20",
+       "qty": 2,
+       "size": "20"
+      },
+      {
+       "sku": "3-22",
+       "qty": 2,
+       "size": "22"
+      }
+     ]
+    },
+    {
+     "code": "4",
+     "title": "Flutter-sleeve top",
+     "priceCents": 3400,
+     "variants": [
+      {
+       "sku": "4-CORA-1X",
+       "qty": 2,
+       "size": "1X",
+       "color": "coral"
+      },
+      {
+       "sku": "4-CORA-2X",
+       "qty": 2,
+       "size": "2X",
+       "color": "coral"
+      },
+      {
+       "sku": "4-CORA-3X",
+       "qty": 2,
+       "size": "3X",
+       "color": "coral"
+      },
+      {
+       "sku": "4-NAVY-1X",
+       "qty": 2,
+       "size": "1X",
+       "color": "navy"
+      },
+      {
+       "sku": "4-NAVY-2X",
+       "qty": 2,
+       "size": "2X",
+       "color": "navy"
+      },
+      {
+       "sku": "4-NAVY-3X",
+       "qty": 2,
+       "size": "3X",
+       "color": "navy"
+      }
+     ]
+    },
+    {
+     "code": "5",
+     "title": "Tie-waist jumpsuit",
+     "priceCents": 6200,
+     "variants": [
+      {
+       "sku": "5-OLIV-1X",
+       "qty": 2,
+       "size": "1X",
+       "color": "olive"
+      },
+      {
+       "sku": "5-OLIV-2X",
+       "qty": 2,
+       "size": "2X",
+       "color": "olive"
+      },
+      {
+       "sku": "5-OLIV-3X",
+       "qty": 2,
+       "size": "3X",
+       "color": "olive"
+      }
+     ]
+    },
+    {
+     "code": "6",
+     "title": "Lace bralette",
+     "priceCents": 2400,
+     "variants": [
+      {
+       "sku": "6-BLAC-1X",
+       "qty": 2,
+       "size": "1X",
+       "color": "black"
+      },
+      {
+       "sku": "6-BLAC-2X",
+       "qty": 2,
+       "size": "2X",
+       "color": "black"
+      },
+      {
+       "sku": "6-BLAC-3X",
+       "qty": 2,
+       "size": "3X",
+       "color": "black"
+      },
+      {
+       "sku": "6-NUDE-1X",
+       "qty": 2,
+       "size": "1X",
+       "color": "nude"
+      },
+      {
+       "sku": "6-NUDE-2X",
+       "qty": 2,
+       "size": "2X",
+       "color": "nude"
+      },
+      {
+       "sku": "6-NUDE-3X",
+       "qty": 2,
+       "size": "3X",
+       "color": "nude"
+      }
+     ]
+    },
+    {
+     "code": "7",
+     "title": "Oversized sweatshirt",
+     "priceCents": 3800,
+     "variants": [
+      {
+       "sku": "7-LAVE-1X",
+       "qty": 2,
+       "size": "1X",
+       "color": "lavender"
+      },
+      {
+       "sku": "7-LAVE-2X",
+       "qty": 2,
+       "size": "2X",
+       "color": "lavender"
+      },
+      {
+       "sku": "7-LAVE-3X",
+       "qty": 2,
+       "size": "3X",
+       "color": "lavender"
+      },
+      {
+       "sku": "7-GREY-1X",
+       "qty": 2,
+       "size": "1X",
+       "color": "grey"
+      },
+      {
+       "sku": "7-GREY-2X",
+       "qty": 2,
+       "size": "2X",
+       "color": "grey"
+      },
+      {
+       "sku": "7-GREY-3X",
+       "qty": 2,
+       "size": "3X",
+       "color": "grey"
+      }
+     ]
+    },
+    {
+     "code": "8",
+     "title": "Pleated maxi skirt",
+     "priceCents": 4600,
+     "variants": [
+      {
+       "sku": "8-PLUM-1X",
+       "qty": 2,
+       "size": "1X",
+       "color": "plum"
+      },
+      {
+       "sku": "8-PLUM-2X",
+       "qty": 2,
+       "size": "2X",
+       "color": "plum"
+      },
+      {
+       "sku": "8-PLUM-3X",
+       "qty": 2,
+       "size": "3X",
+       "color": "plum"
+      }
+     ]
+    },
+    {
+     "code": "9",
+     "title": "Faux leather leggings",
+     "priceCents": 3600,
+     "variants": [
+      {
+       "sku": "9-BLAC-1X",
+       "qty": 2,
+       "size": "1X",
+       "color": "black"
+      },
+      {
+       "sku": "9-BLAC-2X",
+       "qty": 2,
+       "size": "2X",
+       "color": "black"
+      },
+      {
+       "sku": "9-BLAC-3X",
+       "qty": 2,
+       "size": "3X",
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "10",
+     "title": "Statement necklace",
+     "priceCents": 2200,
+     "variants": [
+      {
+       "sku": "10",
+       "qty": 5
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "littles",
+   "name": "Little Sprouts (US kids, toddler sizes)",
+   "locale": "en-US",
+   "items": [
+    {
+     "code": "1",
+     "title": "Ruffle romper",
+     "priceCents": 2600,
+     "variants": [
+      {
+       "sku": "1-PINK-2T",
+       "qty": 2,
+       "size": "2T",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-3T",
+       "qty": 2,
+       "size": "3T",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-4T",
+       "qty": 2,
+       "size": "4T",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-5",
+       "qty": 2,
+       "size": "5",
+       "color": "pink"
+      },
+      {
+       "sku": "1-YELL-2T",
+       "qty": 2,
+       "size": "2T",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELL-3T",
+       "qty": 2,
+       "size": "3T",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELL-4T",
+       "qty": 2,
+       "size": "4T",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELL-5",
+       "qty": 2,
+       "size": "5",
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "code": "2",
+     "title": "Dino hoodie",
+     "priceCents": 3000,
+     "variants": [
+      {
+       "sku": "2-GREE-4",
+       "qty": 2,
+       "size": "4",
+       "color": "green"
+      },
+      {
+       "sku": "2-GREE-6",
+       "qty": 2,
+       "size": "6",
+       "color": "green"
+      },
+      {
+       "sku": "2-GREE-8",
+       "qty": 2,
+       "size": "8",
+       "color": "green"
+      },
+      {
+       "sku": "2-GREE-10",
+       "qty": 2,
+       "size": "10",
+       "color": "green"
+      },
+      {
+       "sku": "2-GREE-12",
+       "qty": 2,
+       "size": "12",
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "code": "3",
+     "title": "Twirl dress",
+     "priceCents": 3400,
+     "variants": [
+      {
+       "sku": "3-LILA-2T",
+       "qty": 2,
+       "size": "2T",
+       "color": "lilac"
+      },
+      {
+       "sku": "3-LILA-3T",
+       "qty": 2,
+       "size": "3T",
+       "color": "lilac"
+      },
+      {
+       "sku": "3-LILA-4T",
+       "qty": 2,
+       "size": "4T",
+       "color": "lilac"
+      },
+      {
+       "sku": "3-LILA-5",
+       "qty": 2,
+       "size": "5",
+       "color": "lilac"
+      },
+      {
+       "sku": "3-LILA-6",
+       "qty": 2,
+       "size": "6",
+       "color": "lilac"
+      },
+      {
+       "sku": "3-MINT-2T",
+       "qty": 2,
+       "size": "2T",
+       "color": "mint"
+      },
+      {
+       "sku": "3-MINT-3T",
+       "qty": 2,
+       "size": "3T",
+       "color": "mint"
+      },
+      {
+       "sku": "3-MINT-4T",
+       "qty": 2,
+       "size": "4T",
+       "color": "mint"
+      },
+      {
+       "sku": "3-MINT-5",
+       "qty": 2,
+       "size": "5",
+       "color": "mint"
+      },
+      {
+       "sku": "3-MINT-6",
+       "qty": 2,
+       "size": "6",
+       "color": "mint"
+      }
+     ]
+    },
+    {
+     "code": "4",
+     "title": "Jogger set",
+     "priceCents": 3200,
+     "variants": [
+      {
+       "sku": "4-GREY-6",
+       "qty": 2,
+       "size": "6",
+       "color": "grey"
+      },
+      {
+       "sku": "4-GREY-8",
+       "qty": 2,
+       "size": "8",
+       "color": "grey"
+      },
+      {
+       "sku": "4-GREY-10",
+       "qty": 2,
+       "size": "10",
+       "color": "grey"
+      },
+      {
+       "sku": "4-GREY-12",
+       "qty": 2,
+       "size": "12",
+       "color": "grey"
+      },
+      {
+       "sku": "4-GREY-14",
+       "qty": 2,
+       "size": "14",
+       "color": "grey"
+      },
+      {
+       "sku": "4-NAVY-6",
+       "qty": 2,
+       "size": "6",
+       "color": "navy"
+      },
+      {
+       "sku": "4-NAVY-8",
+       "qty": 2,
+       "size": "8",
+       "color": "navy"
+      },
+      {
+       "sku": "4-NAVY-10",
+       "qty": 2,
+       "size": "10",
+       "color": "navy"
+      },
+      {
+       "sku": "4-NAVY-12",
+       "qty": 2,
+       "size": "12",
+       "color": "navy"
+      },
+      {
+       "sku": "4-NAVY-14",
+       "qty": 2,
+       "size": "14",
+       "color": "navy"
+      }
+     ]
+    },
+    {
+     "code": "5",
+     "title": "Hair bow 3-pack",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "5",
+       "qty": 8
+      }
+     ]
+    },
+    {
+     "code": "6",
+     "title": "Puffer vest",
+     "priceCents": 3800,
+     "variants": [
+      {
+       "sku": "6-RED-4",
+       "qty": 2,
+       "size": "4",
+       "color": "red"
+      },
+      {
+       "sku": "6-RED-6",
+       "qty": 2,
+       "size": "6",
+       "color": "red"
+      },
+      {
+       "sku": "6-RED-8",
+       "qty": 2,
+       "size": "8",
+       "color": "red"
+      },
+      {
+       "sku": "6-RED-10",
+       "qty": 2,
+       "size": "10",
+       "color": "red"
+      },
+      {
+       "sku": "6-RED-12",
+       "qty": 2,
+       "size": "12",
+       "color": "red"
+      },
+      {
+       "sku": "6-BLAC-4",
+       "qty": 2,
+       "size": "4",
+       "color": "black"
+      },
+      {
+       "sku": "6-BLAC-6",
+       "qty": 2,
+       "size": "6",
+       "color": "black"
+      },
+      {
+       "sku": "6-BLAC-8",
+       "qty": 2,
+       "size": "8",
+       "color": "black"
+      },
+      {
+       "sku": "6-BLAC-10",
+       "qty": 2,
+       "size": "10",
+       "color": "black"
+      },
+      {
+       "sku": "6-BLAC-12",
+       "qty": 2,
+       "size": "12",
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "7",
+     "title": "Sequin skirt",
+     "priceCents": 2800,
+     "variants": [
+      {
+       "sku": "7-GOLD-4",
+       "qty": 2,
+       "size": "4",
+       "color": "gold"
+      },
+      {
+       "sku": "7-GOLD-6",
+       "qty": 2,
+       "size": "6",
+       "color": "gold"
+      },
+      {
+       "sku": "7-GOLD-8",
+       "qty": 2,
+       "size": "8",
+       "color": "gold"
+      },
+      {
+       "sku": "7-GOLD-10",
+       "qty": 2,
+       "size": "10",
+       "color": "gold"
+      },
+      {
+       "sku": "7-SILV-4",
+       "qty": 2,
+       "size": "4",
+       "color": "silver"
+      },
+      {
+       "sku": "7-SILV-6",
+       "qty": 2,
+       "size": "6",
+       "color": "silver"
+      },
+      {
+       "sku": "7-SILV-8",
+       "qty": 2,
+       "size": "8",
+       "color": "silver"
+      },
+      {
+       "sku": "7-SILV-10",
+       "qty": 2,
+       "size": "10",
+       "color": "silver"
+      }
+     ]
+    },
+    {
+     "code": "8",
+     "title": "Rain boots",
+     "priceCents": 3600,
+     "variants": [
+      {
+       "sku": "8-YELL-9",
+       "qty": 2,
+       "size": "9",
+       "color": "yellow"
+      },
+      {
+       "sku": "8-YELL-10",
+       "qty": 2,
+       "size": "10",
+       "color": "yellow"
+      },
+      {
+       "sku": "8-YELL-11",
+       "qty": 2,
+       "size": "11",
+       "color": "yellow"
+      },
+      {
+       "sku": "8-YELL-12",
+       "qty": 2,
+       "size": "12",
+       "color": "yellow"
+      },
+      {
+       "sku": "8-YELL-13",
+       "qty": 2,
+       "size": "13",
+       "color": "yellow"
+      },
+      {
+       "sku": "8-BLUE-9",
+       "qty": 2,
+       "size": "9",
+       "color": "blue"
+      },
+      {
+       "sku": "8-BLUE-10",
+       "qty": 2,
+       "size": "10",
+       "color": "blue"
+      },
+      {
+       "sku": "8-BLUE-11",
+       "qty": 2,
+       "size": "11",
+       "color": "blue"
+      },
+      {
+       "sku": "8-BLUE-12",
+       "qty": 2,
+       "size": "12",
+       "color": "blue"
+      },
+      {
+       "sku": "8-BLUE-13",
+       "qty": 2,
+       "size": "13",
+       "color": "blue"
+      }
+     ]
+    },
+    {
+     "code": "9",
+     "title": "Overall shorts",
+     "priceCents": 2700,
+     "variants": [
+      {
+       "sku": "9-DENI-2T",
+       "qty": 2,
+       "size": "2T",
+       "color": "denim"
+      },
+      {
+       "sku": "9-DENI-3T",
+       "qty": 2,
+       "size": "3T",
+       "color": "denim"
+      },
+      {
+       "sku": "9-DENI-4T",
+       "qty": 2,
+       "size": "4T",
+       "color": "denim"
+      }
+     ]
+    },
+    {
+     "code": "10",
+     "title": "Holiday pajamas",
+     "priceCents": 2900,
+     "variants": [
+      {
+       "sku": "10-PLAI-2T",
+       "qty": 2,
+       "size": "2T",
+       "color": "plaid"
+      },
+      {
+       "sku": "10-PLAI-3T",
+       "qty": 2,
+       "size": "3T",
+       "color": "plaid"
+      },
+      {
+       "sku": "10-PLAI-4T",
+       "qty": 2,
+       "size": "4T",
+       "color": "plaid"
+      },
+      {
+       "sku": "10-PLAI-5",
+       "qty": 2,
+       "size": "5",
+       "color": "plaid"
+      },
+      {
+       "sku": "10-PLAI-6",
+       "qty": 2,
+       "size": "6",
+       "color": "plaid"
+      },
+      {
+       "sku": "10-PLAI-8",
+       "qty": 2,
+       "size": "8",
+       "color": "plaid"
+      },
+      {
+       "sku": "10-PLAI-10",
+       "qty": 2,
+       "size": "10",
+       "color": "plaid"
+      },
+      {
+       "sku": "10-PLAI-12",
+       "qty": 2,
+       "size": "12",
+       "color": "plaid"
+      }
+     ]
+    },
+    {
+     "code": "11",
+     "title": "Knit beanie",
+     "priceCents": 1400,
+     "variants": [
+      {
+       "sku": "11-CREA",
+       "qty": 4,
+       "color": "cream"
+      },
+      {
+       "sku": "11-RUST",
+       "qty": 4,
+       "color": "rust"
+      }
+     ]
+    },
+    {
+     "code": "12",
+     "title": "Velvet party dress",
+     "priceCents": 4200,
+     "variants": [
+      {
+       "sku": "12-EMER-4",
+       "qty": 2,
+       "size": "4",
+       "color": "emerald"
+      },
+      {
+       "sku": "12-EMER-6",
+       "qty": 2,
+       "size": "6",
+       "color": "emerald"
+      },
+      {
+       "sku": "12-EMER-8",
+       "qty": 2,
+       "size": "8",
+       "color": "emerald"
+      },
+      {
+       "sku": "12-EMER-10",
+       "qty": 2,
+       "size": "10",
+       "color": "emerald"
+      },
+      {
+       "sku": "12-EMER-12",
+       "qty": 2,
+       "size": "12",
+       "color": "emerald"
+      },
+      {
+       "sku": "12-BURG-4",
+       "qty": 2,
+       "size": "4",
+       "color": "burgundy"
+      },
+      {
+       "sku": "12-BURG-6",
+       "qty": 2,
+       "size": "6",
+       "color": "burgundy"
+      },
+      {
+       "sku": "12-BURG-8",
+       "qty": 2,
+       "size": "8",
+       "color": "burgundy"
+      },
+      {
+       "sku": "12-BURG-10",
+       "qty": 2,
+       "size": "10",
+       "color": "burgundy"
+      },
+      {
+       "sku": "12-BURG-12",
+       "qty": 2,
+       "size": "12",
+       "color": "burgundy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "glow",
+   "name": "Glow & Co (US jewelry and accessories, mostly one-size)",
+   "locale": "en-US",
+   "items": [
+    {
+     "code": "21",
+     "title": "Paperclip chain necklace",
+     "priceCents": 3400,
+     "variants": [
+      {
+       "sku": "21-GOLD",
+       "qty": 4,
+       "color": "gold"
+      },
+      {
+       "sku": "21-SILV",
+       "qty": 4,
+       "color": "silver"
+      }
+     ]
+    },
+    {
+     "code": "22",
+     "title": "Pearl drop earrings",
+     "priceCents": 2800,
+     "variants": [
+      {
+       "sku": "22",
+       "qty": 3
+      }
+     ]
+    },
+    {
+     "code": "23",
+     "title": "Stackable rings set",
+     "priceCents": 2400,
+     "variants": [
+      {
+       "sku": "23-GOLD-6",
+       "qty": 2,
+       "size": "6",
+       "color": "gold"
+      },
+      {
+       "sku": "23-GOLD-7",
+       "qty": 2,
+       "size": "7",
+       "color": "gold"
+      },
+      {
+       "sku": "23-GOLD-8",
+       "qty": 2,
+       "size": "8",
+       "color": "gold"
+      },
+      {
+       "sku": "23-GOLD-9",
+       "qty": 2,
+       "size": "9",
+       "color": "gold"
+      }
+     ]
+    },
+    {
+     "code": "24",
+     "title": "Claw clip trio",
+     "priceCents": 1600,
+     "variants": [
+      {
+       "sku": "24",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "25",
+     "title": "Silk scarf",
+     "priceCents": 3200,
+     "variants": [
+      {
+       "sku": "25-LEOP",
+       "qty": 3,
+       "color": "leopard"
+      },
+      {
+       "sku": "25-FLOR",
+       "qty": 3,
+       "color": "floral"
+      }
+     ]
+    },
+    {
+     "code": "26",
+     "title": "Tennis bracelet",
+     "priceCents": 4200,
+     "variants": [
+      {
+       "sku": "26",
+       "qty": 2
+      }
+     ]
+    },
+    {
+     "code": "27",
+     "title": "Beaded phone strap",
+     "priceCents": 1400,
+     "variants": [
+      {
+       "sku": "27-RAIN",
+       "qty": 6,
+       "color": "rainbow"
+      },
+      {
+       "sku": "27-NEUT",
+       "qty": 6,
+       "color": "neutral"
+      }
+     ]
+    },
+    {
+     "code": "28",
+     "title": "Bucket hat",
+     "priceCents": 2600,
+     "variants": [
+      {
+       "sku": "28-DENI",
+       "qty": 3,
+       "color": "denim"
+      },
+      {
+       "sku": "28-BLAC",
+       "qty": 3,
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "29",
+     "title": "Mini crossbody",
+     "priceCents": 4800,
+     "variants": [
+      {
+       "sku": "29-SAGE",
+       "qty": 2,
+       "color": "sage"
+      },
+      {
+       "sku": "29-BLAC",
+       "qty": 2,
+       "color": "black"
+      },
+      {
+       "sku": "29-PINK",
+       "qty": 2,
+       "color": "pink"
+      }
+     ]
+    },
+    {
+     "code": "30",
+     "title": "Initial necklace",
+     "priceCents": 3000,
+     "variants": [
+      {
+       "sku": "30-GOLD",
+       "qty": 12,
+       "color": "gold"
+      }
+     ]
+    },
+    {
+     "code": "31",
+     "title": "Sunglasses cat-eye",
+     "priceCents": 2200,
+     "variants": [
+      {
+       "sku": "31-TORT",
+       "qty": 4,
+       "color": "tortoise"
+      },
+      {
+       "sku": "31-BLAC",
+       "qty": 4,
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "32",
+     "title": "Hoop earrings 2-pack",
+     "priceCents": 2000,
+     "variants": [
+      {
+       "sku": "32",
+       "qty": 5
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cozy",
+   "name": "Cozy Knit Collective (US sweaters, 3-digit codes)",
+   "locale": "en-US",
+   "items": [
+    {
+     "code": "101",
+     "title": "Cable-knit crewneck",
+     "priceCents": 5800,
+     "variants": [
+      {
+       "sku": "101-BLUE-S",
+       "qty": 2,
+       "size": "S",
+       "color": "blue"
+      },
+      {
+       "sku": "101-BLUE-M",
+       "qty": 2,
+       "size": "M",
+       "color": "blue"
+      },
+      {
+       "sku": "101-BLUE-L",
+       "qty": 2,
+       "size": "L",
+       "color": "blue"
+      },
+      {
+       "sku": "101-CREA-S",
+       "qty": 2,
+       "size": "S",
+       "color": "cream"
+      },
+      {
+       "sku": "101-CREA-M",
+       "qty": 2,
+       "size": "M",
+       "color": "cream"
+      },
+      {
+       "sku": "101-CREA-L",
+       "qty": 2,
+       "size": "L",
+       "color": "cream"
+      }
+     ]
+    },
+    {
+     "code": "102",
+     "title": "Chunky turtleneck",
+     "priceCents": 6200,
+     "variants": [
+      {
+       "sku": "102-CAME-S",
+       "qty": 2,
+       "size": "S",
+       "color": "camel"
+      },
+      {
+       "sku": "102-CAME-M",
+       "qty": 2,
+       "size": "M",
+       "color": "camel"
+      },
+      {
+       "sku": "102-CAME-L",
+       "qty": 2,
+       "size": "L",
+       "color": "camel"
+      },
+      {
+       "sku": "102-BLAC-S",
+       "qty": 2,
+       "size": "S",
+       "color": "black"
+      },
+      {
+       "sku": "102-BLAC-M",
+       "qty": 2,
+       "size": "M",
+       "color": "black"
+      },
+      {
+       "sku": "102-BLAC-L",
+       "qty": 2,
+       "size": "L",
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "103",
+     "title": "Cropped cardigan",
+     "priceCents": 4800,
+     "variants": [
+      {
+       "sku": "103-PINK-S",
+       "qty": 2,
+       "size": "S",
+       "color": "pink"
+      },
+      {
+       "sku": "103-PINK-M",
+       "qty": 2,
+       "size": "M",
+       "color": "pink"
+      },
+      {
+       "sku": "103-PINK-L",
+       "qty": 2,
+       "size": "L",
+       "color": "pink"
+      },
+      {
+       "sku": "103-LILA-S",
+       "qty": 2,
+       "size": "S",
+       "color": "lilac"
+      },
+      {
+       "sku": "103-LILA-M",
+       "qty": 2,
+       "size": "M",
+       "color": "lilac"
+      },
+      {
+       "sku": "103-LILA-L",
+       "qty": 2,
+       "size": "L",
+       "color": "lilac"
+      }
+     ]
+    },
+    {
+     "code": "104",
+     "title": "Fisherman sweater",
+     "priceCents": 6600,
+     "variants": [
+      {
+       "sku": "104-IVOR-S",
+       "qty": 2,
+       "size": "S",
+       "color": "ivory"
+      },
+      {
+       "sku": "104-IVOR-M",
+       "qty": 2,
+       "size": "M",
+       "color": "ivory"
+      },
+      {
+       "sku": "104-IVOR-L",
+       "qty": 2,
+       "size": "L",
+       "color": "ivory"
+      },
+      {
+       "sku": "104-IVOR-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "ivory"
+      }
+     ]
+    },
+    {
+     "code": "105",
+     "title": "Striped boatneck",
+     "priceCents": 4400,
+     "variants": [
+      {
+       "sku": "105-NAVY-S",
+       "qty": 2,
+       "size": "S",
+       "color": "navy/white"
+      },
+      {
+       "sku": "105-NAVY-M",
+       "qty": 2,
+       "size": "M",
+       "color": "navy/white"
+      },
+      {
+       "sku": "105-NAVY-L",
+       "qty": 2,
+       "size": "L",
+       "color": "navy/white"
+      }
+     ]
+    },
+    {
+     "code": "106",
+     "title": "Mohair vest",
+     "priceCents": 5200,
+     "variants": [
+      {
+       "sku": "106-SAGE-S",
+       "qty": 2,
+       "size": "S",
+       "color": "sage"
+      },
+      {
+       "sku": "106-SAGE-M",
+       "qty": 2,
+       "size": "M",
+       "color": "sage"
+      },
+      {
+       "sku": "106-SAGE-L",
+       "qty": 2,
+       "size": "L",
+       "color": "sage"
+      },
+      {
+       "sku": "106-BROW-S",
+       "qty": 2,
+       "size": "S",
+       "color": "brown"
+      },
+      {
+       "sku": "106-BROW-M",
+       "qty": 2,
+       "size": "M",
+       "color": "brown"
+      },
+      {
+       "sku": "106-BROW-L",
+       "qty": 2,
+       "size": "L",
+       "color": "brown"
+      }
+     ]
+    },
+    {
+     "code": "107",
+     "title": "Knit midi skirt",
+     "priceCents": 4600,
+     "variants": [
+      {
+       "sku": "107-OATM-S",
+       "qty": 2,
+       "size": "S",
+       "color": "oatmeal"
+      },
+      {
+       "sku": "107-OATM-M",
+       "qty": 2,
+       "size": "M",
+       "color": "oatmeal"
+      },
+      {
+       "sku": "107-OATM-L",
+       "qty": 2,
+       "size": "L",
+       "color": "oatmeal"
+      },
+      {
+       "sku": "107-CHAR-S",
+       "qty": 2,
+       "size": "S",
+       "color": "charcoal"
+      },
+      {
+       "sku": "107-CHAR-M",
+       "qty": 2,
+       "size": "M",
+       "color": "charcoal"
+      },
+      {
+       "sku": "107-CHAR-L",
+       "qty": 2,
+       "size": "L",
+       "color": "charcoal"
+      }
+     ]
+    },
+    {
+     "code": "108",
+     "title": "Shawl-collar coatigan",
+     "priceCents": 8800,
+     "variants": [
+      {
+       "sku": "108-GREY-S/M",
+       "qty": 2,
+       "size": "S/M",
+       "color": "grey"
+      },
+      {
+       "sku": "108-GREY-L/XL",
+       "qty": 2,
+       "size": "L/XL",
+       "color": "grey"
+      }
+     ]
+    },
+    {
+     "code": "109",
+     "title": "Ribbed beanie and scarf set",
+     "priceCents": 3400,
+     "variants": [
+      {
+       "sku": "109-CREA",
+       "qty": 3,
+       "color": "cream"
+      },
+      {
+       "sku": "109-RUST",
+       "qty": 3,
+       "color": "rust"
+      }
+     ]
+    },
+    {
+     "code": "110",
+     "title": "Cashmere-blend V-neck",
+     "priceCents": 7800,
+     "variants": [
+      {
+       "sku": "110-RED-S",
+       "qty": 2,
+       "size": "S",
+       "color": "red"
+      },
+      {
+       "sku": "110-RED-M",
+       "qty": 2,
+       "size": "M",
+       "color": "red"
+      },
+      {
+       "sku": "110-RED-L",
+       "qty": 2,
+       "size": "L",
+       "color": "red"
+      },
+      {
+       "sku": "110-FORE-S",
+       "qty": 2,
+       "size": "S",
+       "color": "forest green"
+      },
+      {
+       "sku": "110-FORE-M",
+       "qty": 2,
+       "size": "M",
+       "color": "forest green"
+      },
+      {
+       "sku": "110-FORE-L",
+       "qty": 2,
+       "size": "L",
+       "color": "forest green"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rosas",
+   "name": "Rosa's Closet (US boutique, bilingual Spanish/English)",
+   "locale": "en-US",
+   "items": [
+    {
+     "code": "1",
+     "title": "Off-shoulder ruffle top",
+     "priceCents": 3200,
+     "variants": [
+      {
+       "sku": "1-RED-S",
+       "qty": 2,
+       "size": "S",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-M",
+       "qty": 2,
+       "size": "M",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-L",
+       "qty": 2,
+       "size": "L",
+       "color": "red"
+      },
+      {
+       "sku": "1-WHIT-S",
+       "qty": 2,
+       "size": "S",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHIT-M",
+       "qty": 2,
+       "size": "M",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHIT-L",
+       "qty": 2,
+       "size": "L",
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "code": "2",
+     "title": "Floral wrap skirt",
+     "priceCents": 3800,
+     "variants": [
+      {
+       "sku": "2-YELL-S",
+       "qty": 2,
+       "size": "S",
+       "color": "yellow"
+      },
+      {
+       "sku": "2-YELL-M",
+       "qty": 2,
+       "size": "M",
+       "color": "yellow"
+      },
+      {
+       "sku": "2-YELL-L",
+       "qty": 2,
+       "size": "L",
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "code": "3",
+     "title": "Embroidered peasant blouse",
+     "priceCents": 4200,
+     "variants": [
+      {
+       "sku": "3-WHIT-S",
+       "qty": 2,
+       "size": "S",
+       "color": "white"
+      },
+      {
+       "sku": "3-WHIT-M",
+       "qty": 2,
+       "size": "M",
+       "color": "white"
+      },
+      {
+       "sku": "3-WHIT-L",
+       "qty": 2,
+       "size": "L",
+       "color": "white"
+      },
+      {
+       "sku": "3-WHIT-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "white"
+      },
+      {
+       "sku": "3-BLAC-S",
+       "qty": 2,
+       "size": "S",
+       "color": "black"
+      },
+      {
+       "sku": "3-BLAC-M",
+       "qty": 2,
+       "size": "M",
+       "color": "black"
+      },
+      {
+       "sku": "3-BLAC-L",
+       "qty": 2,
+       "size": "L",
+       "color": "black"
+      },
+      {
+       "sku": "3-BLAC-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "4",
+     "title": "Bodycon midi dress",
+     "priceCents": 4800,
+     "variants": [
+      {
+       "sku": "4-FUCH-S",
+       "qty": 2,
+       "size": "S",
+       "color": "fuchsia"
+      },
+      {
+       "sku": "4-FUCH-M",
+       "qty": 2,
+       "size": "M",
+       "color": "fuchsia"
+      },
+      {
+       "sku": "4-FUCH-L",
+       "qty": 2,
+       "size": "L",
+       "color": "fuchsia"
+      },
+      {
+       "sku": "4-BLAC-S",
+       "qty": 2,
+       "size": "S",
+       "color": "black"
+      },
+      {
+       "sku": "4-BLAC-M",
+       "qty": 2,
+       "size": "M",
+       "color": "black"
+      },
+      {
+       "sku": "4-BLAC-L",
+       "qty": 2,
+       "size": "L",
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "5",
+     "title": "Straw tote",
+     "priceCents": 3600,
+     "variants": [
+      {
+       "sku": "5",
+       "qty": 3
+      }
+     ]
+    },
+    {
+     "code": "6",
+     "title": "Linen co-ord set",
+     "priceCents": 6400,
+     "variants": [
+      {
+       "sku": "6-SAND-S",
+       "qty": 2,
+       "size": "S",
+       "color": "sand"
+      },
+      {
+       "sku": "6-SAND-M",
+       "qty": 2,
+       "size": "M",
+       "color": "sand"
+      },
+      {
+       "sku": "6-SAND-L",
+       "qty": 2,
+       "size": "L",
+       "color": "sand"
+      },
+      {
+       "sku": "6-SKYB-S",
+       "qty": 2,
+       "size": "S",
+       "color": "sky blue"
+      },
+      {
+       "sku": "6-SKYB-M",
+       "qty": 2,
+       "size": "M",
+       "color": "sky blue"
+      },
+      {
+       "sku": "6-SKYB-L",
+       "qty": 2,
+       "size": "L",
+       "color": "sky blue"
+      }
+     ]
+    },
+    {
+     "code": "7",
+     "title": "Gold layered necklace",
+     "priceCents": 2400,
+     "variants": [
+      {
+       "sku": "7",
+       "qty": 5
+      }
+     ]
+    },
+    {
+     "code": "8",
+     "title": "Satin cami",
+     "priceCents": 2600,
+     "variants": [
+      {
+       "sku": "8-CHAM-S",
+       "qty": 2,
+       "size": "S",
+       "color": "champagne"
+      },
+      {
+       "sku": "8-CHAM-M",
+       "qty": 2,
+       "size": "M",
+       "color": "champagne"
+      },
+      {
+       "sku": "8-CHAM-L",
+       "qty": 2,
+       "size": "L",
+       "color": "champagne"
+      },
+      {
+       "sku": "8-EMER-S",
+       "qty": 2,
+       "size": "S",
+       "color": "emerald"
+      },
+      {
+       "sku": "8-EMER-M",
+       "qty": 2,
+       "size": "M",
+       "color": "emerald"
+      },
+      {
+       "sku": "8-EMER-L",
+       "qty": 2,
+       "size": "L",
+       "color": "emerald"
+      }
+     ]
+    },
+    {
+     "code": "9",
+     "title": "Platform sandals",
+     "priceCents": 5400,
+     "variants": [
+      {
+       "sku": "9-NUDE-6",
+       "qty": 2,
+       "size": "6",
+       "color": "nude"
+      },
+      {
+       "sku": "9-NUDE-7",
+       "qty": 2,
+       "size": "7",
+       "color": "nude"
+      },
+      {
+       "sku": "9-NUDE-8",
+       "qty": 2,
+       "size": "8",
+       "color": "nude"
+      },
+      {
+       "sku": "9-NUDE-9",
+       "qty": 2,
+       "size": "9",
+       "color": "nude"
+      }
+     ]
+    },
+    {
+     "code": "10",
+     "title": "Maxi slip dress",
+     "priceCents": 5200,
+     "variants": [
+      {
+       "sku": "10-NAVY-S",
+       "qty": 2,
+       "size": "S",
+       "color": "navy"
+      },
+      {
+       "sku": "10-NAVY-M",
+       "qty": 2,
+       "size": "M",
+       "color": "navy"
+      },
+      {
+       "sku": "10-NAVY-L",
+       "qty": 2,
+       "size": "L",
+       "color": "navy"
+      },
+      {
+       "sku": "10-RUST-S",
+       "qty": 2,
+       "size": "S",
+       "color": "rust"
+      },
+      {
+       "sku": "10-RUST-M",
+       "qty": 2,
+       "size": "M",
+       "color": "rust"
+      },
+      {
+       "sku": "10-RUST-L",
+       "qty": 2,
+       "size": "L",
+       "color": "rust"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "desi",
+   "name": "Desi Drapes (India, kurtis and sarees, Hinglish chat)",
+   "locale": "en-IN",
+   "items": [
+    {
+     "code": "1",
+     "title": "Cotton A-line kurti",
+     "priceCents": 900,
+     "variants": [
+      {
+       "sku": "1-BLUE-S",
+       "qty": 2,
+       "size": "S",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-M",
+       "qty": 2,
+       "size": "M",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-L",
+       "qty": 2,
+       "size": "L",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-XXL",
+       "qty": 2,
+       "size": "XXL",
+       "color": "blue"
+      },
+      {
+       "sku": "1-YELL-S",
+       "qty": 2,
+       "size": "S",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELL-M",
+       "qty": 2,
+       "size": "M",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELL-L",
+       "qty": 2,
+       "size": "L",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELL-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELL-XXL",
+       "qty": 2,
+       "size": "XXL",
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "code": "2",
+     "title": "Chanderi silk saree",
+     "priceCents": 3500,
+     "variants": [
+      {
+       "sku": "2-MARO",
+       "qty": 2,
+       "color": "maroon"
+      },
+      {
+       "sku": "2-PEAC",
+       "qty": 2,
+       "color": "peach"
+      }
+     ]
+    },
+    {
+     "code": "3",
+     "title": "Anarkali suit set",
+     "priceCents": 2800,
+     "variants": [
+      {
+       "sku": "3-GREE-M",
+       "qty": 2,
+       "size": "M",
+       "color": "green"
+      },
+      {
+       "sku": "3-GREE-L",
+       "qty": 2,
+       "size": "L",
+       "color": "green"
+      },
+      {
+       "sku": "3-GREE-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "green"
+      },
+      {
+       "sku": "3-PINK-M",
+       "qty": 2,
+       "size": "M",
+       "color": "pink"
+      },
+      {
+       "sku": "3-PINK-L",
+       "qty": 2,
+       "size": "L",
+       "color": "pink"
+      },
+      {
+       "sku": "3-PINK-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "pink"
+      }
+     ]
+    },
+    {
+     "code": "4",
+     "title": "Block print palazzo",
+     "priceCents": 700,
+     "variants": [
+      {
+       "sku": "4-WHIT-M",
+       "qty": 2,
+       "size": "M",
+       "color": "white"
+      },
+      {
+       "sku": "4-WHIT-L",
+       "qty": 2,
+       "size": "L",
+       "color": "white"
+      },
+      {
+       "sku": "4-WHIT-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "white"
+      },
+      {
+       "sku": "4-WHIT-XXL",
+       "qty": 2,
+       "size": "XXL",
+       "color": "white"
+      },
+      {
+       "sku": "4-BLAC-M",
+       "qty": 2,
+       "size": "M",
+       "color": "black"
+      },
+      {
+       "sku": "4-BLAC-L",
+       "qty": 2,
+       "size": "L",
+       "color": "black"
+      },
+      {
+       "sku": "4-BLAC-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "black"
+      },
+      {
+       "sku": "4-BLAC-XXL",
+       "qty": 2,
+       "size": "XXL",
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "5",
+     "title": "Oxidised jhumka",
+     "priceCents": 400,
+     "variants": [
+      {
+       "sku": "5",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "6",
+     "title": "Banarasi dupatta",
+     "priceCents": 1600,
+     "variants": [
+      {
+       "sku": "6-RED",
+       "qty": 3,
+       "color": "red"
+      },
+      {
+       "sku": "6-GOLD",
+       "qty": 3,
+       "color": "gold"
+      }
+     ]
+    },
+    {
+     "code": "7",
+     "title": "Rayon straight kurti",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "7-MUST-S",
+       "qty": 2,
+       "size": "S",
+       "color": "mustard"
+      },
+      {
+       "sku": "7-MUST-M",
+       "qty": 2,
+       "size": "M",
+       "color": "mustard"
+      },
+      {
+       "sku": "7-MUST-L",
+       "qty": 2,
+       "size": "L",
+       "color": "mustard"
+      },
+      {
+       "sku": "7-MUST-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "mustard"
+      },
+      {
+       "sku": "7-TEAL-S",
+       "qty": 2,
+       "size": "S",
+       "color": "teal"
+      },
+      {
+       "sku": "7-TEAL-M",
+       "qty": 2,
+       "size": "M",
+       "color": "teal"
+      },
+      {
+       "sku": "7-TEAL-L",
+       "qty": 2,
+       "size": "L",
+       "color": "teal"
+      },
+      {
+       "sku": "7-TEAL-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "teal"
+      },
+      {
+       "sku": "7-BLAC-S",
+       "qty": 2,
+       "size": "S",
+       "color": "black"
+      },
+      {
+       "sku": "7-BLAC-M",
+       "qty": 2,
+       "size": "M",
+       "color": "black"
+      },
+      {
+       "sku": "7-BLAC-L",
+       "qty": 2,
+       "size": "L",
+       "color": "black"
+      },
+      {
+       "sku": "7-BLAC-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "8",
+     "title": "Organza saree",
+     "priceCents": 4200,
+     "variants": [
+      {
+       "sku": "8-LAVE",
+       "qty": 2,
+       "color": "lavender"
+      },
+      {
+       "sku": "8-MINT",
+       "qty": 2,
+       "color": "mint"
+      }
+     ]
+    },
+    {
+     "code": "9",
+     "title": "Co-ord set",
+     "priceCents": 1900,
+     "variants": [
+      {
+       "sku": "9-BEIG-S",
+       "qty": 2,
+       "size": "S",
+       "color": "beige"
+      },
+      {
+       "sku": "9-BEIG-M",
+       "qty": 2,
+       "size": "M",
+       "color": "beige"
+      },
+      {
+       "sku": "9-BEIG-L",
+       "qty": 2,
+       "size": "L",
+       "color": "beige"
+      }
+     ]
+    },
+    {
+     "code": "10",
+     "title": "Kalamkari kurti",
+     "priceCents": 1100,
+     "variants": [
+      {
+       "sku": "10-RED-M",
+       "qty": 2,
+       "size": "M",
+       "color": "red"
+      },
+      {
+       "sku": "10-RED-L",
+       "qty": 2,
+       "size": "L",
+       "color": "red"
+      },
+      {
+       "sku": "10-RED-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "red"
+      },
+      {
+       "sku": "10-RED-XXL",
+       "qty": 2,
+       "size": "XXL",
+       "color": "red"
+      },
+      {
+       "sku": "10-INDI-M",
+       "qty": 2,
+       "size": "M",
+       "color": "indigo"
+      },
+      {
+       "sku": "10-INDI-L",
+       "qty": 2,
+       "size": "L",
+       "color": "indigo"
+      },
+      {
+       "sku": "10-INDI-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "indigo"
+      },
+      {
+       "sku": "10-INDI-XXL",
+       "qty": 2,
+       "size": "XXL",
+       "color": "indigo"
+      }
+     ]
+    },
+    {
+     "code": "11",
+     "title": "Chikankari kurta",
+     "priceCents": 2200,
+     "variants": [
+      {
+       "sku": "11-WHIT-S",
+       "qty": 2,
+       "size": "S",
+       "color": "white"
+      },
+      {
+       "sku": "11-WHIT-M",
+       "qty": 2,
+       "size": "M",
+       "color": "white"
+      },
+      {
+       "sku": "11-WHIT-L",
+       "qty": 2,
+       "size": "L",
+       "color": "white"
+      },
+      {
+       "sku": "11-WHIT-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "white"
+      },
+      {
+       "sku": "11-PINK-S",
+       "qty": 2,
+       "size": "S",
+       "color": "pink"
+      },
+      {
+       "sku": "11-PINK-M",
+       "qty": 2,
+       "size": "M",
+       "color": "pink"
+      },
+      {
+       "sku": "11-PINK-L",
+       "qty": 2,
+       "size": "L",
+       "color": "pink"
+      },
+      {
+       "sku": "11-PINK-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "pink"
+      }
+     ]
+    },
+    {
+     "code": "12",
+     "title": "Lehenga choli",
+     "priceCents": 6000,
+     "variants": [
+      {
+       "sku": "12-RED-S",
+       "qty": 2,
+       "size": "S",
+       "color": "red"
+      },
+      {
+       "sku": "12-RED-M",
+       "qty": 2,
+       "size": "M",
+       "color": "red"
+      },
+      {
+       "sku": "12-RED-L",
+       "qty": 2,
+       "size": "L",
+       "color": "red"
+      },
+      {
+       "sku": "12-NAVY-S",
+       "qty": 2,
+       "size": "S",
+       "color": "navy"
+      },
+      {
+       "sku": "12-NAVY-M",
+       "qty": 2,
+       "size": "M",
+       "color": "navy"
+      },
+      {
+       "sku": "12-NAVY-L",
+       "qty": 2,
+       "size": "L",
+       "color": "navy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "kurti",
+   "name": "Kurti Junction (India, fast WhatsApp-style live, Hinglish)",
+   "locale": "en-IN",
+   "items": [
+    {
+     "code": "1",
+     "title": "Printed kurti",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "1-BLUE-M",
+       "qty": 2,
+       "size": "M",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-L",
+       "qty": 2,
+       "size": "L",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-XXL",
+       "qty": 2,
+       "size": "XXL",
+       "color": "blue"
+      },
+      {
+       "sku": "1-GREE-M",
+       "qty": 2,
+       "size": "M",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREE-L",
+       "qty": 2,
+       "size": "L",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREE-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREE-XXL",
+       "qty": 2,
+       "size": "XXL",
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "code": "2",
+     "title": "Georgette saree",
+     "priceCents": 1800,
+     "variants": [
+      {
+       "sku": "2-BLAC",
+       "qty": 3,
+       "color": "black"
+      },
+      {
+       "sku": "2-WINE",
+       "qty": 3,
+       "color": "wine"
+      }
+     ]
+    },
+    {
+     "code": "3",
+     "title": "Sharara set",
+     "priceCents": 2400,
+     "variants": [
+      {
+       "sku": "3-PEAC-S",
+       "qty": 2,
+       "size": "S",
+       "color": "peach"
+      },
+      {
+       "sku": "3-PEAC-M",
+       "qty": 2,
+       "size": "M",
+       "color": "peach"
+      },
+      {
+       "sku": "3-PEAC-L",
+       "qty": 2,
+       "size": "L",
+       "color": "peach"
+      },
+      {
+       "sku": "3-PEAC-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "peach"
+      },
+      {
+       "sku": "3-SKY-S",
+       "qty": 2,
+       "size": "S",
+       "color": "sky"
+      },
+      {
+       "sku": "3-SKY-M",
+       "qty": 2,
+       "size": "M",
+       "color": "sky"
+      },
+      {
+       "sku": "3-SKY-L",
+       "qty": 2,
+       "size": "L",
+       "color": "sky"
+      },
+      {
+       "sku": "3-SKY-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "sky"
+      }
+     ]
+    },
+    {
+     "code": "4",
+     "title": "Cotton nightsuit",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "4-PINK-M",
+       "qty": 2,
+       "size": "M",
+       "color": "pink"
+      },
+      {
+       "sku": "4-PINK-L",
+       "qty": 2,
+       "size": "L",
+       "color": "pink"
+      },
+      {
+       "sku": "4-PINK-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "pink"
+      },
+      {
+       "sku": "4-GREY-M",
+       "qty": 2,
+       "size": "M",
+       "color": "grey"
+      },
+      {
+       "sku": "4-GREY-L",
+       "qty": 2,
+       "size": "L",
+       "color": "grey"
+      },
+      {
+       "sku": "4-GREY-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "grey"
+      }
+     ]
+    },
+    {
+     "code": "5",
+     "title": "Kundan necklace set",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "5",
+       "qty": 4
+      }
+     ]
+    },
+    {
+     "code": "6",
+     "title": "Short kurti",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "6-WHIT-S",
+       "qty": 2,
+       "size": "S",
+       "color": "white"
+      },
+      {
+       "sku": "6-WHIT-M",
+       "qty": 2,
+       "size": "M",
+       "color": "white"
+      },
+      {
+       "sku": "6-WHIT-L",
+       "qty": 2,
+       "size": "L",
+       "color": "white"
+      },
+      {
+       "sku": "6-WHIT-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "white"
+      },
+      {
+       "sku": "6-YELL-S",
+       "qty": 2,
+       "size": "S",
+       "color": "yellow"
+      },
+      {
+       "sku": "6-YELL-M",
+       "qty": 2,
+       "size": "M",
+       "color": "yellow"
+      },
+      {
+       "sku": "6-YELL-L",
+       "qty": 2,
+       "size": "L",
+       "color": "yellow"
+      },
+      {
+       "sku": "6-YELL-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "yellow"
+      }
+     ]
+    },
+    {
+     "code": "7",
+     "title": "Bandhani dupatta",
+     "priceCents": 900,
+     "variants": [
+      {
+       "sku": "7-RED",
+       "qty": 5,
+       "color": "red"
+      },
+      {
+       "sku": "7-GREE",
+       "qty": 5,
+       "color": "green"
+      }
+     ]
+    },
+    {
+     "code": "8",
+     "title": "Silk kurta set",
+     "priceCents": 3000,
+     "variants": [
+      {
+       "sku": "8-MARO-M",
+       "qty": 2,
+       "size": "M",
+       "color": "maroon"
+      },
+      {
+       "sku": "8-MARO-L",
+       "qty": 2,
+       "size": "L",
+       "color": "maroon"
+      },
+      {
+       "sku": "8-MARO-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "maroon"
+      },
+      {
+       "sku": "8-MARO-XXL",
+       "qty": 2,
+       "size": "XXL",
+       "color": "maroon"
+      }
+     ]
+    },
+    {
+     "code": "9",
+     "title": "Bangles set",
+     "priceCents": 300,
+     "variants": [
+      {
+       "sku": "9-GOLD-2.4",
+       "qty": 2,
+       "size": "2.4",
+       "color": "gold"
+      },
+      {
+       "sku": "9-GOLD-2.6",
+       "qty": 2,
+       "size": "2.6",
+       "color": "gold"
+      },
+      {
+       "sku": "9-GOLD-2.8",
+       "qty": 2,
+       "size": "2.8",
+       "color": "gold"
+      }
+     ]
+    },
+    {
+     "code": "10",
+     "title": "Gown",
+     "priceCents": 2600,
+     "variants": [
+      {
+       "sku": "10-NAVY-S",
+       "qty": 2,
+       "size": "S",
+       "color": "navy"
+      },
+      {
+       "sku": "10-NAVY-M",
+       "qty": 2,
+       "size": "M",
+       "color": "navy"
+      },
+      {
+       "sku": "10-NAVY-L",
+       "qty": 2,
+       "size": "L",
+       "color": "navy"
+      },
+      {
+       "sku": "10-NAVY-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "navy"
+      },
+      {
+       "sku": "10-WINE-S",
+       "qty": 2,
+       "size": "S",
+       "color": "wine"
+      },
+      {
+       "sku": "10-WINE-M",
+       "qty": 2,
+       "size": "M",
+       "color": "wine"
+      },
+      {
+       "sku": "10-WINE-L",
+       "qty": 2,
+       "size": "L",
+       "color": "wine"
+      },
+      {
+       "sku": "10-WINE-XL",
+       "qty": 2,
+       "size": "XL",
+       "color": "wine"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "vintage",
+   "name": "Second Spin Vintage (US one-of-a-kind, qty 1 each)",
+   "locale": "en-US",
+   "items": [
+    {
+     "code": "1",
+     "title": "90s Levi's 501",
+     "priceCents": 4500,
+     "variants": [
+      {
+       "sku": "1-W30",
+       "qty": 1,
+       "size": "W30"
+      }
+     ]
+    },
+    {
+     "code": "2",
+     "title": "Harley tee",
+     "priceCents": 6000,
+     "variants": [
+      {
+       "sku": "2-L",
+       "qty": 1,
+       "size": "L"
+      }
+     ]
+    },
+    {
+     "code": "3",
+     "title": "Silk bomber",
+     "priceCents": 5500,
+     "variants": [
+      {
+       "sku": "3-M",
+       "qty": 1,
+       "size": "M"
+      }
+     ]
+    },
+    {
+     "code": "4",
+     "title": "Coach shoulder bag",
+     "priceCents": 8000,
+     "variants": [
+      {
+       "sku": "4-BLAC",
+       "qty": 1,
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "5",
+     "title": "Wool blazer",
+     "priceCents": 4000,
+     "variants": [
+      {
+       "sku": "5-S",
+       "qty": 1,
+       "size": "S"
+      }
+     ]
+    },
+    {
+     "code": "6",
+     "title": "Band tee Nirvana",
+     "priceCents": 9000,
+     "variants": [
+      {
+       "sku": "6-XL",
+       "qty": 1,
+       "size": "XL"
+      }
+     ]
+    },
+    {
+     "code": "7",
+     "title": "Corduroy jacket",
+     "priceCents": 4800,
+     "variants": [
+      {
+       "sku": "7-M",
+       "qty": 1,
+       "size": "M"
+      }
+     ]
+    },
+    {
+     "code": "8",
+     "title": "Floral sundress",
+     "priceCents": 3600,
+     "variants": [
+      {
+       "sku": "8-S",
+       "qty": 1,
+       "size": "S"
+      }
+     ]
+    },
+    {
+     "code": "9",
+     "title": "Leather belt",
+     "priceCents": 2200,
+     "variants": [
+      {
+       "sku": "9",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "10",
+     "title": "Varsity jacket",
+     "priceCents": 9500,
+     "variants": [
+      {
+       "sku": "10-L",
+       "qty": 1,
+       "size": "L"
+      }
+     ]
+    },
+    {
+     "code": "11",
+     "title": "Mom jeans",
+     "priceCents": 3800,
+     "variants": [
+      {
+       "sku": "11-W27",
+       "qty": 1,
+       "size": "W27"
+      }
+     ]
+    },
+    {
+     "code": "12",
+     "title": "Crochet vest",
+     "priceCents": 3000,
+     "variants": [
+      {
+       "sku": "12-M",
+       "qty": 1,
+       "size": "M"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

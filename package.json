@@ -1,0 +1,30 @@
+{
+  "name": "claim",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Claim! — an AI live-sale desk for independent boutiques",
+  "license": "MIT",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "npm run dev -w @claim/web",
+    "build": "npm run build -w @claim/web",
+    "start": "npm run start -w @claim/web",
+    "test": "vitest run",
+    "typecheck": "tsc -b packages/*",
+    "eval": "tsx eval/run.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.3",
+    "zod": "^4.6.5"
+  }
+}

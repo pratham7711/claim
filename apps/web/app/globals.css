@@ -1,0 +1,374 @@
+@import "tailwindcss";
+
+/* ---------- tokens: light ---------- */
+:root {
+  --paper: #f3f1f7;
+  --surface: #ffffff;
+  --surface-2: #faf9fc;
+  --sunken: #ebe8f1;
+  --ink: #1d1726;
+  --ink-2: #4a4258;
+  --muted: #736b82;
+  --line: #e2dde9;
+  --line-strong: #cbc4d6;
+  --brand: #d3236c;
+  --brand-ink: #ffffff;
+  --brand-soft: #fbe6ef;
+  --live: #e11d48;
+  --granted: #0b8456;
+  --granted-soft: #e1f4ea;
+  --held: #2a66d4;
+  --held-soft: #e5edfb;
+  --waitlist: #ad5b07;
+  --waitlist-soft: #fcefdc;
+  --review: #6541e3;
+  --review-soft: #ede8fd;
+  --danger: #c02a2a;
+  --danger-soft: #fbe7e7;
+  --shadow: 0 1px 2px rgb(29 23 38 / 0.06), 0 6px 24px -12px rgb(29 23 38 / 0.18);
+  --ticket-shadow: drop-shadow(0 1px 1px rgb(29 23 38 / 0.07)) drop-shadow(0 4px 10px rgb(29 23 38 / 0.06));
+  color-scheme: light;
+}
+
+/* ---------- tokens: dark ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #100c16;
+    --surface: #1a1522;
+    --surface-2: #1f1929;
+    --sunken: #0b0810;
+    --ink: #f2eef8;
+    --ink-2: #c9c1d6;
+    --muted: #978fa8;
+    --line: #2b2437;
+    --line-strong: #3d344b;
+    --brand: #ff4d90;
+    --brand-ink: #1c0711;
+    --brand-soft: #3a1326;
+    --live: #ff4d6d;
+    --granted: #3ed68d;
+    --granted-soft: #0f2e1f;
+    --held: #74a6ff;
+    --held-soft: #142340;
+    --waitlist: #f5b13d;
+    --waitlist-soft: #33250c;
+    --review: #a98eff;
+    --review-soft: #231a44;
+    --danger: #ff6b6b;
+    --danger-soft: #3a1515;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 28px -14px rgb(0 0 0 / 0.7);
+    --ticket-shadow: drop-shadow(0 1px 1px rgb(0 0 0 / 0.5));
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #100c16;
+  --surface: #1a1522;
+  --surface-2: #1f1929;
+  --sunken: #0b0810;
+  --ink: #f2eef8;
+  --ink-2: #c9c1d6;
+  --muted: #978fa8;
+  --line: #2b2437;
+  --line-strong: #3d344b;
+  --brand: #ff4d90;
+  --brand-ink: #1c0711;
+  --brand-soft: #3a1326;
+  --live: #ff4d6d;
+  --granted: #3ed68d;
+  --granted-soft: #0f2e1f;
+  --held: #74a6ff;
+  --held-soft: #142340;
+  --waitlist: #f5b13d;
+  --waitlist-soft: #33250c;
+  --review: #a98eff;
+  --review-soft: #231a44;
+  --danger: #ff6b6b;
+  --danger-soft: #3a1515;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 28px -14px rgb(0 0 0 / 0.7);
+  --ticket-shadow: drop-shadow(0 1px 1px rgb(0 0 0 / 0.5));
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-sunken: var(--sunken);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-live: var(--live);
+  --color-granted: var(--granted);
+  --color-granted-soft: var(--granted-soft);
+  --color-held: var(--held);
+  --color-held-soft: var(--held-soft);
+  --color-waitlist: var(--waitlist);
+  --color-waitlist-soft: var(--waitlist-soft);
+  --color-review: var(--review);
+  --color-review-soft: var(--review-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --font-display: var(--font-anybody), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-spline-mono), ui-monospace, "SF Mono", monospace;
+  --shadow-card: var(--shadow);
+}
+
+@layer base {
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection {
+    background: var(--brand-soft);
+    color: var(--ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+}
+
+/* ---------- type ---------- */
+.display {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 112;
+  letter-spacing: -0.02em;
+}
+.display-tight {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 72;
+  letter-spacing: -0.005em;
+}
+.num {
+  font-variant-numeric: tabular-nums;
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.kbd {
+  display: inline-block;
+  min-width: 1.35em;
+  padding: 0 0.3em;
+  border: 1px solid var(--line-strong);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--ink-2);
+}
+
+/* ---------- signature: the claim ticket ---------- */
+.ticket-wrap {
+  filter: var(--ticket-shadow);
+}
+.ticket {
+  --stub: 86px;
+  --notch: 7px;
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--stub) minmax(0, 1fr);
+  background: var(--surface);
+  border-radius: 12px;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--notch) at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat;
+  mask:
+    radial-gradient(circle var(--notch) at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--notch) at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat;
+}
+.ticket-stub {
+  position: relative;
+  padding: 12px 10px 12px 12px;
+  background: var(--surface-2);
+}
+.ticket-stub::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  right: -1px;
+  border-right: 2px dashed var(--line-strong);
+}
+.ticket-compact {
+  --stub: 74px;
+  --notch: 6px;
+}
+
+/* ---------- signature: the rubber stamp ---------- */
+.stamp {
+  --tone: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 68;
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--tone);
+  padding: 5px 8px 4px;
+  border: 2px solid var(--tone);
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 2px var(--surface), inset 0 0 0 3px color-mix(in oklab, var(--tone) 55%, transparent);
+  transform: rotate(-3deg);
+  white-space: nowrap;
+  position: relative;
+}
+.stamp[data-tone="granted"],
+.stamp[data-tone="settling"],
+.stamp[data-tone="sold"] {
+  --tone: var(--granted);
+}
+.stamp[data-tone="held"] {
+  --tone: var(--held);
+}
+.stamp[data-tone="waitlist"] {
+  --tone: var(--waitlist);
+}
+.stamp[data-tone="review"] {
+  --tone: var(--review);
+}
+.stamp[data-tone="rejected"],
+.stamp[data-tone="released"] {
+  --tone: var(--danger);
+}
+.stamp[data-tone="question"],
+.stamp[data-tone="chatter"],
+.stamp[data-tone="pending"] {
+  --tone: var(--muted);
+  border-style: dashed;
+  box-shadow: none;
+  transform: none;
+  font-weight: 700;
+}
+.stamp-lg {
+  font-size: 20px;
+  padding: 7px 12px 6px;
+  border-width: 3px;
+}
+
+.tone-bg-granted { background: var(--granted-soft); color: var(--granted); }
+.tone-bg-held { background: var(--held-soft); color: var(--held); }
+.tone-bg-waitlist { background: var(--waitlist-soft); color: var(--waitlist); }
+.tone-bg-review { background: var(--review-soft); color: var(--review); }
+.tone-bg-danger { background: var(--danger-soft); color: var(--danger); }
+
+/* ---------- motion ---------- */
+@keyframes stamp-thud {
+  0% { transform: scale(1.9) rotate(-14deg); opacity: 0; }
+  55% { transform: scale(0.92) rotate(-2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-3deg); opacity: 1; }
+}
+@keyframes grant-pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--granted) 45%, transparent); }
+  100% { box-shadow: 0 0 0 14px color-mix(in oklab, var(--granted) 0%, transparent); }
+}
+@keyframes slide-in {
+  from { transform: translateX(18px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes drop-in {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes drain {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+@keyframes live-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+@keyframes drawer-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes ticket-loop {
+  0%, 6% { transform: translateY(-14px); opacity: 0; }
+  12%, 88% { transform: translateY(0); opacity: 1; }
+  96%, 100% { transform: translateY(6px); opacity: 0; }
+}
+@keyframes stamp-loop {
+  0%, 18% { transform: scale(1.9) rotate(-14deg); opacity: 0; }
+  24% { transform: scale(0.92) rotate(-2deg); opacity: 1; }
+  27%, 88% { transform: scale(1) rotate(-3deg); opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+.loop-ticket { animation: ticket-loop 9s var(--loop-delay, 0s) cubic-bezier(0.2, 0.8, 0.2, 1) infinite both; }
+.loop-stamp { animation: stamp-loop 9s var(--loop-delay, 0s) cubic-bezier(0.2, 0.9, 0.3, 1.15) infinite both; }
+.anim-stamp { animation: stamp-thud 420ms cubic-bezier(0.2, 0.9, 0.3, 1.15) both; }
+.anim-pulse { animation: grant-pulse 900ms ease-out 260ms 2; }
+.anim-slide { animation: slide-in 380ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.anim-drop { animation: drop-in 300ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.anim-fade { animation: fade-in 200ms ease-out both; }
+.anim-drawer { animation: drawer-in 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.live-dot { animation: live-dot 1.4s ease-in-out infinite; }
+.drain { transform-origin: left; animation: drain linear both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+    animation-delay: 0ms;
+    transition-duration: 1ms;
+  }
+  /* The hero loop ends invisible; without motion it should simply show the settled race. */
+  .loop-ticket, .loop-stamp { animation: none; }
+}
+
+/* ---------- small utilities the token system needs ---------- */
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+.hairline {
+  background-image: linear-gradient(var(--line), var(--line));
+  background-size: 100% 1px;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+.grain {
+  background-image:
+    radial-gradient(circle at 20% 0%, color-mix(in oklab, var(--brand) 9%, transparent), transparent 46%),
+    radial-gradient(circle at 100% 30%, color-mix(in oklab, var(--review) 8%, transparent), transparent 40%);
+}
+.perforation {
+  background-image: radial-gradient(circle, var(--line-strong) 1.2px, transparent 1.6px);
+  background-size: 9px 4px;
+  background-repeat: repeat-x;
+  height: 4px;
+}

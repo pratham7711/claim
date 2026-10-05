@@ -1,0 +1,13 @@
+**/node_modules
+**/.next
+apps/web/.data
+**/.data
+eval/raw
+eval/.cache
+eval/results
+.env*
+**/.env*
+.git
+**/*.tsbuildinfo
+**/dist
+.DS_Store

@@ -1,0 +1,4482 @@
+{
+ "shows": [
+  {
+   "id": "v3-trusty",
+   "source": "vD5j_ZHEJ7c",
+   "name": "US vintage live sale, numbered items one at a time plus a lettered $2 bargain bin (Trusty Huckster Mercantile)",
+   "locale": "en-US",
+   "current": null,
+   "note": "Host shows one item at a time and says '<price> by giving me number N'; viewers claim by typing the bare number and a moderator confirms '#N goes to <viewer>'. Catalogue (40 numbers, prices) recovered from host speech in the auto-captions, cross-checked against moderator confirmations. Item 56 is a mystery box sold as a guessing game: the host hides a number between 50 and 60 and the first viewer to type it wins, so bare numbers 50-60 typed around 0:12-0:14 are guesses, not claims of items 51, 52 or 54. 28, 42 and 77 found no takers; 17 and 54 drew 'no takers' first and sold later (17 claimed at about 1:36:39, while 51 was on screen); 77 was re-shown on request at about 1:26:39. 70 had two sets (qty 2); the second set was re-offered at about 1:46:38. From about 1:47:09 a $2 bargain bin uses letters as codes (Q, S, N, H, T, C, Y, F, K, R, M, G, shown in that order); the host says his letter tags got mixed up. Sale ends about 2:05:11. Timeline in eval/raw/heldout-v3/timelines.json.",
+   "items": [
+    {
+     "code": "2",
+     "title": "#2 Set of six Brooke Bond British costume tea cards",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "2",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "5",
+     "title": "#5 Little calendar and notebook",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "5",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "7",
+     "title": "#7 Red Wing console bowl",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "7",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "9",
+     "title": "#9 Abingdon console bowl, blue",
+     "priceCents": 1400,
+     "variants": [
+      {
+       "sku": "9",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "10",
+     "title": "#10 Drip-glaze pottery piece (host: 'bowling ball or coconut')",
+     "priceCents": 400,
+     "variants": [
+      {
+       "sku": "10",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "11",
+     "title": "#11 Little humorous glass dish",
+     "priceCents": 300,
+     "variants": [
+      {
+       "sku": "11",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "12",
+     "title": "#12 Orange autumn table runner",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "12",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "14",
+     "title": "#14 Antique French handkerchief",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "14",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "17",
+     "title": "#17 Set of six silver-plate Lund teddy-bear birthday candle holders",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "17",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "22",
+     "title": "#22 Pair of Russian lacquer (khokhloma) ladles with bird design",
+     "priceCents": 1500,
+     "variants": [
+      {
+       "sku": "22",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "23",
+     "title": "#23 Pebble art",
+     "priceCents": 1500,
+     "variants": [
+      {
+       "sku": "23",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "28",
+     "title": "#28 Dark blue Bavarian salt-glaze stoneware",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "28",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "32",
+     "title": "#32 Set of five hangers",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "32",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "33",
+     "title": "#33 Tea and strainer",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "33",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "35",
+     "title": "#35 Pair of train bookends",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "35",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "36",
+     "title": "#36 Cordless electric pump-matic drink dispenser",
+     "priceCents": 700,
+     "variants": [
+      {
+       "sku": "36",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "37",
+     "title": "#37 Mid-century modern yellow tray",
+     "priceCents": 700,
+     "variants": [
+      {
+       "sku": "37",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "39",
+     "title": "#39 Springbok jigsaw puzzle (Kuan Yin)",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "39",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "41",
+     "title": "#41 Pair of union dues books",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "41",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "42",
+     "title": "#42 Four table mats and four coasters",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "42",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "46",
+     "title": "#46 Fire-King Little Flower Garden platonite bowl, lime green",
+     "priceCents": 900,
+     "variants": [
+      {
+       "sku": "46",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "49",
+     "title": "#49 Alfred Meakin ironstone copper-tea piece",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "49",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "51",
+     "title": "#51 Eight swizzle sticks",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "51",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "52",
+     "title": "#52 Square bowl from the Netherlands",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "52",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "54",
+     "title": "#54 Vintage tin",
+     "priceCents": 400,
+     "variants": [
+      {
+       "sku": "54",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "56",
+     "title": "#56 Mystery box (hidden-number guessing game, range 50-60)",
+     "priceCents": 1500,
+     "variants": [
+      {
+       "sku": "56",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "70",
+     "title": "#70 Set of four platinum-starburst bread-and-butter plates (two sets)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "70",
+       "qty": 2
+      }
+     ]
+    },
+    {
+     "code": "72",
+     "title": "#72 Hand-carved wooden teddy bear",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "72",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "74",
+     "title": "#74 Little mug, girl with dog (Bessie Pease Gutmann)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "74",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "76",
+     "title": "#76 Little Lizzie Kaplan dish",
+     "priceCents": 700,
+     "variants": [
+      {
+       "sku": "76",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "77",
+     "title": "#77 Walt Disney World Jungle Book drinks tray",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "77",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "79",
+     "title": "#79 Fire-King Little Flower Garden platonite bowl, peach/pink",
+     "priceCents": 900,
+     "variants": [
+      {
+       "sku": "79",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "80",
+     "title": "#80 Expo 67 Montreal world's fair passport",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "80",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "82",
+     "title": "#82 Pair of restaurant-ware coasters / ashtrays",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "82",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "83",
+     "title": "#83 Floral tapestry collapsible kneeler",
+     "priceCents": 1200,
+     "variants": [
+      {
+       "sku": "83",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "85",
+     "title": "#85 Heisey orchid-etch dolphin-footed glass bowl",
+     "priceCents": 1000,
+     "variants": [
+      {
+       "sku": "85",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "89",
+     "title": "#89 Little Shaker-style wooden box with velveteen lining",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "89",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "93",
+     "title": "#93 Dandelion Lenox-ware plate",
+     "priceCents": 600,
+     "variants": [
+      {
+       "sku": "93",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "94",
+     "title": "#94 Ireland horse brass",
+     "priceCents": 700,
+     "variants": [
+      {
+       "sku": "94",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "96",
+     "title": "#96 Salt-glaze beer stein with Bavarian-dialect phrase",
+     "priceCents": 800,
+     "variants": [
+      {
+       "sku": "96",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "C",
+     "title": "Letter C, Bargain bin: picnic cookbook",
+     "priceCents": 200,
+     "variants": [
+      {
+       "sku": "C",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "F",
+     "title": "Letter F, Bargain bin: little Elite tray",
+     "priceCents": 200,
+     "variants": [
+      {
+       "sku": "F",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "G",
+     "title": "Letter G, Bargain bin: batch of jam and jelly canning labels",
+     "priceCents": 200,
+     "variants": [
+      {
+       "sku": "G",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "H",
+     "title": "Letter H, Bargain bin: Syracuse mug with gold trim",
+     "priceCents": 200,
+     "variants": [
+      {
+       "sku": "H",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "K",
+     "title": "Letter K, Bargain bin: 1982 lighthouse trivet",
+     "priceCents": 200,
+     "variants": [
+      {
+       "sku": "K",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "M",
+     "title": "Letter M, Bargain bin: coaster from Greece",
+     "priceCents": 200,
+     "variants": [
+      {
+       "sku": "M",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "N",
+     "title": "Letter N, Bargain bin: vintage cocktail short-straw container",
+     "priceCents": 200,
+     "variants": [
+      {
+       "sku": "N",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "Q",
+     "title": "Letter Q, Bargain bin: hangers",
+     "priceCents": 200,
+     "variants": [
+      {
+       "sku": "Q",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "R",
+     "title": "Letter R, Bargain bin: Cracker Barrel toothpick holder",
+     "priceCents": 200,
+     "variants": [
+      {
+       "sku": "R",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "S",
+     "title": "Letter S, Bargain bin: red bud vase",
+     "priceCents": 200,
+     "variants": [
+      {
+       "sku": "S",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "T",
+     "title": "Letter T, Bargain bin: pair of shot glasses",
+     "priceCents": 200,
+     "variants": [
+      {
+       "sku": "T",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "Y",
+     "title": "Letter Y, Bargain bin: Pyrex mug",
+     "priceCents": 200,
+     "variants": [
+      {
+       "sku": "Y",
+       "qty": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "v3-sparkle",
+   "source": "XxCmxitOa6I",
+   "name": "US Paparazzi $5 jewellery live sale, numbered pieces shown one at a time (Sparkle Seeds)",
+   "locale": "en-US",
+   "current": null,
+   "note": "YouTube backup stream (Facebook video failed). Every piece is $5. The host holds up a numbered card and says 'this is N'; viewers claim by typing the number, often with a colour or a part ('59 purple', '98 set', '151 necklace', '132 earring'). Catalogue of 64 numbers recovered from host speech in the auto-captions; speech-to-text garbles many numbers ('3:02'=302, '4:58'=458, 'for 71'=471, 'to 44'=244, 'one 5/8'=158, 'for 61'=461, '2:36'=236, 'for 83'=483, 'to 85'=285, 'for 97'=497, 'one 55'=155, '$4.99'=499, '1/4'=124, 'three-sixteen'=316, 'sixty six four six six'=466, 'one to 26'=126). Every number viewers typed is in the catalogue. 465 is only a confirmed claim, never described; 314 was said right after a silver-and-red side-hinge bracelet and nobody claimed it; 435 was read out from a comment and is omitted. Pieces sold as necklace/bracelet/earrings or a set cannot be encoded as variants, so they are one variant each and the part is in the title; colour variants exist only where the host named colours (281, 59, 22, 53, 385). Stock per number is not stated except 108 (three pieces, then a waiting list); other qty values are nominal. Re-shows on request are repeat timeline entries; current is null while the host catches up on comments.",
+   "items": [
+    {
+     "code": "15",
+     "title": "#15 Purple suede triple wrap bracelet",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "15",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "18",
+     "title": "#18 Rose-gold toggle heart bracelet + necklace + earrings (bracelet, necklace or set)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "18",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "22",
+     "title": "#22 Magnet bead bracelet",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "22-BLUE",
+       "qty": 10,
+       "color": "blue"
+      },
+      {
+       "sku": "22-MULTI",
+       "qty": 10,
+       "color": "multi"
+      }
+     ]
+    },
+    {
+     "code": "35",
+     "title": "#35 Pink crackle-stone open/close hinge bracelet, silver",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "35",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "47",
+     "title": "#47 Green ombre 'fade-out' snap wrap bracelet on light gray suede",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "47",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "51",
+     "title": "#51 Bling chain-link choker + medium bling earrings (set, choker or earrings)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "51",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "53",
+     "title": "#53 Crackle-stone stretch bracelet",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "53-RED",
+       "qty": 10,
+       "color": "red"
+      },
+      {
+       "sku": "53-WHITE",
+       "qty": 10,
+       "color": "white"
+      }
+     ]
+    },
+    {
+     "code": "59",
+     "title": "#59 Wood earrings",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "59-PURPLE",
+       "qty": 10,
+       "color": "purple"
+      },
+      {
+       "sku": "59-YELLOW",
+       "qty": 10,
+       "color": "yellow"
+      },
+      {
+       "sku": "59-RED",
+       "qty": 10,
+       "color": "red"
+      },
+      {
+       "sku": "59-BLACK",
+       "qty": 10,
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "68",
+     "title": "#68 Cream crackle earrings with wood beads",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "68",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "70",
+     "title": "#70 Lightweight rectangle acrylic necklace",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "70",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "77",
+     "title": "#77 Gunmetal bling bangle, two rows of white rhinestones",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "77",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "78",
+     "title": "#78 Four-tier red crystal necklace + stretch bracelet (set, necklace or bracelet)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "78",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "86",
+     "title": "#86 Gunmetal adjustable cuff",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "86",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "98",
+     "title": "#98 Navy and silver double-layer necklace + stretch bracelet (set, necklace or bracelet)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "98",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "106",
+     "title": "#106 Copper owl-feather earrings",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "106",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "108",
+     "title": "#108 White and silver multi-layer short necklace (only three; waiting list)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "108",
+       "qty": 3
+      }
+     ]
+    },
+    {
+     "code": "123",
+     "title": "#123 Red hammered stacking stretch bracelet",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "123",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "124",
+     "title": "#124 Long green and silver necklace",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "124",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "126",
+     "title": "#126 Toggle necklace with little heart + heart earrings (number heard as 'one to 26')",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "126",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "132",
+     "title": "#132 Gunmetal and black hematite necklace + earrings (earrings, necklace or set)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "132",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "134",
+     "title": "#134 Brown pearl statement necklace",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "134",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "151",
+     "title": "#151 Long silver bling necklace + long toggle-style earrings (earrings, necklace or set)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "151",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "152",
+     "title": "#152 Black fringe post earrings",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "152",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "153",
+     "title": "#153 Gold front-toggle necklace with bling heart cut-outs",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "153",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "155",
+     "title": "#155 Silver and yellow chandelier necklace + earrings (earrings, necklace or set)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "155",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "158",
+     "title": "#158 Purple single-circle acrylic necklace + gold oval hoops (earrings, necklace or set)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "158",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "159",
+     "title": "#159 Patterned bangle set of seven",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "159",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "162",
+     "title": "#162 Silver pearl bracelet + medium earrings set",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "162",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "171",
+     "title": "#171 Silver flower toggle necklace + earrings",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "171",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "188",
+     "title": "#188 Brass heart necklace",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "188",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "190",
+     "title": "#190 Long gold bling lanyard (hook or no hook)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "190",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "192",
+     "title": "#192 Textured gunmetal cuff",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "192",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "196",
+     "title": "#196 Red iced stretch bracelet + chunky double-chain necklace (bracelet, necklace or set)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "196",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "198",
+     "title": "#198 Silver bling hoop earrings",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "198",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "205",
+     "title": "#205 White and turquoise stone bracelet",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "205",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "208",
+     "title": "#208 Dainty silver choker",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "208",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "211",
+     "title": "#211 Crystal candelabra champagne stretch bracelet",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "211",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "214",
+     "title": "#214 Metro Retrospect acrylic wavy post earrings",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "214",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "236",
+     "title": "#236 Short disc-charm necklace + bracelet (bracelet, necklace or set; two colours, not named)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "236",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "244",
+     "title": "#244 Turquoise and red seed-bead necklace + earrings",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "244",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "267",
+     "title": "#267 Earthy iridescent brown pull-string bracelet, three strands",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "267",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "278",
+     "title": "#278 Black-on-brass long statement necklace",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "278",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "281",
+     "title": "#281 Crushed-rock suede wrap",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "281-GREEN",
+       "qty": 10,
+       "color": "green"
+      },
+      {
+       "sku": "281-BLUE",
+       "qty": 10,
+       "color": "blue"
+      },
+      {
+       "sku": "281-BLACK",
+       "qty": 10,
+       "color": "black"
+      }
+     ]
+    },
+    {
+     "code": "285",
+     "title": "#285 Gunmetal striped bangle set of five",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "285",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "301",
+     "title": "#301 Gunmetal textured bangle set",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "301",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "302",
+     "title": "#302 Multi-metal (copper, brass, silver) stretch bracelet",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "302",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "304",
+     "title": "#304 Pink crackle-stone and brown wood stacking bracelets",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "304",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "314",
+     "title": "#314 Silver and red side-hinge bracelet (number said right after it was shown)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "314",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "316",
+     "title": "#316 Purple stone stretch bracelet",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "316",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "321",
+     "title": "#321 Tribal statement necklace",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "321",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "322",
+     "title": "#322 Short toggle necklace with leaf/feather + earrings",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "322",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "333",
+     "title": "#333 Short olive-green pearly necklace",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "333",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "384",
+     "title": "#384 Hematite teardrop",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "384",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "385",
+     "title": "#385 Medallion open/close hinge bracelet",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "385-COPPER",
+       "qty": 10,
+       "color": "copper"
+      },
+      {
+       "sku": "385-SILVER",
+       "qty": 10,
+       "color": "silver"
+      }
+     ]
+    },
+    {
+     "code": "458",
+     "title": "#458 Turquoise crackle-stone cuff",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "458",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "461",
+     "title": "#461 Orange tribal stretch ring",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "461",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "465",
+     "title": "#465 Piece not described on this stream (host confirms a claim on 465 at about 1:01:40)",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "465",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "466",
+     "title": "#466 Big pearl earrings",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "466",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "471",
+     "title": "#471 Silver and white alternating nine-chain necklace + earrings",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "471",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "473",
+     "title": "#473 'Party animal' fringe earrings, brown",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "473",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "483",
+     "title": "#483 Black and antique-silver stretch bracelets, set of four",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "483",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "493",
+     "title": "#493 Pink stone stacking stretch bracelets",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "493",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "497",
+     "title": "#497 All-silver front-toggle necklace with solid rhinestone heart",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "497",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "code": "499",
+     "title": "#499 Brass double-chain necklace + matching earrings",
+     "priceCents": 500,
+     "variants": [
+      {
+       "sku": "499",
+       "qty": 10
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "v3-gary",
+   "source": "r5vtg_Y1IZQ",
+   "name": "US comic book claim sale, lettered wall of slots A-W refilled through the show, claims and offers (Very Gary Comics)",
+   "locale": "en-US",
+   "current": null,
+   "note": "Channel's first live claim sale. Comics hang on a wall in lettered slots; viewers write 'claim <letter>' or make offers ('$300 for letter M', 'would you take 150 on U?'), and the owner posts payment requests. Books on a slot change after they sell, so items are slots, not titles. Slot letters A-W were heard in host speech in the auto-captions; O and U come through only as 'on oh' / 'on you' and are confirmed by viewers asking for grade and price on O and U. No X. Owner payment requests range from $34 to $1,900; priceCents is nominal. There is no item timeline (any slot can be claimed at any time), so current is null for every row.",
+   "items": [
+    {
+     "code": "A",
+     "title": "Slot A (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "A",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "B",
+     "title": "Slot B (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "B",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "C",
+     "title": "Slot C (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "C",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "D",
+     "title": "Slot D (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "D",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "E",
+     "title": "Slot E (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "E",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "F",
+     "title": "Slot F (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "F",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "G",
+     "title": "Slot G (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "G",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "H",
+     "title": "Slot H (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "H",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "I",
+     "title": "Slot I (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "I",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "J",
+     "title": "Slot J (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "J",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "K",
+     "title": "Slot K (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "K",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "L",
+     "title": "Slot L (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "L",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "M",
+     "title": "Slot M (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "M",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "N",
+     "title": "Slot N (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "N",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "O",
+     "title": "Slot O (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "O",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "P",
+     "title": "Slot P (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "P",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "Q",
+     "title": "Slot Q (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "Q",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "R",
+     "title": "Slot R (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "R",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "S",
+     "title": "Slot S (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "S",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "T",
+     "title": "Slot T (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "T",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "U",
+     "title": "Slot U (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "U",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "V",
+     "title": "Slot V (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "V",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "code": "W",
+     "title": "Slot W (the book on it changes through the show)",
+     "priceCents": 10000,
+     "variants": [
+      {
+       "sku": "W",
+       "qty": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "v3-honey",
+   "source": "mPYomEzM8Hc",
+   "name": "India suits, kurtis and dupatta sets live, one design at a time, Hindi/Hinglish (Honey Money Collection)",
+   "locale": "en-IN",
+   "current": "1",
+   "note": "Designs shown one at a time; viewers book in chat with size and colour ('book 40 for me', 'book black M', 'ek xl mera bhi', 'book 44 pink'). Prices vary by design (mostly ₹450-₹950, some ₹3500-₹5300); free shipping on two suits. Item '1' stands for the design on screen. Some designs come in letter sizes (the host lists small, medium, large, XL, double XL) and others in numeric sizes ('36 se 46'), so the size grid holds both. Colours are those the host names at least five times in the captions; any one design has only some of them. qty is nominal.",
+   "items": [
+    {
+     "code": "1",
+     "title": "Suit / kurti / dupatta set on screen (price varies)",
+     "priceCents": 95000,
+     "variants": [
+      {
+       "sku": "1-RED-S",
+       "qty": 1,
+       "size": "S",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-M",
+       "qty": 1,
+       "size": "M",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-L",
+       "qty": 1,
+       "size": "L",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-XL",
+       "qty": 1,
+       "size": "XL",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-XXL",
+       "qty": 1,
+       "size": "XXL",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-36",
+       "qty": 1,
+       "size": "36",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-38",
+       "qty": 1,
+       "size": "38",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-40",
+       "qty": 1,
+       "size": "40",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-42",
+       "qty": 1,
+       "size": "42",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-44",
+       "qty": 1,
+       "size": "44",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-46",
+       "qty": 1,
+       "size": "46",
+       "color": "red"
+      },
+      {
+       "sku": "1-BLACK-S",
+       "qty": 1,
+       "size": "S",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-M",
+       "qty": 1,
+       "size": "M",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-L",
+       "qty": 1,
+       "size": "L",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-XL",
+       "qty": 1,
+       "size": "XL",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-XXL",
+       "qty": 1,
+       "size": "XXL",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-36",
+       "qty": 1,
+       "size": "36",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-38",
+       "qty": 1,
+       "size": "38",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-40",
+       "qty": 1,
+       "size": "40",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-42",
+       "qty": 1,
+       "size": "42",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-44",
+       "qty": 1,
+       "size": "44",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-46",
+       "qty": 1,
+       "size": "46",
+       "color": "black"
+      },
+      {
+       "sku": "1-PINK-S",
+       "qty": 1,
+       "size": "S",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-M",
+       "qty": 1,
+       "size": "M",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-L",
+       "qty": 1,
+       "size": "L",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-XL",
+       "qty": 1,
+       "size": "XL",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-XXL",
+       "qty": 1,
+       "size": "XXL",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-36",
+       "qty": 1,
+       "size": "36",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-38",
+       "qty": 1,
+       "size": "38",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-40",
+       "qty": 1,
+       "size": "40",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-42",
+       "qty": 1,
+       "size": "42",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-44",
+       "qty": 1,
+       "size": "44",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-46",
+       "qty": 1,
+       "size": "46",
+       "color": "pink"
+      },
+      {
+       "sku": "1-BLUE-S",
+       "qty": 1,
+       "size": "S",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-M",
+       "qty": 1,
+       "size": "M",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-L",
+       "qty": 1,
+       "size": "L",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-XL",
+       "qty": 1,
+       "size": "XL",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-XXL",
+       "qty": 1,
+       "size": "XXL",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "blue"
+      },
+      {
+       "sku": "1-YELLOW-S",
+       "qty": 1,
+       "size": "S",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-M",
+       "qty": 1,
+       "size": "M",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-L",
+       "qty": 1,
+       "size": "L",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-XL",
+       "qty": 1,
+       "size": "XL",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-XXL",
+       "qty": 1,
+       "size": "XXL",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-36",
+       "qty": 1,
+       "size": "36",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-38",
+       "qty": 1,
+       "size": "38",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-40",
+       "qty": 1,
+       "size": "40",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-42",
+       "qty": 1,
+       "size": "42",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-44",
+       "qty": 1,
+       "size": "44",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-46",
+       "qty": 1,
+       "size": "46",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-GREEN-S",
+       "qty": 1,
+       "size": "S",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-M",
+       "qty": 1,
+       "size": "M",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-L",
+       "qty": 1,
+       "size": "L",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-XL",
+       "qty": 1,
+       "size": "XL",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-XXL",
+       "qty": 1,
+       "size": "XXL",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-36",
+       "qty": 1,
+       "size": "36",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-38",
+       "qty": 1,
+       "size": "38",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-40",
+       "qty": 1,
+       "size": "40",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-42",
+       "qty": 1,
+       "size": "42",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-44",
+       "qty": 1,
+       "size": "44",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-46",
+       "qty": 1,
+       "size": "46",
+       "color": "green"
+      },
+      {
+       "sku": "1-WINE-S",
+       "qty": 1,
+       "size": "S",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-M",
+       "qty": 1,
+       "size": "M",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-L",
+       "qty": 1,
+       "size": "L",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-XL",
+       "qty": 1,
+       "size": "XL",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-XXL",
+       "qty": 1,
+       "size": "XXL",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "wine"
+      },
+      {
+       "sku": "1-MAROON-S",
+       "qty": 1,
+       "size": "S",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-M",
+       "qty": 1,
+       "size": "M",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-L",
+       "qty": 1,
+       "size": "L",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-XL",
+       "qty": 1,
+       "size": "XL",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-XXL",
+       "qty": 1,
+       "size": "XXL",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-36",
+       "qty": 1,
+       "size": "36",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-38",
+       "qty": 1,
+       "size": "38",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-40",
+       "qty": 1,
+       "size": "40",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-42",
+       "qty": 1,
+       "size": "42",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-44",
+       "qty": 1,
+       "size": "44",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-46",
+       "qty": 1,
+       "size": "46",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-ORANGE-S",
+       "qty": 1,
+       "size": "S",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-M",
+       "qty": 1,
+       "size": "M",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-L",
+       "qty": 1,
+       "size": "L",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-XL",
+       "qty": 1,
+       "size": "XL",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-XXL",
+       "qty": 1,
+       "size": "XXL",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "orange"
+      },
+      {
+       "sku": "1-RANI PINK-S",
+       "qty": 1,
+       "size": "S",
+       "color": "rani pink"
+      },
+      {
+       "sku": "1-RANI PINK-M",
+       "qty": 1,
+       "size": "M",
+       "color": "rani pink"
+      },
+      {
+       "sku": "1-RANI PINK-L",
+       "qty": 1,
+       "size": "L",
+       "color": "rani pink"
+      },
+      {
+       "sku": "1-RANI PINK-XL",
+       "qty": 1,
+       "size": "XL",
+       "color": "rani pink"
+      },
+      {
+       "sku": "1-RANI PINK-XXL",
+       "qty": 1,
+       "size": "XXL",
+       "color": "rani pink"
+      },
+      {
+       "sku": "1-RANI PINK-36",
+       "qty": 1,
+       "size": "36",
+       "color": "rani pink"
+      },
+      {
+       "sku": "1-RANI PINK-38",
+       "qty": 1,
+       "size": "38",
+       "color": "rani pink"
+      },
+      {
+       "sku": "1-RANI PINK-40",
+       "qty": 1,
+       "size": "40",
+       "color": "rani pink"
+      },
+      {
+       "sku": "1-RANI PINK-42",
+       "qty": 1,
+       "size": "42",
+       "color": "rani pink"
+      },
+      {
+       "sku": "1-RANI PINK-44",
+       "qty": 1,
+       "size": "44",
+       "color": "rani pink"
+      },
+      {
+       "sku": "1-RANI PINK-46",
+       "qty": 1,
+       "size": "46",
+       "color": "rani pink"
+      },
+      {
+       "sku": "1-GREY-S",
+       "qty": 1,
+       "size": "S",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-M",
+       "qty": 1,
+       "size": "M",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-L",
+       "qty": 1,
+       "size": "L",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-XL",
+       "qty": 1,
+       "size": "XL",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-XXL",
+       "qty": 1,
+       "size": "XXL",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-36",
+       "qty": 1,
+       "size": "36",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-38",
+       "qty": 1,
+       "size": "38",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-40",
+       "qty": 1,
+       "size": "40",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-42",
+       "qty": 1,
+       "size": "42",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-44",
+       "qty": 1,
+       "size": "44",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-46",
+       "qty": 1,
+       "size": "46",
+       "color": "grey"
+      },
+      {
+       "sku": "1-SKY BLUE-S",
+       "qty": 1,
+       "size": "S",
+       "color": "sky blue"
+      },
+      {
+       "sku": "1-SKY BLUE-M",
+       "qty": 1,
+       "size": "M",
+       "color": "sky blue"
+      },
+      {
+       "sku": "1-SKY BLUE-L",
+       "qty": 1,
+       "size": "L",
+       "color": "sky blue"
+      },
+      {
+       "sku": "1-SKY BLUE-XL",
+       "qty": 1,
+       "size": "XL",
+       "color": "sky blue"
+      },
+      {
+       "sku": "1-SKY BLUE-XXL",
+       "qty": 1,
+       "size": "XXL",
+       "color": "sky blue"
+      },
+      {
+       "sku": "1-SKY BLUE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "sky blue"
+      },
+      {
+       "sku": "1-SKY BLUE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "sky blue"
+      },
+      {
+       "sku": "1-SKY BLUE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "sky blue"
+      },
+      {
+       "sku": "1-SKY BLUE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "sky blue"
+      },
+      {
+       "sku": "1-SKY BLUE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "sky blue"
+      },
+      {
+       "sku": "1-SKY BLUE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "sky blue"
+      },
+      {
+       "sku": "1-GOLDEN-S",
+       "qty": 1,
+       "size": "S",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-M",
+       "qty": 1,
+       "size": "M",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-L",
+       "qty": 1,
+       "size": "L",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-XL",
+       "qty": 1,
+       "size": "XL",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-XXL",
+       "qty": 1,
+       "size": "XXL",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-36",
+       "qty": 1,
+       "size": "36",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-38",
+       "qty": 1,
+       "size": "38",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-40",
+       "qty": 1,
+       "size": "40",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-42",
+       "qty": 1,
+       "size": "42",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-44",
+       "qty": 1,
+       "size": "44",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-46",
+       "qty": 1,
+       "size": "46",
+       "color": "golden"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "v3-zaid",
+   "source": "dCbiICbLmIU",
+   "name": "India chikankari kurti live, one piece at a time, Hindi/Hinglish (ZAID CHIKAN WORLD)",
+   "locale": "en-IN",
+   "current": "1",
+   "note": "Kurtis shown one piece at a time, each a single size; most are ₹600; some heavier designs are priced higher (₹1050-₹4000 heard). Viewers book with size and colour ('book my 54 green', '48 me yellow', 'book for me purple tie and die'). The host gives the size as a number and names the letter size: 40 = L, 42 = XL, 44 = XXL, 46 = 3XL, 48 = 4XL, 50 = 5XL, 54 = 7XL. Item '1' stands for the piece on screen; the grid is the union of sizes (34-58) and of colours the host names at least five times. qty is nominal.",
+   "items": [
+    {
+     "code": "1",
+     "title": "Chikankari kurti on screen (most at ₹600)",
+     "priceCents": 60000,
+     "variants": [
+      {
+       "sku": "1-BLACK-34",
+       "qty": 1,
+       "size": "34",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-36",
+       "qty": 1,
+       "size": "36",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-38",
+       "qty": 1,
+       "size": "38",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-40",
+       "qty": 1,
+       "size": "40",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-42",
+       "qty": 1,
+       "size": "42",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-44",
+       "qty": 1,
+       "size": "44",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-46",
+       "qty": 1,
+       "size": "46",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-48",
+       "qty": 1,
+       "size": "48",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-50",
+       "qty": 1,
+       "size": "50",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-52",
+       "qty": 1,
+       "size": "52",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-54",
+       "qty": 1,
+       "size": "54",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-56",
+       "qty": 1,
+       "size": "56",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-58",
+       "qty": 1,
+       "size": "58",
+       "color": "black"
+      },
+      {
+       "sku": "1-WHITE-34",
+       "qty": 1,
+       "size": "34",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-48",
+       "qty": 1,
+       "size": "48",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-50",
+       "qty": 1,
+       "size": "50",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-52",
+       "qty": 1,
+       "size": "52",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-54",
+       "qty": 1,
+       "size": "54",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-56",
+       "qty": 1,
+       "size": "56",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-58",
+       "qty": 1,
+       "size": "58",
+       "color": "white"
+      },
+      {
+       "sku": "1-PINK-34",
+       "qty": 1,
+       "size": "34",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-36",
+       "qty": 1,
+       "size": "36",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-38",
+       "qty": 1,
+       "size": "38",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-40",
+       "qty": 1,
+       "size": "40",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-42",
+       "qty": 1,
+       "size": "42",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-44",
+       "qty": 1,
+       "size": "44",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-46",
+       "qty": 1,
+       "size": "46",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-48",
+       "qty": 1,
+       "size": "48",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-50",
+       "qty": 1,
+       "size": "50",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-52",
+       "qty": 1,
+       "size": "52",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-54",
+       "qty": 1,
+       "size": "54",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-56",
+       "qty": 1,
+       "size": "56",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-58",
+       "qty": 1,
+       "size": "58",
+       "color": "pink"
+      },
+      {
+       "sku": "1-POWDER BLUE-34",
+       "qty": 1,
+       "size": "34",
+       "color": "powder blue"
+      },
+      {
+       "sku": "1-POWDER BLUE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "powder blue"
+      },
+      {
+       "sku": "1-POWDER BLUE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "powder blue"
+      },
+      {
+       "sku": "1-POWDER BLUE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "powder blue"
+      },
+      {
+       "sku": "1-POWDER BLUE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "powder blue"
+      },
+      {
+       "sku": "1-POWDER BLUE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "powder blue"
+      },
+      {
+       "sku": "1-POWDER BLUE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "powder blue"
+      },
+      {
+       "sku": "1-POWDER BLUE-48",
+       "qty": 1,
+       "size": "48",
+       "color": "powder blue"
+      },
+      {
+       "sku": "1-POWDER BLUE-50",
+       "qty": 1,
+       "size": "50",
+       "color": "powder blue"
+      },
+      {
+       "sku": "1-POWDER BLUE-52",
+       "qty": 1,
+       "size": "52",
+       "color": "powder blue"
+      },
+      {
+       "sku": "1-POWDER BLUE-54",
+       "qty": 1,
+       "size": "54",
+       "color": "powder blue"
+      },
+      {
+       "sku": "1-POWDER BLUE-56",
+       "qty": 1,
+       "size": "56",
+       "color": "powder blue"
+      },
+      {
+       "sku": "1-POWDER BLUE-58",
+       "qty": 1,
+       "size": "58",
+       "color": "powder blue"
+      },
+      {
+       "sku": "1-RED-34",
+       "qty": 1,
+       "size": "34",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-36",
+       "qty": 1,
+       "size": "36",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-38",
+       "qty": 1,
+       "size": "38",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-40",
+       "qty": 1,
+       "size": "40",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-42",
+       "qty": 1,
+       "size": "42",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-44",
+       "qty": 1,
+       "size": "44",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-46",
+       "qty": 1,
+       "size": "46",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-48",
+       "qty": 1,
+       "size": "48",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-50",
+       "qty": 1,
+       "size": "50",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-52",
+       "qty": 1,
+       "size": "52",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-54",
+       "qty": 1,
+       "size": "54",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-56",
+       "qty": 1,
+       "size": "56",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-58",
+       "qty": 1,
+       "size": "58",
+       "color": "red"
+      },
+      {
+       "sku": "1-YELLOW-34",
+       "qty": 1,
+       "size": "34",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-36",
+       "qty": 1,
+       "size": "36",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-38",
+       "qty": 1,
+       "size": "38",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-40",
+       "qty": 1,
+       "size": "40",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-42",
+       "qty": 1,
+       "size": "42",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-44",
+       "qty": 1,
+       "size": "44",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-46",
+       "qty": 1,
+       "size": "46",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-48",
+       "qty": 1,
+       "size": "48",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-50",
+       "qty": 1,
+       "size": "50",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-52",
+       "qty": 1,
+       "size": "52",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-54",
+       "qty": 1,
+       "size": "54",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-56",
+       "qty": 1,
+       "size": "56",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-58",
+       "qty": 1,
+       "size": "58",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-MAROON-34",
+       "qty": 1,
+       "size": "34",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-36",
+       "qty": 1,
+       "size": "36",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-38",
+       "qty": 1,
+       "size": "38",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-40",
+       "qty": 1,
+       "size": "40",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-42",
+       "qty": 1,
+       "size": "42",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-44",
+       "qty": 1,
+       "size": "44",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-46",
+       "qty": 1,
+       "size": "46",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-48",
+       "qty": 1,
+       "size": "48",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-50",
+       "qty": 1,
+       "size": "50",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-52",
+       "qty": 1,
+       "size": "52",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-54",
+       "qty": 1,
+       "size": "54",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-56",
+       "qty": 1,
+       "size": "56",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-MAROON-58",
+       "qty": 1,
+       "size": "58",
+       "color": "maroon"
+      },
+      {
+       "sku": "1-GREEN-34",
+       "qty": 1,
+       "size": "34",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-36",
+       "qty": 1,
+       "size": "36",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-38",
+       "qty": 1,
+       "size": "38",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-40",
+       "qty": 1,
+       "size": "40",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-42",
+       "qty": 1,
+       "size": "42",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-44",
+       "qty": 1,
+       "size": "44",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-46",
+       "qty": 1,
+       "size": "46",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-48",
+       "qty": 1,
+       "size": "48",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-50",
+       "qty": 1,
+       "size": "50",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-52",
+       "qty": 1,
+       "size": "52",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-54",
+       "qty": 1,
+       "size": "54",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-56",
+       "qty": 1,
+       "size": "56",
+       "color": "green"
+      },
+      {
+       "sku": "1-GREEN-58",
+       "qty": 1,
+       "size": "58",
+       "color": "green"
+      },
+      {
+       "sku": "1-PURPLE-34",
+       "qty": 1,
+       "size": "34",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-48",
+       "qty": 1,
+       "size": "48",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-50",
+       "qty": 1,
+       "size": "50",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-52",
+       "qty": 1,
+       "size": "52",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-54",
+       "qty": 1,
+       "size": "54",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-56",
+       "qty": 1,
+       "size": "56",
+       "color": "purple"
+      },
+      {
+       "sku": "1-PURPLE-58",
+       "qty": 1,
+       "size": "58",
+       "color": "purple"
+      },
+      {
+       "sku": "1-GREY-34",
+       "qty": 1,
+       "size": "34",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-36",
+       "qty": 1,
+       "size": "36",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-38",
+       "qty": 1,
+       "size": "38",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-40",
+       "qty": 1,
+       "size": "40",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-42",
+       "qty": 1,
+       "size": "42",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-44",
+       "qty": 1,
+       "size": "44",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-46",
+       "qty": 1,
+       "size": "46",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-48",
+       "qty": 1,
+       "size": "48",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-50",
+       "qty": 1,
+       "size": "50",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-52",
+       "qty": 1,
+       "size": "52",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-54",
+       "qty": 1,
+       "size": "54",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-56",
+       "qty": 1,
+       "size": "56",
+       "color": "grey"
+      },
+      {
+       "sku": "1-GREY-58",
+       "qty": 1,
+       "size": "58",
+       "color": "grey"
+      },
+      {
+       "sku": "1-BROWN-34",
+       "qty": 1,
+       "size": "34",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-36",
+       "qty": 1,
+       "size": "36",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-38",
+       "qty": 1,
+       "size": "38",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-40",
+       "qty": 1,
+       "size": "40",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-42",
+       "qty": 1,
+       "size": "42",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-44",
+       "qty": 1,
+       "size": "44",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-46",
+       "qty": 1,
+       "size": "46",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-48",
+       "qty": 1,
+       "size": "48",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-50",
+       "qty": 1,
+       "size": "50",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-52",
+       "qty": 1,
+       "size": "52",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-54",
+       "qty": 1,
+       "size": "54",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-56",
+       "qty": 1,
+       "size": "56",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BROWN-58",
+       "qty": 1,
+       "size": "58",
+       "color": "brown"
+      },
+      {
+       "sku": "1-BLUE-34",
+       "qty": 1,
+       "size": "34",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-48",
+       "qty": 1,
+       "size": "48",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-50",
+       "qty": 1,
+       "size": "50",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-52",
+       "qty": 1,
+       "size": "52",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-54",
+       "qty": 1,
+       "size": "54",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-56",
+       "qty": 1,
+       "size": "56",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-58",
+       "qty": 1,
+       "size": "58",
+       "color": "blue"
+      },
+      {
+       "sku": "1-WINE-34",
+       "qty": 1,
+       "size": "34",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-48",
+       "qty": 1,
+       "size": "48",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-50",
+       "qty": 1,
+       "size": "50",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-52",
+       "qty": 1,
+       "size": "52",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-54",
+       "qty": 1,
+       "size": "54",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-56",
+       "qty": 1,
+       "size": "56",
+       "color": "wine"
+      },
+      {
+       "sku": "1-WINE-58",
+       "qty": 1,
+       "size": "58",
+       "color": "wine"
+      },
+      {
+       "sku": "1-NAVY BLUE-34",
+       "qty": 1,
+       "size": "34",
+       "color": "navy blue"
+      },
+      {
+       "sku": "1-NAVY BLUE-36",
+       "qty": 1,
+       "size": "36",
+       "color": "navy blue"
+      },
+      {
+       "sku": "1-NAVY BLUE-38",
+       "qty": 1,
+       "size": "38",
+       "color": "navy blue"
+      },
+      {
+       "sku": "1-NAVY BLUE-40",
+       "qty": 1,
+       "size": "40",
+       "color": "navy blue"
+      },
+      {
+       "sku": "1-NAVY BLUE-42",
+       "qty": 1,
+       "size": "42",
+       "color": "navy blue"
+      },
+      {
+       "sku": "1-NAVY BLUE-44",
+       "qty": 1,
+       "size": "44",
+       "color": "navy blue"
+      },
+      {
+       "sku": "1-NAVY BLUE-46",
+       "qty": 1,
+       "size": "46",
+       "color": "navy blue"
+      },
+      {
+       "sku": "1-NAVY BLUE-48",
+       "qty": 1,
+       "size": "48",
+       "color": "navy blue"
+      },
+      {
+       "sku": "1-NAVY BLUE-50",
+       "qty": 1,
+       "size": "50",
+       "color": "navy blue"
+      },
+      {
+       "sku": "1-NAVY BLUE-52",
+       "qty": 1,
+       "size": "52",
+       "color": "navy blue"
+      },
+      {
+       "sku": "1-NAVY BLUE-54",
+       "qty": 1,
+       "size": "54",
+       "color": "navy blue"
+      },
+      {
+       "sku": "1-NAVY BLUE-56",
+       "qty": 1,
+       "size": "56",
+       "color": "navy blue"
+      },
+      {
+       "sku": "1-NAVY BLUE-58",
+       "qty": 1,
+       "size": "58",
+       "color": "navy blue"
+      },
+      {
+       "sku": "1-LAVENDER-34",
+       "qty": 1,
+       "size": "34",
+       "color": "lavender"
+      },
+      {
+       "sku": "1-LAVENDER-36",
+       "qty": 1,
+       "size": "36",
+       "color": "lavender"
+      },
+      {
+       "sku": "1-LAVENDER-38",
+       "qty": 1,
+       "size": "38",
+       "color": "lavender"
+      },
+      {
+       "sku": "1-LAVENDER-40",
+       "qty": 1,
+       "size": "40",
+       "color": "lavender"
+      },
+      {
+       "sku": "1-LAVENDER-42",
+       "qty": 1,
+       "size": "42",
+       "color": "lavender"
+      },
+      {
+       "sku": "1-LAVENDER-44",
+       "qty": 1,
+       "size": "44",
+       "color": "lavender"
+      },
+      {
+       "sku": "1-LAVENDER-46",
+       "qty": 1,
+       "size": "46",
+       "color": "lavender"
+      },
+      {
+       "sku": "1-LAVENDER-48",
+       "qty": 1,
+       "size": "48",
+       "color": "lavender"
+      },
+      {
+       "sku": "1-LAVENDER-50",
+       "qty": 1,
+       "size": "50",
+       "color": "lavender"
+      },
+      {
+       "sku": "1-LAVENDER-52",
+       "qty": 1,
+       "size": "52",
+       "color": "lavender"
+      },
+      {
+       "sku": "1-LAVENDER-54",
+       "qty": 1,
+       "size": "54",
+       "color": "lavender"
+      },
+      {
+       "sku": "1-LAVENDER-56",
+       "qty": 1,
+       "size": "56",
+       "color": "lavender"
+      },
+      {
+       "sku": "1-LAVENDER-58",
+       "qty": 1,
+       "size": "58",
+       "color": "lavender"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "v3-sikka",
+   "source": "LHC9htbwySY",
+   "name": "India Durga Puja and Diwali festive goods live (candles, diyas, torans), one item at a time, Hindi/Hinglish (Sikka Sisterss)",
+   "locale": "en-IN",
+   "current": "1",
+   "note": "Festive goods shown one at a time: fragrance candles, sweet-shaped candles (modak, laddu, kaju katli, imarti), heart candles, diyas, torans, Lakshmi-Ganesh pieces, hing; sold loose by the piece or as a mixed-colour box. Prices vary (mostly ₹50-₹650, a few up to ₹1450-₹2500). Viewers book by colour and count ('book 2 heart', 'book pink 4 pc', 'Book sky blue 2', 'mera 450 wala book white wala'). Item '1' stands for the item on screen; variants are the colours the host names at least five times ('multi' covers mixed-colour boxes). Quantities are per piece; qty is nominal.",
+   "items": [
+    {
+     "code": "1",
+     "title": "Festive item on screen: candles, diyas, torans and similar (price varies)",
+     "priceCents": 15000,
+     "variants": [
+      {
+       "sku": "1-RED",
+       "qty": 20,
+       "color": "red"
+      },
+      {
+       "sku": "1-GREEN",
+       "qty": 20,
+       "color": "green"
+      },
+      {
+       "sku": "1-PINK",
+       "qty": 20,
+       "color": "pink"
+      },
+      {
+       "sku": "1-YELLOW",
+       "qty": 20,
+       "color": "yellow"
+      },
+      {
+       "sku": "1-PURPLE",
+       "qty": 20,
+       "color": "purple"
+      },
+      {
+       "sku": "1-WHITE",
+       "qty": 20,
+       "color": "white"
+      },
+      {
+       "sku": "1-BLUE",
+       "qty": 20,
+       "color": "blue"
+      },
+      {
+       "sku": "1-ORANGE",
+       "qty": 20,
+       "color": "orange"
+      },
+      {
+       "sku": "1-MULTI",
+       "qty": 20,
+       "color": "multi"
+      },
+      {
+       "sku": "1-RANI PINK",
+       "qty": 20,
+       "color": "rani pink"
+      },
+      {
+       "sku": "1-LAVENDER",
+       "qty": 20,
+       "color": "lavender"
+      },
+      {
+       "sku": "1-DARK PINK",
+       "qty": 20,
+       "color": "dark pink"
+      },
+      {
+       "sku": "1-GOLDEN",
+       "qty": 20,
+       "color": "golden"
+      },
+      {
+       "sku": "1-SKY BLUE",
+       "qty": 20,
+       "color": "sky blue"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "v3-simran",
+   "source": "k2cLnVEJNeg",
+   "name": "India Xuping jewellery live (rings, bracelets, earrings, pendants), one piece at a time, Hindi/Hinglish (Simransethi)",
+   "locale": "en-IN",
+   "current": "1",
+   "note": "Pieces shown one at a time; prices vary (roughly ₹100-₹500). Viewers book by colour, ring size or price ('white for me no. 6', 'bk dark blue 7 no.', 'Book 185 silver matar chain', 'book 2.4 for me'). Item '1' stands for the piece on screen. Sizes are the ring numbers the host names (5-10; 'number 10' is asked for but not stocked for the first ring) and the bracelet sizes 2.4, 2.6 and 2.8; each colour also has a no-size variant for earrings, pendants and chains. Colours are the polish and stone colours the host names at least three times (dark/midnight blue folded into blue). qty is nominal.",
+   "items": [
+    {
+     "code": "1",
+     "title": "Xuping jewellery piece on screen (price varies)",
+     "priceCents": 27000,
+     "variants": [
+      {
+       "sku": "1-SILVER",
+       "qty": 1,
+       "color": "silver"
+      },
+      {
+       "sku": "1-SILVER-5",
+       "qty": 1,
+       "size": "5",
+       "color": "silver"
+      },
+      {
+       "sku": "1-SILVER-6",
+       "qty": 1,
+       "size": "6",
+       "color": "silver"
+      },
+      {
+       "sku": "1-SILVER-7",
+       "qty": 1,
+       "size": "7",
+       "color": "silver"
+      },
+      {
+       "sku": "1-SILVER-8",
+       "qty": 1,
+       "size": "8",
+       "color": "silver"
+      },
+      {
+       "sku": "1-SILVER-9",
+       "qty": 1,
+       "size": "9",
+       "color": "silver"
+      },
+      {
+       "sku": "1-SILVER-10",
+       "qty": 1,
+       "size": "10",
+       "color": "silver"
+      },
+      {
+       "sku": "1-SILVER-2.4",
+       "qty": 1,
+       "size": "2.4",
+       "color": "silver"
+      },
+      {
+       "sku": "1-SILVER-2.6",
+       "qty": 1,
+       "size": "2.6",
+       "color": "silver"
+      },
+      {
+       "sku": "1-SILVER-2.8",
+       "qty": 1,
+       "size": "2.8",
+       "color": "silver"
+      },
+      {
+       "sku": "1-GOLDEN",
+       "qty": 1,
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-5",
+       "qty": 1,
+       "size": "5",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-6",
+       "qty": 1,
+       "size": "6",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-7",
+       "qty": 1,
+       "size": "7",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-8",
+       "qty": 1,
+       "size": "8",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-9",
+       "qty": 1,
+       "size": "9",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-10",
+       "qty": 1,
+       "size": "10",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-2.4",
+       "qty": 1,
+       "size": "2.4",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-2.6",
+       "qty": 1,
+       "size": "2.6",
+       "color": "golden"
+      },
+      {
+       "sku": "1-GOLDEN-2.8",
+       "qty": 1,
+       "size": "2.8",
+       "color": "golden"
+      },
+      {
+       "sku": "1-WHITE",
+       "qty": 1,
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-5",
+       "qty": 1,
+       "size": "5",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-6",
+       "qty": 1,
+       "size": "6",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-7",
+       "qty": 1,
+       "size": "7",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-8",
+       "qty": 1,
+       "size": "8",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-9",
+       "qty": 1,
+       "size": "9",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-10",
+       "qty": 1,
+       "size": "10",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-2.4",
+       "qty": 1,
+       "size": "2.4",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-2.6",
+       "qty": 1,
+       "size": "2.6",
+       "color": "white"
+      },
+      {
+       "sku": "1-WHITE-2.8",
+       "qty": 1,
+       "size": "2.8",
+       "color": "white"
+      },
+      {
+       "sku": "1-BLACK",
+       "qty": 1,
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-5",
+       "qty": 1,
+       "size": "5",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-6",
+       "qty": 1,
+       "size": "6",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-7",
+       "qty": 1,
+       "size": "7",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-8",
+       "qty": 1,
+       "size": "8",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-9",
+       "qty": 1,
+       "size": "9",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-10",
+       "qty": 1,
+       "size": "10",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-2.4",
+       "qty": 1,
+       "size": "2.4",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-2.6",
+       "qty": 1,
+       "size": "2.6",
+       "color": "black"
+      },
+      {
+       "sku": "1-BLACK-2.8",
+       "qty": 1,
+       "size": "2.8",
+       "color": "black"
+      },
+      {
+       "sku": "1-YELLOW",
+       "qty": 1,
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-5",
+       "qty": 1,
+       "size": "5",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-6",
+       "qty": 1,
+       "size": "6",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-7",
+       "qty": 1,
+       "size": "7",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-8",
+       "qty": 1,
+       "size": "8",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-9",
+       "qty": 1,
+       "size": "9",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-10",
+       "qty": 1,
+       "size": "10",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-2.4",
+       "qty": 1,
+       "size": "2.4",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-2.6",
+       "qty": 1,
+       "size": "2.6",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-YELLOW-2.8",
+       "qty": 1,
+       "size": "2.8",
+       "color": "yellow"
+      },
+      {
+       "sku": "1-DUAL TONE",
+       "qty": 1,
+       "color": "dual tone"
+      },
+      {
+       "sku": "1-DUAL TONE-5",
+       "qty": 1,
+       "size": "5",
+       "color": "dual tone"
+      },
+      {
+       "sku": "1-DUAL TONE-6",
+       "qty": 1,
+       "size": "6",
+       "color": "dual tone"
+      },
+      {
+       "sku": "1-DUAL TONE-7",
+       "qty": 1,
+       "size": "7",
+       "color": "dual tone"
+      },
+      {
+       "sku": "1-DUAL TONE-8",
+       "qty": 1,
+       "size": "8",
+       "color": "dual tone"
+      },
+      {
+       "sku": "1-DUAL TONE-9",
+       "qty": 1,
+       "size": "9",
+       "color": "dual tone"
+      },
+      {
+       "sku": "1-DUAL TONE-10",
+       "qty": 1,
+       "size": "10",
+       "color": "dual tone"
+      },
+      {
+       "sku": "1-DUAL TONE-2.4",
+       "qty": 1,
+       "size": "2.4",
+       "color": "dual tone"
+      },
+      {
+       "sku": "1-DUAL TONE-2.6",
+       "qty": 1,
+       "size": "2.6",
+       "color": "dual tone"
+      },
+      {
+       "sku": "1-DUAL TONE-2.8",
+       "qty": 1,
+       "size": "2.8",
+       "color": "dual tone"
+      },
+      {
+       "sku": "1-PINK",
+       "qty": 1,
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-5",
+       "qty": 1,
+       "size": "5",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-6",
+       "qty": 1,
+       "size": "6",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-7",
+       "qty": 1,
+       "size": "7",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-8",
+       "qty": 1,
+       "size": "8",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-9",
+       "qty": 1,
+       "size": "9",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-10",
+       "qty": 1,
+       "size": "10",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-2.4",
+       "qty": 1,
+       "size": "2.4",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-2.6",
+       "qty": 1,
+       "size": "2.6",
+       "color": "pink"
+      },
+      {
+       "sku": "1-PINK-2.8",
+       "qty": 1,
+       "size": "2.8",
+       "color": "pink"
+      },
+      {
+       "sku": "1-RED",
+       "qty": 1,
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-5",
+       "qty": 1,
+       "size": "5",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-6",
+       "qty": 1,
+       "size": "6",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-7",
+       "qty": 1,
+       "size": "7",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-8",
+       "qty": 1,
+       "size": "8",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-9",
+       "qty": 1,
+       "size": "9",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-10",
+       "qty": 1,
+       "size": "10",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-2.4",
+       "qty": 1,
+       "size": "2.4",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-2.6",
+       "qty": 1,
+       "size": "2.6",
+       "color": "red"
+      },
+      {
+       "sku": "1-RED-2.8",
+       "qty": 1,
+       "size": "2.8",
+       "color": "red"
+      },
+      {
+       "sku": "1-PEACH",
+       "qty": 1,
+       "color": "peach"
+      },
+      {
+       "sku": "1-PEACH-5",
+       "qty": 1,
+       "size": "5",
+       "color": "peach"
+      },
+      {
+       "sku": "1-PEACH-6",
+       "qty": 1,
+       "size": "6",
+       "color": "peach"
+      },
+      {
+       "sku": "1-PEACH-7",
+       "qty": 1,
+       "size": "7",
+       "color": "peach"
+      },
+      {
+       "sku": "1-PEACH-8",
+       "qty": 1,
+       "size": "8",
+       "color": "peach"
+      },
+      {
+       "sku": "1-PEACH-9",
+       "qty": 1,
+       "size": "9",
+       "color": "peach"
+      },
+      {
+       "sku": "1-PEACH-10",
+       "qty": 1,
+       "size": "10",
+       "color": "peach"
+      },
+      {
+       "sku": "1-PEACH-2.4",
+       "qty": 1,
+       "size": "2.4",
+       "color": "peach"
+      },
+      {
+       "sku": "1-PEACH-2.6",
+       "qty": 1,
+       "size": "2.6",
+       "color": "peach"
+      },
+      {
+       "sku": "1-PEACH-2.8",
+       "qty": 1,
+       "size": "2.8",
+       "color": "peach"
+      },
+      {
+       "sku": "1-BLUE",
+       "qty": 1,
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-5",
+       "qty": 1,
+       "size": "5",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-6",
+       "qty": 1,
+       "size": "6",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-7",
+       "qty": 1,
+       "size": "7",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-8",
+       "qty": 1,
+       "size": "8",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-9",
+       "qty": 1,
+       "size": "9",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-10",
+       "qty": 1,
+       "size": "10",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-2.4",
+       "qty": 1,
+       "size": "2.4",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-2.6",
+       "qty": 1,
+       "size": "2.6",
+       "color": "blue"
+      },
+      {
+       "sku": "1-BLUE-2.8",
+       "qty": 1,
+       "size": "2.8",
+       "color": "blue"
+      },
+      {
+       "sku": "1-ORANGE",
+       "qty": 1,
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-5",
+       "qty": 1,
+       "size": "5",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-6",
+       "qty": 1,
+       "size": "6",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-7",
+       "qty": 1,
+       "size": "7",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-8",
+       "qty": 1,
+       "size": "8",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-9",
+       "qty": 1,
+       "size": "9",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-10",
+       "qty": 1,
+       "size": "10",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-2.4",
+       "qty": 1,
+       "size": "2.4",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-2.6",
+       "qty": 1,
+       "size": "2.6",
+       "color": "orange"
+      },
+      {
+       "sku": "1-ORANGE-2.8",
+       "qty": 1,
+       "size": "2.8",
+       "color": "orange"
+      },
+      {
+       "sku": "1-MULTI",
+       "qty": 1,
+       "color": "multi"
+      },
+      {
+       "sku": "1-MULTI-5",
+       "qty": 1,
+       "size": "5",
+       "color": "multi"
+      },
+      {
+       "sku": "1-MULTI-6",
+       "qty": 1,
+       "size": "6",
+       "color": "multi"
+      },
+      {
+       "sku": "1-MULTI-7",
+       "qty": 1,
+       "size": "7",
+       "color": "multi"
+      },
+      {
+       "sku": "1-MULTI-8",
+       "qty": 1,
+       "size": "8",
+       "color": "multi"
+      },
+      {
+       "sku": "1-MULTI-9",
+       "qty": 1,
+       "size": "9",
+       "color": "multi"
+      },
+      {
+       "sku": "1-MULTI-10",
+       "qty": 1,
+       "size": "10",
+       "color": "multi"
+      },
+      {
+       "sku": "1-MULTI-2.4",
+       "qty": 1,
+       "size": "2.4",
+       "color": "multi"
+      },
+      {
+       "sku": "1-MULTI-2.6",
+       "qty": 1,
+       "size": "2.6",
+       "color": "multi"
+      },
+      {
+       "sku": "1-MULTI-2.8",
+       "qty": 1,
+       "size": "2.8",
+       "color": "multi"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
