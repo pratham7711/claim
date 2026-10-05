@@ -1,49 +1,69 @@
 # Demo video script
 
-There are two cuts: a 3-minute walkthrough and a 30-second version. Both are recorded on a fresh demo show in mock-payment mode. The banner reads "Sandbox not connected: simulated payments", and the "p95 resolve" card reads "rules · LLM off". The voice-over says so; do not imply live PayPal money or an LLM in this recording.
+One cut, under 3 minutes, recorded against **PayPal's sandbox** and **Groq**. The banner reads "PayPal sandbox", and the "p95 resolve" card reads "rules + groq". Every payment in it is a real PayPal API call with test money. Say "sandbox" once on camera, and never call it real money.
 
-**Setup.**
-1. Run `npm run dev` and open http://localhost:3011 in Chrome.
-2. Click **Start a demo show**. The split screen at `/demo/<showId>` shows the seller console on the left and the buyer phone on the right.
-3. Record at 1440 px or wider so both panes are readable.
-4. Do the beats **in this order**. Every simulated outcome below was measured by driving this order through the API (2026-10-05). A different order changes the stock each step sees, and so changes the results.
+## Before you record
 
-**Times.** Simulations play out in real time: about 0.5 s for the race, 1.3 s for the late comment, 1.9 s for the bundle, about 3.3 s for the slang burst and 2.6 s for the Hinglish burst. Leave a beat of silence or trim in the edit.
+- **Where.** Use the Render deployment, because that is the link judges get and PayPal's webhooks can reach it. Or use a local production build (`npm run build && npm start`, http://localhost:3011) with `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` and `GROQ_API_KEY` in `.env`.
+- **Warm it up.** Render's free plan sleeps after 15 minutes. Open the URL a minute before you record.
+- **A PayPal sandbox buyer.** Use a *personal* account from developer.paypal.com → Testing Tools → Sandbox Accounts.
+  - You log in twice on camera: once for the Claim Pass, once for the pay-now checkout.
+  - PayPal's window shows that account's sandbox email. The password field is masked.
+- **Screen.** Chrome at 1440 px or wider, 100% zoom, notifications off.
+- **One take, one fresh show.** Start every take from the landing page with **Start a demo show**.
+- **Reach the pay-now step within 5 minutes of the race.**
+  - Simulated buyers cannot approve a PayPal window, so in sandbox they hold items on a 5-minute pay-now timer.
+  - Past that, a hold lapses and the waitlist moves up.
+- **Keep the order.** Every outcome below was measured by driving these beats through the API in this order (2026-10-06). The comment outcomes and review cards matched in both runs. A different order changes the stock each beat sees.
+- **Lines marked *Groq* come from the model** and can differ between takes.
 
-## 3-minute version
+## 3-minute cut
 
-| Time | On screen | Action that produces it | Voice-over |
+| Time | On screen | Do this | Voice-over |
 |---|---|---|---|
-| 0:00-0:12 | Landing page, then the split screen | **Start a demo show** | "Boutiques sell on live video. When an item is on camera, the chat floods: 'sold', 'me', '12 M', in slang and in Hindi. Someone has to decide who was first, and then chase everyone for payment." |
-| 0:12-0:32 | Voice listing panel: the draft shows #9 Sage Linen Button Down, $36.00, S x2, M x1, plus one warning | **Use a sample**, then **Draft listing**, then **Confirm and put on air**. Then click **#12** in the Run sheet. | "Claim! starts with the host's own words. 'Number 9, sage linen button down, two smalls and a medium, thirty six.' That becomes a listing. It flags that the price was a bare number, and nothing goes live until the seller confirms." |
-| 0:32-0:55 | Live comments: ava GRANTED, dana GRANTED, ben WAITLIST #1, cleo WAITLIST #2. Item board for #12 M. Open **Why?** on ben's ticket. | On #12, choose **4 buyers race for 2 items**, then **Simulate** | "Four buyers, two mediums. Claims are ranked by the platform's own timestamp, not by when they reached us. Two win, two wait in order, and every ticket says why." |
-| 0:55-1:20 | #7 on air. gia's ticket shows GRANTED, then flips to WAITLIST #1. hal GRANTED. Open **Audit**: "pre-empted on #7 S ... arrived 894ms after the grant, inside the 2000ms settle window". | Click **#7** in the Run sheet, choose **Late-arriving earlier comment**, then **Simulate** | "Networks are uneven. hal typed first, but his comment landed almost a second after gia's. Grants stay provisional for two seconds, so the earlier comment still wins. hal has no saved PayPal, so he gets a five-minute pay-now hold. If he doesn't pay, the dress goes to gia." |
-| 1:20-1:32 | #21 on air. nora: "sold 21 M and 12 L" gives two grants, then "claim 7 M too 🛍️" gives one more. | Click **#21**, choose **One buyer, three items, one cart**, then **Simulate** | "One buyer, two items in one comment, a third a moment later, across three different listings." |
-| 1:32-2:00 | Slang burst, then Hinglish burst, scrolling. Then the **Needs you** review panel: 7 cards with the "Unsure" chip and plain reasons such as "Didn't say which size or colour." The "Needs you" KPI reads 7. | Choose **Messy slang burst**, **Simulate**. Then **Hinglish burst**, **Simulate**. | "Real chat is messy. 'can i get a small' is a claim. 'how much is shipping?' is a question. 'mast hai yaar' is chatter. 'bhaiya 21 L de do na' is a claim. Anything the desk isn't sure about, like a bare 'SOLD!!!' or 'me me me', goes to the seller instead of being granted. Getting a sale wrong costs more than asking." |
-| 2:00-2:12 | Needs you panel: isha's "21 L pakka" becomes GRANTED (pay-now hold). kendall_b's "me me me 🙋‍♀️" becomes REJECTED. Optionally open **Resolver detail** on one card. | On isha's card, click **Approve L · rust**; L is preselected because she named it. On kendall_b's card, click **Reject**. Mouse or keyboard (J/K, A, R). | "One tap approves a claim onto the size the buyer named, or rejects it. If they didn't name a size, the seller has to pick one first." |
-| 2:12-2:35 | Close-out page: carts for ava $42.00, dana $42.00, nora $111.00 (three items, shipping $0.00) and shopwithsam $37.00. Toast: 3 charged, dana declined. The button is replaced by "Every Claim Pass cart is charged". | **End show**, then **Charge 4 Claim Pass carts · $232.00** | "End the show and every buyer gets one cart with combined shipping. nora's three items ship free because she passed a hundred dollars. Buyers who saved PayPal with a Claim Pass are charged in one go, without being online. dana's card declines." |
-| 2:35-2:48 | dana's card, then the pay page: $34.00 plus $8.00 shipping. **Pay with PayPal**, captured. dana's supplementary cart is charged. | On dana's card: **Offer a pay-now link**, then the link icon labelled "Open pay-now link" (new tab), then **Pay with PayPal** | "A decline doesn't lose the sale. dana's dress goes back on a pay-now link, and she pays at checkout. Or the seller can release it to the next person on the waitlist." |
-| 2:48-2:58 | nora's charged cart: "Refunded $5.00", then "Tracking added; PayPal notifies the buyer" | **Refund** $5, then **Add tracking** (USPS + a number) | "Refunds and tracking are one click each, and a double-clicked refund is only sent once." |
-| 2:58-3:00 | Banner close-up: "Sandbox not connected: simulated payments" | none | "Payments in this video are simulated. The same flow is coded against PayPal's sandbox: Vault, Orders, refunds and tracking." |
+| 0:00-0:10 | Landing, then the split screen: seller console on the left, buyer phone on the right. Banner: "PayPal sandbox". | **Start a demo show** | "Boutiques sell on live video. When an item is on camera, the chat floods: 'sold', 'me', '12 M', in slang and in Hindi. Someone has to work out who was first, then chase everyone for payment." |
+| 0:10-0:30 | Phone: the Claim Pass sheet, then PayPal's sandbox window. Log in and approve. The phone shows "Claim Pass linked". | In the phone, **Get Claim Pass**, pick **$100**, then **Save PayPal**. Trim the typing in the edit. | "A buyer saves PayPal once, before the show. That's PayPal's vault: the boutique keeps a token, never the card, under a spending cap. Nothing is charged yet." |
+| 0:30-0:45 | Voice listing: the draft reads #9 Sage Linen Button Down, $36.00, S ×2, M ×1. It carries one warning: "price read from a bare number (36); confirm it". | **Use a sample**, then **Draft listing**, then **Confirm and put on air** | "The host lists by talking. 'Number 9, sage linen button down, two smalls and a medium, thirty six.' It flags the bare number, and nothing goes live until the seller confirms." |
+| 0:45-0:53 | The phone stamps the claim YOURS. The seller's feed shows jess GRANTED. | In the phone's chat, type `sold 9 S` and send | "With a Claim Pass, a claim is confirmed the moment it lands. Nobody checks out during the show." |
+| 0:53-1:12 | #12 M: ava and dana GRANTED, each with a 5-minute pay-now timer. ben WAITLIST #1, cleo WAITLIST #2. Open **Why?** on ben's ticket. | Run sheet **#12**, choose **4 buyers race for 2 items**, then **Simulate** | "Four buyers, two mediums. Claims are ranked by the platform's own timestamp, not by when they reached us. Two win, two wait in line, and every ticket says why. These four have no Claim Pass, so they get five minutes to pay." |
+| 1:12-1:32 | #7 S: gia GRANTED, then flipped to WAITLIST #1, and hal GRANTED. Open **Audit**: "pre-empted on #7 S black … arrived 900ms after the grant, inside the 2000ms settle window". | **#7**, choose **Late-arriving earlier comment**, then **Simulate** | "Networks are uneven. hal typed first, but his comment landed almost a second after gia's. Grants stay provisional for two seconds, so the earlier comment still wins." |
+| 1:32-1:55 | #21 Hinglish burst. meera_j "bhaiya 21 L de do na" GRANTED. ananya_s "mujhe 21 S chahiye" GRANTED. neha_r WAITLIST #1. "mast hai yaar 😍" CHATTER. "kya 21 red mein hai?" and "ye kitne ka hai?" QUESTION. *Groq:* isha "21 L pakka" and simran.b "S wala mera" go to **Needs you**. | **#21**, choose **Hinglish burst**, then **Simulate** | "Real chat is Hinglish and slang. Rules settle the clear comments instantly, and the unclear ones go to an LLM on Groq. 'Mast hai yaar' is chatter, 'ye kitne ka hai' is a question. When the model isn't sure, like '21 L pakka', the seller decides, because a wrong sale costs more than asking." |
+| 1:55-2:05 | isha becomes GRANTED, held for pay-now. simran.b becomes WAITLIST #1, and neha_r moves to #2. | On isha's card, **Approve L · rust**. On simran.b's card, **Approve S · rust**. | "One tap puts the claim on the size the buyer named. The small is already gone, so simran joins the waitlist, ahead of neha, because she commented first." |
+| 2:05-2:25 | Close-out: jess's cart is #9 S at $36.00 plus $8.00 shipping. After the charge, the card shows **Ship to** with the sandbox buyer's PayPal address, then "vault order … · capture …". | **End show**, then **Charge 1 Claim Pass cart · $44.00** | "The show ends, and every buyer gets one cart with combined shipping. Claim Pass carts are charged in one go, against the saved PayPal, while the buyer is offline. The ship-to address comes from their PayPal wallet." |
+| 2:25-2:45 | ava's row shows a $42.00 link. On PayPal's sandbox checkout, log in and pay. Back on Claim!: "Confirming with PayPal…", then PAID. Close-out: ava's cart is charged, with a Ship to. | On ava's row, **Send pay-now link**, then the **Open pay-now link** icon (new tab), then **Pay Now** on PayPal | "Buyers without a Claim Pass get one link for everything they hold. They pay on PayPal's own checkout and land back on a receipt." |
+| 2:45-2:55 | jess's card: "Refunded $5.00", then "Tracking added; PayPal notifies the buyer". On Render with webhooks connected, the order line gains "· refund confirmed by PayPal". | **Refund** $5. Then **Add tracking** with USPS and any number. | "Refunds and tracking are one click each, through PayPal's APIs. PayPal's signed webhooks come back in, so the seller sees PayPal confirm it." |
+| 2:55-3:00 | **Ledger**: the AG Grid table with its Ship to column, then **Export CSV** | **Ledger**, then **Export CSV** | "Claim!: PayPal Vault and Orders, an LLM on Groq, AG Grid, running on Render." |
 
-**Notes for the recording**
-- **Combined shipping vs free shipping.** nora's cart shows $0.00 shipping because the subtotal ($111.00) is over the $100 free-shipping line. Every other cart shows the $8.00 first-item rate. To show the "$8 + $2 per extra item" rule, narrate it rather than claim nora's cart shows it.
-- **The other close-out path.** **Release to waitlist** on dana's card promotes ben (Claim Pass, WAITLIST #1 on #12 M), and the button then offers one more Claim Pass charge. This is covered by `apps/web/lib/service.test.ts` ("closes out: charges Claim Pass carts, declines one, and cascades the declined unit to the waitlist").
-- **Don't click "Approve N ready" in this cut.** The panel offers it when two or more cards have item and variant known. Bulk-approving changes the stock for the later beats, and that path was not measured.
-- **Skip "Cancel, then waitlist promotion" in this cut.** Run after the race, dana cancels and ben is promoted (measured). dana then has no cart, so the decline beat at 2:12 would not happen.
-- **hal's lease.** hal's 5-minute hold lapsing to gia is real (covered by the service test "expires an unpaid hold on the clock and promotes the next buyer"), but it is too slow for the cut. Mention it; don't wait for it.
-- **Voice listing.** Chrome uses the browser's speech recognition. If the mic misbehaves on the recording machine, **Use a sample** fills the same text.
+## Notes for the recording
 
-## 30-second version
+- **If a *Groq* card doesn't appear.** In both measured runs, isha and simran.b went to review. If the model settles one of them differently in a take, approve whichever card is there, or skip that beat.
+- **Saving the Claim Pass inside the phone pane.**
+  - PayPal's window opens from the phone pane with no console errors (checked 2026-10-06).
+  - The full approval was last recorded in the standalone buyer room (2026-10-05).
+  - If the window closes without "Claim Pass linked", open **Buyer room** from the header and save the pass there.
+- **Pay-now in sandbox.**
+  - After the buyer pays on PayPal's checkout, PayPal sends them back to `/pay`, which captures without a second click.
+  - That return path was checked up to PayPal refusing an order nobody had approved (2026-10-06). The order stayed open and payable.
+  - A full sandbox payment through the checkout page has not been recorded yet. Do it once in a dry run.
+- **Refund and tracking in sandbox.** Both passed in the gateway spike. The dry run is their first pass through the app's UI.
+- **Webhooks.**
+  - They arrive only on the deployed URL, after `PAYPAL_WEBHOOK_ID` is set (see [DEPLOY.md](DEPLOY.md)).
+  - PayPal can take from seconds to minutes to deliver.
+  - If the confirmation hasn't arrived, cut that line. Never stage it.
+- **No decline in this cut.** The sandbox has no scripted decline. The Devpost text covers the fallback, and the mock run below shows it.
+- **Twitch.** **Read a Twitch chat** connects to any live channel, read-only. It is not in the cut, because a live channel's chat can't be planned.
 
-| Time | On screen | Action | Voice-over |
-|---|---|---|---|
-| 0:00-0:05 | Split screen, #12 on air | **Start a demo show** | "Live-sale chat floods with 'sold' and 'me'. Claim! decides who got it." |
-| 0:05-0:13 | ava and dana GRANTED, ben and cleo WAITLIST. Then on #7, hal pre-empts gia. | **4 buyers race for 2 items**. Then **#7** and **Late-arriving earlier comment**. | "Ranked by the platform's timestamp. Even a comment that arrives late wins if it was sent first." |
-| 0:13-0:19 | #21: Hinglish burst. ananya_s "mujhe 21 S chahiye" and meera_j "bhaiya 21 L de do na" are GRANTED. Two cards land in **Needs you**. | **#21**, **One buyer, three items, one cart**, then **Hinglish burst** | "Hinglish and slang become claims. Anything unclear goes to the seller, not to a buyer." |
-| 0:19-0:27 | Close-out: **Charge 4 Claim Pass carts · $232.00** (ava, dana, nora, ananya_s). dana declines. **Offer a pay-now link**, then **Pay with PayPal**. | **End show**, then charge, then pay-now | "One cart per buyer, charged through saved PayPal after the show. A decline falls back to a pay-now link." |
-| 0:27-0:30 | Banner: simulated payments | none | "Claim! Payments simulated in this demo." |
+## Mock-mode fallback
 
-The 30-second cut skips the voice listing, the slang burst and the review clicks. Its outcomes were measured separately in this exact order: race, then #7 late comment, then #21 bundle, then Hinglish burst.
-- Without the slang burst, ananya_s gets #21 S (instead of WAITLIST #2), and only 2 comments go to review.
-- The close-out still shows 4 Claim Pass carts and $232.00: ananya_s's $37.00 cart takes the place of shopwithsam's.
+If PayPal's sandbox is down, or the login misbehaves on the day, record with no PayPal keys.
+- The banner reads "Sandbox not connected: simulated payments". Say so in the voice-over.
+- Groq still runs, so the "p95 resolve" card still reads "rules + groq".
+- The Claim Pass sheet saves without a PayPal window.
+
+Run the same beats in the same order (measured 2026-10-06):
+- **Simulated buyers hold Claim Passes.** Most of their grants are confirmed on the pass instead of held for pay-now.
+- **Close-out charges 4 Claim Pass carts, $165.00 due.**
+  - jess $44.00, ava $42.00 and ananya_s $37.00 are charged.
+  - dana's $42.00 declines.
+  - On dana's card: **Offer a pay-now link**, then **Open pay-now link**, then **Pay with PayPal**.
+- **Ship-to addresses are placeholders** ("843 Main St, San Jose") made from the buyer's name.

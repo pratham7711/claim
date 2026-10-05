@@ -87,6 +87,8 @@ The repo carries a Blueprint, `render.yaml`: one Docker web service on the **fre
 - In Render, **New**, then **Blueprint**, and pick this repo. Render reads `render.yaml`.
 - It asks for `GROQ_API_KEY`, `PAYPAL_CLIENT_ID` and `PAYPAL_CLIENT_SECRET` (marked `sync: false`, so they never live in the repo). `LLM_PROVIDER=groq` is set by the Blueprint.
 - Render provides `PORT`, and the container honours it.
+- No base-URL variable is needed: PayPal's return and cancel URLs are built from the browser's `Origin`, so the pay-now checkout returns to the Render host.
+- After the first deploy, connect PayPal's webhooks ([below](#paypal-webhook-url)) and add `PAYPAL_WEBHOOK_ID` under **Environment**. Until then the route answers 503 and PayPal retries.
 - The free plan has no persistent disk and sleeps after 15 minutes without traffic; the first request after that waits for a cold start. Show logs under `/data` last only as long as the instance, which is fine for demos because each demo show is seeded fresh.
 - For shows that must survive a restart, move to a paid instance, add a **Disk** at `/data`, and keep the instance count at 1 (a disk belongs to one instance).
 

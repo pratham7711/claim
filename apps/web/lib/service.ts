@@ -675,7 +675,19 @@ export function createShowService(opts: ShowServiceOptions) {
     return rec;
   }
 
-  async function capture(show: Show, orderId: string): Promise<OrderRecord> {
+  /** Captures in flight, so a double click or a page that auto-captures on PayPal's return sends one capture. */
+  const capturing = new Map<string, Promise<OrderRecord>>();
+
+  function capture(show: Show, orderId: string): Promise<OrderRecord> {
+    const key = `${show.showId}:${orderId}`;
+    const running = capturing.get(key);
+    if (running) return running;
+    const p = captureOnce(show, orderId).finally(() => capturing.delete(key));
+    capturing.set(key, p);
+    return p;
+  }
+
+  async function captureOnce(show: Show, orderId: string): Promise<OrderRecord> {
     const order = show.orders.get(orderId);
     if (!order) throw new Error(`Unknown order ${orderId}.`);
     if (order.status === "captured") return order;
@@ -689,6 +701,8 @@ export function createShowService(opts: ShowServiceOptions) {
       }
     }
     const result = await gateway.captureOrder(orderId);
+    // Not approved yet is not a failure: the buyer can still approve on PayPal, so the order stays open.
+    if (result.status === "PAYER_ACTION_REQUIRED") throw new Error("PayPal has not approved this payment yet. Approve it on PayPal, then come back.");
     if (result.status !== "COMPLETED") {
       saveOrder(show, { ...order, status: "failed" });
       throw new Error(`Capture returned ${result.status}${result.declineCode ? ` (${result.declineCode})` : ""}.`);

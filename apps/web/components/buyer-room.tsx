@@ -613,10 +613,10 @@ function SandboxSave({ act, me, cap, onLinked }: { act: Act; me: Me; cap: number
         className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#ffc439] text-[15px] font-bold text-[#111] hover:brightness-95 disabled:opacity-60"
       >
         {state === "saving" ? "Linking…" : (
-          <>
+          <span>
             Save <span className="italic text-[#003087]">Pay</span>
-            <span className="-ml-2 italic text-[#0070e0]">Pal</span>
-          </>
+            <span className="italic text-[#0070e0]">Pal</span>
+          </span>
         )}
       </button>
       <p role="status" className="mt-2 text-[12px] text-muted">
@@ -683,10 +683,10 @@ function ClaimPassSheet({ v, me, act, onClose, onSave, onLinked }: { v: ShowView
                 className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#ffc439] text-[15px] font-bold text-[#111] hover:brightness-95 disabled:opacity-60"
               >
                 {busy ? "Saving…" : (
-                  <>
+                  <span>
                     Save <span className="italic text-[#003087]">Pay</span>
-                    <span className="-ml-2 italic text-[#0070e0]">Pal</span>
-                  </>
+                    <span className="italic text-[#0070e0]">Pal</span>
+                  </span>
                 )}
               </button>
               <div className="mt-2.5 flex items-center justify-between gap-2">

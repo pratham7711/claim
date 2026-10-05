@@ -1,14 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { OrderRecord, ShowView } from "../lib/types";
 import { moneyExact } from "../lib/stats";
 import { Logo, MockBanner, Stamp } from "./ui";
 
-export function PayPage({ showId, shopName, order, payments }: { showId: string; shopName: string; order: OrderRecord | null; payments: ShowView["payments"] }) {
+/**
+ * In mock mode the button stands in for PayPal and captures directly. In sandbox the buyer approves on PayPal's
+ * own checkout (its button already says "Pay Now"), so arriving back here with a PayerID captures without a
+ * second click, and arriving without one sends the buyer to PayPal first.
+ */
+export function PayPage({ showId, shopName, order, payments, approved = false }: { showId: string; shopName: string; order: OrderRecord | null; payments: ShowView["payments"]; approved?: boolean }) {
   const [state, setState] = useState<"idle" | "busy" | "done" | "error">(order?.status === "captured" ? "done" : "idle");
   const [error, setError] = useState("");
+  const sandbox = payments.mode === "sandbox";
+  const autoCapture = sandbox && approved && order?.status === "open";
+  const started = useRef(false);
+  // Before the effect runs (and in the server render) a returning buyer already sees the capture as under way.
+  const confirming = state === "busy" || (autoCapture && state === "idle");
+
+  useEffect(() => {
+    if (!autoCapture || started.current) return;
+    started.current = true;
+    void pay();
+  }, [autoCapture]);
 
   const pay = async () => {
     if (!order) return;
@@ -64,19 +80,15 @@ export function PayPage({ showId, shopName, order, payments }: { showId: string;
                   </div>
                 ) : (
                   <>
-                    <button
-                      type="button"
-                      onClick={pay}
-                      disabled={state === "busy"}
-                      className="mt-6 flex h-12 w-full items-center justify-center rounded-full bg-[#ffc439] text-[16px] font-bold text-[#111] hover:brightness-95 disabled:opacity-60"
-                    >
-                      {state === "busy" ? "Paying…" : (
-                        <>
-                          Pay with&nbsp;<span className="italic text-[#003087]">Pay</span>
-                          <span className="italic text-[#0070e0]">Pal</span>
-                        </>
-                      )}
-                    </button>
+                    {sandbox && order.status === "open" && !confirming && (!approved || state === "error") ? (
+                      <a href={order.approveUrl} className={PAY_BUTTON}>
+                        <PayWith />
+                      </a>
+                    ) : (
+                      <button type="button" onClick={pay} disabled={confirming || order.status === "failed"} className={PAY_BUTTON}>
+                        {confirming ? (sandbox ? "Confirming with PayPal…" : "Paying…") : <PayWith />}
+                      </button>
+                    )}
                     {state === "error" ? <p role="alert" className="mt-3 text-[13px] text-danger">{error}</p> : null}
                     {order.status === "failed" ? <p className="mt-3 text-[13px] text-danger">This order can no longer be paid.</p> : null}
                   </>
@@ -89,5 +101,16 @@ export function PayPage({ showId, shopName, order, payments }: { showId: string;
         </div>
       </div>
     </main>
+  );
+}
+
+const PAY_BUTTON = "mt-6 flex h-12 w-full items-center justify-center rounded-full bg-[#ffc439] text-[16px] font-bold text-[#111] hover:brightness-95 disabled:opacity-60";
+
+function PayWith() {
+  return (
+    <span>
+      Pay with <span className="italic text-[#003087]">Pay</span>
+      <span className="italic text-[#0070e0]">Pal</span>
+    </span>
   );
 }

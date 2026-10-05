@@ -26,8 +26,8 @@ flowchart TD
 | `packages/resolver` | `normalize.ts`, `lexicon.ts`, `rules.ts` (stage 1), `llm-stage.ts` (stage 2), `resolve.ts` (orchestration). | Granting anything. It only emits intents with a confidence. |
 | `packages/listing` | `rules.ts` / `numbers.ts` / `lexicon.ts` parse a spoken listing ("two mediums and one large, thirty four dollars"). `llm.ts` fills gaps. `confirmListing` applies the seller's edits. | Listing an item. The web app sends `listItem` to the engine only after the seller confirms. |
 | `packages/llm` | `LlmClient` with JSON-schema completions. Adapters: `anthropic` (default model `claude-haiku-4-5`); `openai` (`gpt-4.1-mini`), `groq` (`openai/gpt-oss-20b`, reasoning effort `low`) and `gemini` (`gemini-2.5-flash-lite`), all three through `openai-compat`; `claude-cli` (spawns the local `claude` binary, default `haiku`); and `mock`. `factory.ts` reads `LLM_PROVIDER`, which defaults to `mock`. | Prompting. The prompts live with their callers. |
-| `packages/paypal` | `sandbox.ts` (REST calls), `bodies.ts` (pure request-body builders), `http.ts` (OAuth, retries, timeouts), `errors.ts`, `money.ts`, `parse.ts`, `mock.ts` (deterministic in-memory gateway), `env.ts` (`createGateway`: sandbox or mock), `browser.ts` (the v6 JS SDK save session, loaded by the buyer room in sandbox mode; untested against a live sandbox). | Deciding what to charge. Carts come from the engine. |
-| `apps/web` | `lib/service.ts` (the show service: ingestion, simulator, Twitch, payments, actions), `lib/store.ts` (JSONL file store), `lib/view.ts` (the snapshot the UI renders), `lib/scenarios.ts`, `lib/twitch.ts`, `lib/seed.ts`. Routes: `GET`/`POST /api/shows`, `GET`/`POST /api/shows/[showId]`, `GET /api/shows/[showId]/stream` (SSE). Pages: `/`, `/demo/[id]`, `/seller/[id]`, `/seller/[id]/closeout`, `/live/[id]`, `/pay/[id]`. | Fairness decisions. Every allocation goes through `@claim/core`. |
+| `packages/paypal` | `sandbox.ts` (REST calls), `bodies.ts` (pure request-body builders), `http.ts` (OAuth, retries, timeouts), `errors.ts`, `money.ts`, `parse.ts`, `mock.ts` (deterministic in-memory gateway), `env.ts` (`createGateway`: sandbox or mock), `browser.ts` (the v6 JS SDK save session, loaded by the buyer room in sandbox mode; verified against a live sandbox on 2026-10-05), `webhook.ts` (reads the ids out of a webhook event). | Deciding what to charge. Carts come from the engine. |
+| `apps/web` | `lib/service.ts` (the show service: ingestion, simulator, Twitch, payments, actions), `lib/store.ts` (JSONL file store), `lib/view.ts` (the snapshot the UI renders), `lib/scenarios.ts`, `lib/twitch.ts`, `lib/seed.ts`. Routes: `GET`/`POST /api/shows`, `GET`/`POST /api/shows/[showId]`, `GET /api/shows/[showId]/stream` (SSE), `POST /api/paypal/webhook`. Pages: `/`, `/demo/[id]`, `/seller/[id]`, `/seller/[id]/closeout`, `/seller/[id]/ledger`, `/live/[id]`, `/pay/[id]` (in sandbox it captures when PayPal returns the buyer). | Fairness decisions. Every allocation goes through `@claim/core`. |
 
 **Every mutation goes through one endpoint.** `POST /api/shows/[showId]` takes `{ action, ... }`, and `ShowService.act` switches on it. The actions are:
 
@@ -280,9 +280,9 @@ sequenceDiagram
 
   Note over B,P: Pay-now (no Claim Pass, or after a decline)
   W->>P: POST /v2/checkout/orders (PAY_NOW, request id + "-paynow")
-  P-->>B: approval page, returns to /pay/{showId}?token=
-  B->>W: Pay with PayPal
-  W->>P: POST /v2/checkout/orders/{id}/capture
+  P-->>B: checkout ("Pay Now"), returns to /pay/{showId}?token=&PayerID=
+  B->>W: /pay captures on arrival (mock mode: the Pay with PayPal button)
+  W->>P: POST /v2/checkout/orders/{id}/capture (one in flight per order; not-yet-approved keeps the order open)
   W->>E: confirmPayment (units paid), then finalizeCarts / recordCharge for the supplementary cart
 
   Note over B,P: After the sale

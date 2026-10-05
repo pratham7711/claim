@@ -179,7 +179,7 @@ Every call below is implemented in `packages/paypal/src/sandbox.ts` (request bod
 | Claim Pass in the buyer room | **Save PayPal** button (`savePass`, mock only), auto-approved | PayPal v6 save session in the sheet: `clientToken`, then `passSetup`, then PayPal's window, then `passApprove`. Verified against a live sandbox on 2026-10-05 |
 | Simulated buyers | some get a Claim Pass (race: ava, dana, ben), and dana's card declines | no Claim Pass: their grants are pay-now holds, so Claim Pass carts come only from real buyer-room buyers |
 | Declines | buyers who tick "card declines at close-out", and the race scenario's `dana`, decline with `INSTRUMENT_DECLINED` | real issuer response, or `PayPal-Mock-Response` |
-| Pay-now link | goes straight to `/pay/<showId>?token=...` | PayPal approval page, which returns to `/pay/<showId>` |
+| Pay-now link | goes straight to `/pay/<showId>?token=...` | PayPal's checkout, which returns to `/pay/<showId>`; the page captures on arrival, with no second click |
 | Idempotency, duplicate invoice, over-refund | modelled | PayPal's own |
 
 The PayPal package has its own sandbox setup guide and a 16-step spike script (`npx tsx packages/paypal/scripts/spike.ts`); see [packages/paypal/README.md](packages/paypal/README.md). **None of the sandbox code has run against a real sandbox account yet.** It is unit-tested against a fake `fetch`, and request bodies are checked against PayPal's published OpenAPI specs.
@@ -229,7 +229,8 @@ So the LLM can only lower confidence or fill a gap; it cannot push an unclear co
   - The gateway spike (`packages/paypal/scripts/spike.ts`) passed 16 of 18 checks: v6 eligibility and approval, vault id, vault and `stored_credential` charges, idempotent replay, duplicate `invoice_id` refused, decline mock, pay-now after a decline, refund and refund replay, tracking.
   - A merchant-initiated order does not copy the wallet's address onto the order by itself, which was the spike's one failing check. Close-out now reads it from the saved wallet and sends it (2026-10-06, live: a $1.00 vault order with the address COMPLETED, and the order read back from PayPal carried the same address).
   - The webhook route is tested with signed deliveries against the mock (unit and browser tests). Real PayPal deliveries need a public HTTPS URL; see [docs/DEPLOY.md](docs/DEPLOY.md).
-  - In sandbox mode, simulated buyers have no Claim Pass, so the scripted decline (dana) and the simulated Claim Pass charges only happen in mock mode. Demo in mock mode.
+  - In sandbox mode, simulated buyers have no Claim Pass, so the scripted decline (dana) and the simulated Claim Pass charges only happen in mock mode. The demo video is recorded in sandbox with one real buyer-room Claim Pass; see [docs/DEMO-SCRIPT.md](docs/DEMO-SCRIPT.md).
+  - Pay-now in the app: the return to `/pay` was checked up to PayPal refusing an order nobody had approved (`ORDER_NOT_APPROVED`, 2026-10-06). The order stays open and the page sends the buyer back to PayPal. A complete in-app checkout payment has not been recorded yet.
 - **Groq is the only provider run with a real API key** (free tier, `openai/gpt-oss-20b`, 2026-10-05). On all five dev sets, rules + Groq made zero harmful grants, and on dev-real3 it raised grant recall from 0.522 to 0.565. These sets were read while writing the rules, so the numbers are in-sample; no held-out set has been scored with Groq. The `anthropic`, `openai` and `gemini` adapters are unit-tested against fakes only, and the held-out numbers above come from the local `claude` CLI.
 - **Measured LLM latency is far above the settle window's budget.** With the `claude` CLI, a single comment took p50 3.4 s against the 1.5 s budget. Through Groq, a single comment took p50 788 ms and p95 8,894 ms (n=12), so the median fits the budget and the tail does not. When a live LLM is configured, a comment the rules route to it is applied when the answer returns. It can then pre-empt only a grant made less than 2 s before that moment; a grant made earlier is already final, so the comment queues on the waitlist instead. Rule-resolved comments are unaffected: the "p95 resolve" KPI read 4.57 ms after the measured demo run (4.74 ms in an earlier identical run), with rules only.
 - **Single process.** All state is in one Node process's memory, with a local append-only log. One instance per data directory; no horizontal scaling. Vercel-style serverless does not work as-is; see [docs/DEPLOY.md](docs/DEPLOY.md).
@@ -244,9 +245,9 @@ npm test             # vitest: packages, eval metrics, web service
 npm run typecheck    # tsc -b packages/*
 ```
 
-`npm test` measured 21 files and 491 tests passing (2026-10-05). The PayPal OpenAPI conformance suite reads PayPal's published specs from `PAYPAL_OPENAPI_DIR`. It defaults to a path outside this repo, and when the specs are absent the suite reports as skipped.
+`npm test` measured 24 files and 540 tests passing (2026-10-06). The PayPal OpenAPI conformance suite reads PayPal's published specs from `PAYPAL_OPENAPI_DIR`. It defaults to a path outside this repo, and when the specs are absent the suite reports as skipped.
 
-A Python Playwright script drives the real UI end to end: one seller and two buyers, close-out with a decline, pay-now, refund, tracking and reload persistence. Run it as `python apps/web/e2e/e2e.py <base-url> <out-dir>`. It needs Python `playwright`, Google Chrome, and a server in mock mode. It was reported passing 19/19 checks on 2026-10-05; this packaging pass did not re-run it.
+A Python Playwright script drives the real UI end to end: one seller and two buyers, close-out with a decline, pay-now, refund, tracking and reload persistence. Run it as `python apps/web/e2e/e2e.py <base-url> <out-dir>`. It needs Python `playwright`, Google Chrome, and a server in mock mode. It passed 23/23 checks on 2026-10-06, against a production build with mock payments and Groq live; the added checks cover ship-to addresses, the ledger's Ship to column and CSV, and signed webhooks.
 
 `npm run eval` runs the resolver evaluation over `eval/data`; see the usage comment in `eval/run.ts`.
 

@@ -166,6 +166,53 @@ describe("show service", () => {
     expect(v.tracking[0]!.carrier).toBe("USPS");
   });
 
+  it("sends one capture to PayPal when the same order is captured twice at once", async () => {
+    const selected = selectGateway({});
+    let captures = 0;
+    const captureOrder = selected.gateway.captureOrder.bind(selected.gateway);
+    selected.gateway.captureOrder = async (orderId) => {
+      captures += 1;
+      await new Promise((r) => setTimeout(r, 5));
+      return captureOrder(orderId);
+    };
+    const svc = createShowService({ store: createMemoryStore(), gateway: selected, now: () => T0, tickMs: false });
+    services.push(svc);
+    const id = await svc.create({ seed: true });
+    await svc.ingest(id, { id: "c1", platform: "room", userId: "uma", displayName: "uma", text: "sold 12 L", platformTs: T0, receivedTs: T0 });
+    await svc.act(id, { action: "end" });
+    const { orderId } = ((await svc.act(id, { action: "payNowHolds", buyerKey: "room:uma" }, { origin: "http://x" })) as { data: { orderId: string } }).data;
+    const [a, b] = await Promise.all([svc.act(id, { action: "capture", orderId }), svc.act(id, { action: "capture", orderId })]);
+    expect(a.ok && b.ok).toBe(true);
+    expect(captures).toBe(1);
+    expect((await svc.act(id, { action: "capture", orderId })).ok).toBe(true);
+    expect(captures).toBe(1);
+    expect(svc.view(id)!.charges.filter((c) => c.via === "pay-now")).toHaveLength(1);
+  });
+
+  it("keeps a pay-now order open when PayPal says the buyer has not approved it yet", async () => {
+    const selected = selectGateway({});
+    const captureOrder = selected.gateway.captureOrder.bind(selected.gateway);
+    let first = true;
+    selected.gateway.captureOrder = async (orderId) => {
+      if (first) {
+        first = false;
+        return { orderId, status: "PAYER_ACTION_REQUIRED", declineCode: "ORDER_NOT_APPROVED" };
+      }
+      return captureOrder(orderId);
+    };
+    const svc = createShowService({ store: createMemoryStore(), gateway: selected, now: () => T0, tickMs: false });
+    services.push(svc);
+    const id = await svc.create({ seed: true });
+    await svc.ingest(id, { id: "c1", platform: "room", userId: "uma", displayName: "uma", text: "sold 12 L", platformTs: T0, receivedTs: T0 });
+    await svc.act(id, { action: "end" });
+    const { orderId } = ((await svc.act(id, { action: "payNowHolds", buyerKey: "room:uma" }, { origin: "http://x" })) as { data: { orderId: string } }).data;
+    const early = await svc.act(id, { action: "capture", orderId });
+    expect(early).toMatchObject({ ok: false, error: expect.stringMatching(/not approved this payment yet/) });
+    expect(svc.view(id)!.orders.find((o) => o.orderId === orderId)!.status).toBe("open");
+    expect((await svc.act(id, { action: "capture", orderId })).ok).toBe(true);
+    expect(svc.view(id)!.orders.find((o) => o.orderId === orderId)!.status).toBe("captured");
+  });
+
   it("replays a refund submitted twice with the same key, but honours a second refund with a new key", async () => {
     const { svc } = track(setup());
     const id = await svc.create({ seed: true });
