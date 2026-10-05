@@ -23,6 +23,7 @@ import {
 } from "@claim/core";
 import { confirmListing, parseListing, type ListingDraft, type ListingEdits } from "@claim/listing";
 import type { LlmClient } from "@claim/llm";
+import { readWebhookEvent, type WebhookEvent } from "@claim/paypal";
 import * as resolver from "@claim/resolver";
 import { DECLINE_PREFIX } from "./payments";
 import { buildScript, type HolderHint } from "./scenarios";
@@ -30,7 +31,7 @@ import { DEMO_SHOP, DEMO_TRANSCRIPTS } from "./seed";
 import { percentile } from "./stats";
 import type { ShowRecord, ShowStore } from "./store";
 import { connectTwitch, type TwitchConnection } from "./twitch";
-import type { ChargeRecord, OrderRecord, ScenarioId, ShowAction, ShowSummary, ShowView } from "./types";
+import type { ChargeRecord, OrderRecord, ScenarioId, ShowAction, ShowSummary, ShowView, ViewScope, WebhookRecord } from "./types";
 import { SCENARIOS } from "./types";
 import { buildView, indexEvent, type CommentRecord, type ShowData, type ViewEnv } from "./view";
 
@@ -52,7 +53,8 @@ export type ActionResult = { ok: true; data?: unknown } | { ok: false; error: st
 type Listener = (view: ShowView) => void;
 
 interface Show extends ShowData {
-  listeners: Set<Listener>;
+  /** Each subscriber with the view scope it receives. */
+  listeners: Map<Listener, ViewScope>;
   broadcastTimer?: ReturnType<typeof setTimeout>;
   tickTimer?: ReturnType<typeof setInterval>;
   lastTickAt: number;
@@ -118,8 +120,9 @@ export function createShowService(opts: ShowServiceOptions) {
       charges: [],
       refunds: [],
       tracking: [],
+      webhooks: [],
       twitch: { state: "off", messages: 0 },
-      listeners: new Set(),
+      listeners: new Map(),
       lastTickAt: now(),
       twitchLags: [],
       twitchWindow: [],
@@ -161,6 +164,12 @@ export function createShowService(opts: ShowServiceOptions) {
           break;
         case "tracking":
           show.tracking.push(r.tracking);
+          break;
+        case "webhook":
+          show.webhooks.push(r.hook);
+          break;
+        case "passRevoked":
+          show.passes.delete(r.buyerKey);
           break;
       }
     }
@@ -207,8 +216,8 @@ export function createShowService(opts: ShowServiceOptions) {
     broadcast(show);
   }
 
-  function view(show: Show): ShowView {
-    return buildView(show, env, now());
+  function view(show: Show, scope: ViewScope = "public"): ShowView {
+    return buildView(show, env, now(), scope);
   }
 
   function broadcast(show: Show): void {
@@ -216,8 +225,12 @@ export function createShowService(opts: ShowServiceOptions) {
     show.broadcastTimer = setTimeout(() => {
       show.broadcastTimer = undefined;
       if (!show.listeners.size) return;
-      const v = view(show);
-      for (const fn of show.listeners) fn(v);
+      const views = new Map<ViewScope, ShowView>();
+      for (const [fn, scope] of show.listeners) {
+        let v = views.get(scope);
+        if (!v) views.set(scope, (v = view(show, scope)));
+        fn(v);
+      }
     }, opts.broadcastMs ?? 80);
   }
 
@@ -524,7 +537,8 @@ export function createShowService(opts: ShowServiceOptions) {
         persist(show, { k: "pass", buyerKey, ...pass });
         show.passes.set(buyerKey, pass);
         try {
-          return await gateway.chargeVaulted(fresh.vaultId, input);
+          const shipTo = input.shipTo ?? (await gateway.walletShipTo(fresh.vaultId));
+          return await gateway.chargeVaulted(fresh.vaultId, { ...input, ...(shipTo ? { shipTo } : {}) });
         } catch (again) {
           err = again;
         }
@@ -548,9 +562,11 @@ export function createShowService(opts: ShowServiceOptions) {
         skipped += 1;
         continue;
       }
-      const input = cartInput(show, cart);
+      const shipTo = await gateway.walletShipTo(pass.vaultId);
+      const input = { ...cartInput(show, cart), ...(shipTo ? { shipTo } : {}) };
       const result = await chargeOne(show, cart.buyerKey, pass.vaultId, input);
       const ok = result.status === "COMPLETED";
+      const shipped = result.shipTo ?? shipTo;
       record(show, {
         cartId: cart.cartId,
         ...(result.orderId ? { orderId: result.orderId } : {}),
@@ -560,6 +576,7 @@ export function createShowService(opts: ShowServiceOptions) {
         amountCents: input.totalCents,
         via: "vault",
         at: now(),
+        ...(ok && shipped ? { shipTo: shipped } : {}),
       });
       exec(show, {
         type: "recordCharge",
@@ -680,7 +697,7 @@ export function createShowService(opts: ShowServiceOptions) {
     saveOrder(show, captured);
 
     if (order.purpose === "cart" && order.cartId) {
-      record(show, { cartId: order.cartId, orderId, ...(result.captureId ? { captureId: result.captureId } : {}), status: "COMPLETED", amountCents: order.amountCents, via: "pay-now", at: now() });
+      record(show, { cartId: order.cartId, orderId, ...(result.captureId ? { captureId: result.captureId } : {}), status: "COMPLETED", amountCents: order.amountCents, via: "pay-now", at: now(), ...(result.shipTo ? { shipTo: result.shipTo } : {}) });
       exec(show, { type: "recordCharge", cartId: order.cartId, outcome: "completed", orderId });
       return captured;
     }
@@ -691,7 +708,7 @@ export function createShowService(opts: ShowServiceOptions) {
       const s = show.engine.state;
       const cart = [...s.cartOrder].reverse().map((id) => s.carts[id]!).find((c) => c.buyerKey === order.buyerKey && c.status === "pending");
       if (cart && cart.dueCents === order.shippingCents) {
-        record(show, { cartId: cart.cartId, orderId, ...(result.captureId ? { captureId: result.captureId } : {}), status: "COMPLETED", amountCents: order.amountCents, via: "pay-now", at: now() });
+        record(show, { cartId: cart.cartId, orderId, ...(result.captureId ? { captureId: result.captureId } : {}), status: "COMPLETED", amountCents: order.amountCents, via: "pay-now", at: now(), ...(result.shipTo ? { shipTo: result.shipTo } : {}) });
         exec(show, { type: "recordCharge", cartId: cart.cartId, outcome: "completed", orderId });
       }
     }
@@ -873,18 +890,81 @@ export function createShowService(opts: ShowServiceOptions) {
     return { ok: false, error: "Unknown action." };
   }
 
+  // ---------- PayPal webhooks ----------
+
+  /** Event ids already handled in this process; a show's own records cover redeliveries after a restart. */
+  const seenEvents = new Set<string>();
+
+  /**
+   * One delivery from PayPal. Anything but a 2xx makes PayPal retry, so: 401 for a bad signature, 503
+   * when no webhook id is configured, 502 when PayPal could not be asked, and 200 for every genuine
+   * event, matched or not, so a delivery for another app's order is not retried for three days.
+   */
+  async function webhook(headers: Record<string, string | undefined>, rawBody: string): Promise<{ status: number; body: Record<string, unknown> }> {
+    let verified: boolean;
+    try {
+      verified = await gateway.verifyWebhook(headers, rawBody);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      return { status: /PAYPAL_WEBHOOK_ID/.test(message) ? 503 : 502, body: { ok: false, error: message } };
+    }
+    if (!verified) return { status: 401, body: { ok: false, error: "The PayPal signature did not verify." } };
+    const event = readWebhookEvent(rawBody);
+    if (!event) return { status: 400, body: { ok: false, error: "The body is not a webhook event." } };
+    if (seenEvents.has(event.id)) return { status: 200, body: { ok: true, event: event.type, duplicate: true } };
+    seenEvents.add(event.id);
+    const matched: string[] = [];
+    for (const showId of store.list()) {
+      const show = get(showId);
+      if (show && applyWebhook(show, event)) matched.push(showId);
+    }
+    return { status: 200, body: { ok: true, event: event.type, matched: matched.length } };
+  }
+
+  function applyWebhook(show: Show, e: WebhookEvent): boolean {
+    if (show.webhooks.some((h) => h.eventId === e.id)) return false;
+    const passHolders = e.vaultId ? [...show.passes].filter(([, p]) => p.vaultId === e.vaultId).map(([buyerKey]) => buyerKey) : [];
+    const hit =
+      (e.captureId && show.charges.some((c) => c.captureId === e.captureId)) ||
+      (e.orderId && (show.orders.has(e.orderId) || show.charges.some((c) => c.orderId === e.orderId))) ||
+      passHolders.length > 0;
+    if (!hit) return false;
+    const hook: WebhookRecord = {
+      eventId: e.id,
+      type: e.type,
+      at: now(),
+      ...(e.captureId ? { captureId: e.captureId } : {}),
+      ...(e.refundId ? { refundId: e.refundId } : {}),
+      ...(e.orderId ? { orderId: e.orderId } : {}),
+      ...(e.vaultId ? { vaultId: e.vaultId } : {}),
+      summary: hookSummary(e),
+    };
+    show.webhooks.push(hook);
+    persist(show, { k: "webhook", hook });
+    if (e.type === "VAULT.PAYMENT-TOKEN.DELETED") {
+      for (const buyerKey of passHolders) {
+        show.passes.delete(buyerKey);
+        persist(show, { k: "passRevoked", buyerKey, at: now() });
+        exec(show, { type: "revokeClaimPass", buyerKey });
+      }
+    }
+    broadcast(show);
+    return true;
+  }
+
   return {
     create,
     list,
     act,
-    view(showId: string): ShowView | undefined {
+    webhook,
+    view(showId: string, scope: ViewScope = "public"): ShowView | undefined {
       const show = get(showId);
-      return show ? view(show) : undefined;
+      return show ? view(show, scope) : undefined;
     },
-    subscribe(showId: string, fn: Listener): (() => void) | undefined {
+    subscribe(showId: string, fn: Listener, scope: ViewScope = "public"): (() => void) | undefined {
       const show = get(showId);
       if (!show) return undefined;
-      show.listeners.add(fn);
+      show.listeners.set(fn, scope);
       return () => show.listeners.delete(fn);
     },
     async ingest(showId: string, comment: ChatComment, at?: number) {
@@ -918,3 +998,26 @@ export function createShowService(opts: ShowServiceOptions) {
 }
 
 export type ShowService = ReturnType<typeof createShowService>;
+
+function hookSummary(e: WebhookEvent): string {
+  switch (e.type) {
+    case "PAYMENT.CAPTURE.COMPLETED":
+      return "PayPal confirmed the payment";
+    case "PAYMENT.CAPTURE.PENDING":
+      return `PayPal is holding the payment as pending${e.reason ? ` (${e.reason})` : ""}`;
+    case "PAYMENT.CAPTURE.DECLINED":
+      return "PayPal declined the payment";
+    case "PAYMENT.CAPTURE.REFUNDED":
+      return "PayPal confirmed the refund";
+    case "PAYMENT.CAPTURE.REVERSED":
+      return "PayPal reversed the payment";
+    case "CHECKOUT.ORDER.APPROVED":
+      return "The buyer approved the order in PayPal";
+    case "VAULT.PAYMENT-TOKEN.CREATED":
+      return "PayPal saved the buyer's wallet";
+    case "VAULT.PAYMENT-TOKEN.DELETED":
+      return "The buyer removed the saved wallet in PayPal, so the Claim Pass is revoked";
+    default:
+      return e.type;
+  }
+}

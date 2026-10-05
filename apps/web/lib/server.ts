@@ -3,6 +3,7 @@ import { createLlmClient } from "@claim/llm";
 import { selectGateway } from "./payments";
 import { createShowService, type ShowService } from "./service";
 import { createFileStore } from "./store";
+import type { ViewScope } from "./types";
 
 const g = globalThis as typeof globalThis & { __claimShows?: ShowService };
 
@@ -22,4 +23,13 @@ export function getService(): ShowService {
     });
   }
   return g.__claimShows;
+}
+
+/**
+ * `?scope=seller` asks for the seller view, which adds buyers' ship-to addresses. Buyer rooms never ask
+ * for it, so addresses stay out of every buyer's browser. There is no seller login in this demo, so the
+ * parameter is a scope, not access control (see the README's limitations).
+ */
+export function scopeOf(url: string): ViewScope {
+  return new URL(url).searchParams.get("scope") === "seller" ? "seller" : "public";
 }

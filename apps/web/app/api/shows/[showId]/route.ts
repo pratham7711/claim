@@ -1,4 +1,4 @@
-import { getService } from "../../../../lib/server";
+import { getService, scopeOf } from "../../../../lib/server";
 import type { ShowAction } from "../../../../lib/types";
 
 export const dynamic = "force-dynamic";
@@ -6,9 +6,9 @@ export const runtime = "nodejs";
 
 type Ctx = { params: Promise<{ showId: string }> };
 
-export async function GET(_req: Request, { params }: Ctx) {
+export async function GET(req: Request, { params }: Ctx) {
   const { showId } = await params;
-  const view = getService().view(showId);
+  const view = getService().view(showId, scopeOf(req.url));
   return view ? Response.json(view) : Response.json({ error: "No such show." }, { status: 404 });
 }
 

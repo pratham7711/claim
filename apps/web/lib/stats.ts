@@ -1,3 +1,5 @@
+import type { ShipTo } from "@claim/core";
+
 /** Nearest-rank percentile; null for an empty sample. */
 export function percentile(values: readonly number[], p: number): number | null {
   if (!values.length) return null;
@@ -44,4 +46,17 @@ export function countdown(ms: number): string {
 
 export function variantLabel(v: { size?: string; color?: string; sku: string }): string {
   return [v.size, v.color].filter(Boolean).join(" · ") || v.sku;
+}
+
+/** A ship-to address as label lines, without the name: street, city/state/postcode, country. */
+export function shipToLines(s: ShipTo): string[] {
+  const street = [s.line1, s.line2].filter(Boolean).join(", ");
+  const region = [s.state, s.postalCode].filter(Boolean).join(" ");
+  const locality = [s.city, region].filter(Boolean).join(", ");
+  return [street, locality, s.countryCode].filter(Boolean);
+}
+
+/** One line, name first, for a table cell or a CSV column. */
+export function shipToText(s: ShipTo): string {
+  return [s.name, ...shipToLines(s)].filter(Boolean).join(", ");
 }

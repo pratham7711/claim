@@ -141,7 +141,7 @@ All are optional. With none set, the app runs rules-only resolution and mock pay
 | `LLM_FALLBACK_MODELS` | groq: `qwen/qwen3.8-27b,openai/gpt-oss-120b` | Comma list of models to try, in order, when the current one answers 429. Rate limits are per model, so this spreads the free tier. A model that hit its limit is skipped until its `Retry-After` passes; when every model is limited the comment goes straight to review. An empty value turns fallback off. |
 | `CLAUDE_BIN`, `CLAUDE_THINKING` | `claude`, off | For `claude-cli`. It spawns the local Claude Code CLI, which is **not in the Docker image**, so do not use it in a container. |
 | `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` | none | When **both** are set, the app switches from the mock to the PayPal **sandbox** gateway. |
-| `PAYPAL_WEBHOOK_ID` | none | Needed by `verifyWebhook`. No route calls it yet. |
+| `PAYPAL_WEBHOOK_ID` | none | The id PayPal gives the webhook you register. Without it `/api/paypal/webhook` answers 503 and verifies nothing. |
 | `PAYPAL_GATEWAY` | unset | `mock` forces the mock even when credentials are set. |
 | `PAYPAL_STORED_CREDENTIAL` | on | `false`, `0`, `off` or `no` drops `stored_credential` from vault orders (whether PayPal requires it is unverified). |
 | `PAYPAL_BASE_URL` | `https://api-m.sandbox.paypal.com` | Any non-sandbox host is refused. |
@@ -152,20 +152,22 @@ All are optional. With none set, the app runs rules-only resolution and mock pay
 - For local `npm run dev`, export them in the shell. Next.js reads `.env*` files from `apps/web/`, not from the repo root (standard Next.js behaviour, not exercised in this repo: unverified). The repo-root `.env` is read only by the PayPal spike script.
 
 **Keep public demos on the mock.** Setting the PayPal credentials switches the whole app to sandbox, and two things change:
-- the buyer room's Claim Pass sheet loads PayPal's v6 save session (`clientToken`, then `passSetup`, then `passApprove`), which has not been run against a live sandbox;
+- the buyer room's Claim Pass sheet loads PayPal's v6 save session (`clientToken`, then `passSetup`, then `passApprove`), so each buyer logs in to a sandbox PayPal account (verified live on 2026-10-05);
 - simulated buyers get no Claim Pass. Their grants become pay-now holds, so the scripted decline and the simulated Claim Pass charges do not happen.
 
 Also, no route has authentication, so anyone with a show URL can act as the seller.
 
 ## PayPal webhook URL
 
-**The web app has no webhook route yet.** There is no `/api/paypal/webhook` under `apps/web/app`. `@claim/paypal` provides the pieces:
-- `verifyWebhook(headers, rawBody)`, which posts to `/v1/notifications/verify-webhook-signature`;
-- `registerWebhook(url)`;
-- `WEBHOOK_EVENTS`.
+`POST /api/paypal/webhook` takes PayPal's deliveries. It reads the body as raw text, verifies it with `verify-webhook-signature`, and answers:
+- `401` for a bad or missing signature;
+- `503` when `PAYPAL_WEBHOOK_ID` is not set, and `502` when PayPal could not be asked, so PayPal redelivers;
+- `400` for a signed body that is not an event;
+- `200` for every genuine event, matched or not, with repeat deliveries ignored.
 
-When a route exists, set it up like this. The steps follow `packages/paypal/README.md` and are unverified.
+What it does with an event: capture confirmations, refunds and reversals show on that cart in close-out (a reversal tells the seller to hold the parcel), and `VAULT.PAYMENT-TOKEN.DELETED` revokes the buyer's Claim Pass, so open claims fall back to pay-now.
 
+To connect it:
 1. Deploy to a public **HTTPS URL on port 443**. PayPal cannot deliver to localhost.
 2. On developer.paypal.com, open the sandbox app, then **Sandbox Webhooks**, then **Add Webhook**, with URL `https://<your-host>/api/paypal/webhook`. Subscribe to:
    - `PAYMENT.CAPTURE.COMPLETED`, `PAYMENT.CAPTURE.DECLINED`, `PAYMENT.CAPTURE.PENDING`, `PAYMENT.CAPTURE.REFUNDED`, `PAYMENT.CAPTURE.REVERSED`;
@@ -173,10 +175,6 @@ When a route exists, set it up like this. The steps follow `packages/paypal/READ
    - `VAULT.PAYMENT-TOKEN.CREATED`, `VAULT.PAYMENT-TOKEN.DELETED`.
 
    The spike can also register it: `SPIKE_WEBHOOK_URL=https://<your-host>/api/paypal/webhook npx tsx packages/paypal/scripts/spike.ts`.
-3. Copy the **Webhook ID** into `PAYPAL_WEBHOOK_ID` and restart.
-4. The route must:
-   - read the body as raw text (`await req.text()`), not parsed JSON, and pass it with the request headers to `verifyWebhook`;
-   - answer `400` when that returns `false`;
-   - answer `5xx` when it throws (a PayPal outage), so PayPal redelivers.
+3. Copy the **Webhook ID** into `PAYPAL_WEBHOOK_ID` and restart (on Render: **Environment**, add the variable, save; it redeploys).
 
-   PayPal's simulator events cannot be postback-verified; use real sandbox events.
+PayPal's simulator events cannot be postback-verified; use real sandbox events, such as a refund from close-out.

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCallback, useState } from "react";
 import type { BuyerCarts, Cart } from "@claim/core";
 import type { OrderRecord, ShowAction, ShowView } from "../lib/types";
-import { money, moneyExact } from "../lib/stats";
+import { money, moneyExact, shipToLines } from "../lib/stats";
 import { Button, Icon, Logo, MockBanner, Stamp, ThemeToggle, Toasts, cx, inputCls } from "./ui";
 import { useFreshKeys, useShow, useToasts, type ActResult } from "./use-show";
 
@@ -77,7 +77,7 @@ function WaitlistOnly({ buyers, v }: { buyers: BuyerCarts[]; v: ShowView }) {
 }
 
 export function Closeout({ initial }: { initial: ShowView }) {
-  const { view: v, act } = useShow(initial.showId, initial);
+  const { view: v, act } = useShow(initial.showId, initial, "seller");
   const { toasts, push } = useToasts();
   const [busy, setBusy] = useState<string | null>(null);
   const run: Run = useCallback(
@@ -254,6 +254,9 @@ function BuyerCard({ b, v, run, busy, fresh }: { b: BuyerCarts; v: ShowView; run
         const charge = [...v.charges].reverse().find((c) => c.cartId === cart.cartId);
         const refunds = v.refunds.filter((r) => r.cartId === cart.cartId);
         const tracking = v.tracking.filter((t) => t.cartId === cart.cartId);
+        const hooks = charge ? v.webhooks.filter((h) => (charge.captureId && h.captureId === charge.captureId) || (charge.orderId && h.orderId === charge.orderId)) : [];
+        const reversed = hooks.find((h) => h.type === "PAYMENT.CAPTURE.REVERSED" || h.type === "PAYMENT.CAPTURE.DECLINED");
+        const confirmed = hooks.filter((h) => h.type === "PAYMENT.CAPTURE.COMPLETED" || h.type === "PAYMENT.CAPTURE.REFUNDED").map((h) => (h.type === "PAYMENT.CAPTURE.REFUNDED" ? "refund confirmed by PayPal" : "confirmed by PayPal"));
         const capPct = cart.capCents ? Math.min(100, (cart.totalCents / cart.capCents) * 100) : 0;
         return (
           <section key={cart.cartId + (preview ? "-p" : "")} className="px-5 py-4" aria-label={`Cart ${cart.seq} for ${b.displayName}`}>
@@ -324,10 +327,37 @@ function BuyerCard({ b, v, run, busy, fresh }: { b: BuyerCarts; v: ShowView; run
               </p>
             ) : null}
             {charge?.status === "COMPLETED" && cart.status === "charged" ? (
-              <p className="mt-3 font-mono text-[11px] text-muted">
-                {charge.via === "vault" ? "vault order" : "pay-now order"} {charge.orderId}
-                {charge.captureId ? ` · capture ${charge.captureId}` : ""}
-              </p>
+              <>
+                {charge.shipTo ? (
+                  <address className="mt-3 flex gap-2.5 rounded-lg bg-sunken px-3 py-2.5 text-[13px] not-italic leading-snug" aria-label={`Ship to for ${b.displayName}`}>
+                    <Icon.Truck size={15} className="mt-0.5 shrink-0 text-muted" />
+                    <span className="min-w-0">
+                      <span className="block font-semibold">
+                        Ship to {charge.shipTo.name ?? b.displayName}
+                      </span>
+                      {shipToLines(charge.shipTo).map((line) => (
+                        <span key={line} className="block text-ink-2">
+                          {line}
+                        </span>
+                      ))}
+                    </span>
+                  </address>
+                ) : (
+                  <p role="status" className="tone-bg-waitlist mt-3 rounded-lg px-3 py-2 text-[12.5px] font-semibold">
+                    PayPal has no ship-to address for this order. Ask {b.displayName} where to send it before you ship.
+                  </p>
+                )}
+                {reversed ? (
+                  <p role="alert" className="tone-bg-danger mt-3 rounded-lg px-3 py-2 text-[12.5px] font-semibold">
+                    {reversed.summary}. Hold this parcel until it is resolved.
+                  </p>
+                ) : null}
+                <p className="mt-2 font-mono text-[11px] text-muted">
+                  {charge.via === "vault" ? "vault order" : "pay-now order"} {charge.orderId}
+                  {charge.captureId ? ` · capture ${charge.captureId}` : ""}
+                  {[...new Set(confirmed)].map((c) => ` · ${c}`).join("")}
+                </p>
+              </>
             ) : null}
 
             {!preview && cart.status === "pending" && cart.chargeMode === "pay-now" && cart.dueCents > 0 ? (

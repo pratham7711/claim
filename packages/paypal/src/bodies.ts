@@ -1,4 +1,4 @@
-import type { Cart, CartChargeInput } from "@claim/core";
+import type { Cart, CartChargeInput, ShipTo } from "@claim/core";
 import { clientError } from "./errors.js";
 import { assertCents, money } from "./money.js";
 
@@ -36,6 +36,26 @@ export function validateCart(cart: CartChargeInput, op = "validate"): void {
   if (cart.customId !== undefined && (!cart.customId || cart.customId.length > 127)) {
     throw clientError("customId must be 1-127 chars", op);
   }
+  if (cart.shipTo) {
+    if (!cart.shipTo.line1.trim()) throw clientError("shipTo.line1 is empty", op);
+    if (!/^[A-Z]{2}$/.test(cart.shipTo.countryCode)) throw clientError("shipTo.countryCode must be two capital letters", op);
+  }
+}
+
+/** Orders v2 shipping_detail; lengths are the spec's maxima. */
+export function paypalShipping(s: ShipTo) {
+  const opt = (key: string, v: string | undefined, max: number) => (v?.trim() ? { [key]: v.trim().slice(0, max) } : {});
+  return {
+    ...(s.name?.trim() ? { name: { full_name: s.name.trim().slice(0, 300) } } : {}),
+    address: {
+      address_line_1: s.line1.trim().slice(0, 300),
+      ...opt("address_line_2", s.line2, 300),
+      ...opt("admin_area_2", s.city, 120),
+      ...opt("admin_area_1", s.state, 300),
+      ...opt("postal_code", s.postalCode, 60),
+      country_code: s.countryCode,
+    },
+  };
 }
 
 /** One purchase unit with an item_total + shipping breakdown; items are physical goods. */
@@ -45,6 +65,7 @@ export function purchaseUnit(cart: CartChargeInput) {
   return {
     invoice_id: cart.invoiceId,
     ...(cart.customId ? { custom_id: cart.customId } : {}),
+    ...(cart.shipTo ? { shipping: paypalShipping(cart.shipTo) } : {}),
     amount: {
       ...money(cart.totalCents, c),
       breakdown: { item_total: money(itemTotal, c), shipping: money(cart.shippingCents, c) },

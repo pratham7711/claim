@@ -1,18 +1,18 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { ShowAction, ShowView } from "../lib/types";
+import type { ShowAction, ShowView, ViewScope } from "../lib/types";
 
 export type ActResult = { ok: true; data?: unknown } | { ok: false; error: string };
 
-/** Live show state over SSE, plus one POST helper for every action. */
-export function useShow(showId: string, initial: ShowView) {
+/** Live show state over SSE, plus one POST helper for every action. Seller pages pass scope "seller". */
+export function useShow(showId: string, initial: ShowView, scope: ViewScope = "public") {
   const [view, setView] = useState<ShowView>(initial);
   const [offset, setOffset] = useState(() => initial.now - Date.now());
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
-    const es = new EventSource(`/api/shows/${showId}/stream`);
+    const es = new EventSource(`/api/shows/${showId}/stream${scope === "seller" ? "?scope=seller" : ""}`);
     es.addEventListener("snapshot", (ev) => {
       const v = JSON.parse((ev as MessageEvent<string>).data) as ShowView;
       setView(v);
@@ -21,7 +21,7 @@ export function useShow(showId: string, initial: ShowView) {
     });
     es.onerror = () => setConnected(false);
     return () => es.close();
-  }, [showId]);
+  }, [showId, scope]);
 
   const act = useCallback(
     async (a: ShowAction): Promise<ActResult> => {

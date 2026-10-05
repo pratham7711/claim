@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CloseoutPage({ params }: Props) {
   const { showId } = await params;
-  const view = getService().view(showId);
+  const view = getService().view(showId, "seller");
   if (!view) notFound();
   return <Closeout initial={view} />;
 }

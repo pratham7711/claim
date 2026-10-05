@@ -6,6 +6,7 @@ import type {
   IntentKind,
   Platform,
   ReviewCause,
+  ShipTo,
   ShowItem,
   UnitStatus,
 } from "@claim/core";
@@ -133,6 +134,24 @@ export interface ChargeRecord {
   amountCents: number;
   via: "vault" | "pay-now";
   at: number;
+  /** Where the order ships. A buyer's address, so only the seller-scoped view carries it. */
+  shipTo?: ShipTo;
+}
+
+/** "public" goes to every buyer room; "seller" adds buyers' ship-to addresses for close-out and the ledger. */
+export type ViewScope = "public" | "seller";
+
+/** A verified PayPal webhook delivery that matched something in this show. */
+export interface WebhookRecord {
+  eventId: string;
+  type: string;
+  at: number;
+  captureId?: string;
+  refundId?: string;
+  orderId?: string;
+  vaultId?: string;
+  /** Plain words for the seller, e.g. "PayPal confirmed the payment". */
+  summary: string;
 }
 
 export interface RefundRecord {
@@ -200,6 +219,7 @@ export interface ShowView {
   charges: ChargeRecord[];
   refunds: RefundRecord[];
   tracking: TrackingRecord[];
+  webhooks: WebhookRecord[];
   kpis: Kpis;
   config: {
     currency: string;

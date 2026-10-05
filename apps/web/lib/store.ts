@@ -1,7 +1,7 @@
 import { appendFileSync, existsSync, mkdirSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import type { ChatComment, ClaimIntent, EngineConfig, EngineEvent } from "@claim/core";
-import type { ChargeRecord, OrderRecord, RefundRecord, TrackingRecord } from "./types";
+import type { ChargeRecord, OrderRecord, RefundRecord, TrackingRecord, WebhookRecord } from "./types";
 
 /** One line of `<showId>.jsonl`. Engine events are the source of truth; the rest is show furniture. */
 export type ShowRecord =
@@ -14,7 +14,9 @@ export type ShowRecord =
   | { k: "order"; order: OrderRecord }
   | { k: "charge"; charge: ChargeRecord }
   | { k: "refund"; refund: RefundRecord }
-  | { k: "tracking"; tracking: TrackingRecord };
+  | { k: "tracking"; tracking: TrackingRecord }
+  | { k: "webhook"; hook: WebhookRecord }
+  | { k: "passRevoked"; buyerKey: string; at: number };
 
 const SHOW_ID = /^[a-z0-9][a-z0-9-]{2,47}$/;
 

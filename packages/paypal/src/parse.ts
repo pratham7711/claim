@@ -1,4 +1,4 @@
-import type { ChargeResult } from "@claim/core";
+import type { ChargeResult, ShipTo } from "@claim/core";
 import { DECLINE_ISSUES, PAYER_ACTION_ISSUES, PayPalError } from "./errors.js";
 
 interface Link {
@@ -12,15 +12,52 @@ interface Capture {
   status_details?: { reason?: string };
 }
 
+/** shipping_detail on an order, and payment_source.paypal.shipping on a saved payment token. */
+export interface ShippingJson {
+  name?: { full_name?: string };
+  address?: {
+    address_line_1?: string;
+    address_line_2?: string;
+    admin_area_2?: string;
+    admin_area_1?: string;
+    postal_code?: string;
+    country_code?: string;
+  };
+  trackers?: { id?: string }[];
+}
+
 export interface OrderJson {
   id?: string;
   status?: string;
   links?: Link[];
-  purchase_units?: { payments?: { captures?: Capture[] }; shipping?: { trackers?: { id?: string }[] } }[];
+  purchase_units?: { payments?: { captures?: Capture[] }; shipping?: ShippingJson }[];
+}
+
+export interface PaymentTokenJson {
+  id?: string;
+  payment_source?: { paypal?: { shipping?: ShippingJson } };
 }
 
 export function linkHref(links: Link[] | undefined, rel: string): string | undefined {
   return links?.find((l) => l.rel === rel)?.href;
+}
+
+/** Undefined unless there is at least a street line and a country, which a label needs. */
+export function shipToFrom(s: ShippingJson | undefined): ShipTo | undefined {
+  const a = s?.address;
+  const line1 = a?.address_line_1?.trim();
+  const countryCode = a?.country_code?.trim().toUpperCase();
+  if (!line1 || !countryCode) return undefined;
+  const opt = <K extends keyof ShipTo>(key: K, v: string | undefined) => (v?.trim() ? { [key]: v.trim() } : {});
+  return {
+    ...opt("name", s?.name?.full_name),
+    line1,
+    ...opt("line2", a?.address_line_2),
+    ...opt("city", a?.admin_area_2),
+    ...opt("state", a?.admin_area_1),
+    ...opt("postalCode", a?.postal_code),
+    countryCode,
+  };
 }
 
 /**
@@ -29,7 +66,8 @@ export function linkHref(links: Link[] | undefined, rel: string): string | undef
  */
 export function chargeFromOrder(order: OrderJson, debugId?: string): ChargeResult {
   const orderId = order.id ?? "";
-  const extra = debugId ? { debugId } : {};
+  const shipTo = shipToFrom(order.purchase_units?.[0]?.shipping);
+  const extra = { ...(debugId ? { debugId } : {}), ...(shipTo ? { shipTo } : {}) };
   if (order.status === "PAYER_ACTION_REQUIRED") return { orderId, status: "PAYER_ACTION_REQUIRED", ...extra };
   const capture = order.purchase_units?.[0]?.payments?.captures?.[0];
   if (capture?.id) {

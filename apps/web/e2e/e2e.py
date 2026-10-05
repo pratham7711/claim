@@ -12,6 +12,7 @@ import json
 import re
 import sys
 import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -34,6 +35,54 @@ def api(path, body=None):
         req.data = json.dumps(body).encode()
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.loads(r.read() or b"{}")
+
+
+def post_raw(path, raw, headers):
+    """POST exact bytes and return (status, json) for 4xx/5xx too, unlike api()."""
+    req = urllib.request.Request(BASE + path, method="POST", data=raw.encode())
+    req.add_header("content-type", "application/json")
+    for k, v in headers.items():
+        req.add_header(k, v)
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return r.status, json.loads(r.read() or b"{}")
+    except urllib.error.HTTPError as e:
+        return e.code, json.loads(e.read() or b"{}")
+
+
+def fnv1a(s):
+    """The mock gateway's fnv1a over UTF-16 code units, as JavaScript's charCodeAt sees them."""
+    h = 0x811C9DC5
+    units = s.encode("utf-16-le")
+    for i in range(0, len(units), 2):
+        h ^= units[i] | (units[i + 1] << 8)
+        h = (h * 0x01000193) & 0xFFFFFFFF
+    digits = "0123456789abcdefghijklmnopqrstuvwxyz"
+    out = ""
+    while True:
+        h, r = divmod(h, 36)
+        out = digits[r] + out
+        if not h:
+            return out
+
+
+def signed(event, transmission_id):
+    """A webhook delivery the mock-mode server verifies, signed the way its mock gateway signs."""
+    raw = json.dumps(event)
+    time_ = "2026-10-05T00:00:00.000Z"
+    return raw, {
+        "paypal-auth-algo": "MOCKFNV1A",
+        "paypal-cert-url": "https://api-m.sandbox.paypal.com/v1/notifications/certs/MOCK",
+        "paypal-transmission-id": transmission_id,
+        "paypal-transmission-sig": "mock-" + fnv1a(f"{transmission_id}|{time_}|WEBHOOK_ID|{raw}"),
+        "paypal-transmission-time": time_,
+    }
+
+
+def charge_of(show, name):
+    v = api(f"/api/shows/{show}?scope=seller")
+    carts = {c["cartId"] for b in v["carts"] if b["displayName"] == name for c in b["finalized"]}
+    return [c for c in v["charges"] if c["cartId"] in carts and c["status"] == "COMPLETED"][-1]
 
 
 def check(name, ok, detail=""):
@@ -281,6 +330,23 @@ def main():
 
         step("end show -> close-out charges Claim Pass carts: jess charged, maya declined", end_and_charge, seller)
 
+        def ship_to():
+            address = seller.locator('address[aria-label="Ship to for jess"]')
+            expect(address).to_be_visible(timeout=10000)
+            expect(address).to_contain_text("Main St")
+            expect(address).to_contain_text("San Jose, CA 95131")
+            seller_json = json.dumps(api(f"/api/shows/{show}?scope=seller"))
+            public_json = json.dumps(api(f"/api/shows/{show}"))
+            assert "Main St" in seller_json, "seller view has no address"
+            assert "Main St" not in public_json and "95131" not in public_json, "public view leaks an address"
+            jess.reload()
+            jess.wait_for_load_state("networkidle")
+            time.sleep(1)
+            assert "Main St" not in jess.content(), "buyer room page carries an address"
+            address.screenshot(path=str(OUT / "06b-ship-to.png"))
+
+        step("charged cart shows the wallet's ship-to address; buyer rooms and the public API never get it", ship_to, seller)
+
         def buyer_pays():
             maya.reload()
             maya.wait_for_load_state("networkidle")
@@ -296,6 +362,33 @@ def main():
             expect(maya.get_by_text("Your Claim Pass charge didn't go through")).to_be_hidden(timeout=10000)
 
         step("declined buyer sees what she owes, pays through PayPal pay-now, the debt clears", buyer_pays, maya)
+
+        def pay_now_address():
+            seller.reload()
+            seller.wait_for_load_state("networkidle")
+            address = seller.locator('address[aria-label="Ship to for maya"]')
+            expect(address).to_be_visible(timeout=10000)
+            expect(address).to_contain_text("Main St")
+
+        step("a pay-now capture brings the buyer's PayPal address to close-out", pay_now_address, seller)
+
+        def ledger_ship_to():
+            pg = browser.new_context(viewport=DESKTOP, accept_downloads=True).new_page()
+            watch(pg, "ledger")
+            pg.goto(f"{BASE}/seller/{show}/ledger")
+            pg.wait_for_selector(".ag-root-wrapper", timeout=20000)
+            expect(pg.locator(".ag-header-cell", has_text="Ship to")).to_be_visible()
+            cells = pg.locator('.ag-row[row-id] .ag-cell[col-id="shipTo"]')
+            expect(cells.filter(has_text="Main St").first).to_be_visible(timeout=10000)
+            with pg.expect_download() as dl:
+                pg.get_by_role("button", name="Export CSV").click()
+            text = Path(dl.value.path()).read_text()
+            assert "Ship to" in text.splitlines()[0], text.splitlines()[0]
+            assert "Main St" in text, "CSV has no addresses"
+            pg.screenshot(path=str(OUT / "06c-ledger-ship-to.png"))
+            pg.context.close()
+
+        step("ledger shows a Ship to column and exports it in the CSV", ledger_ship_to, seller)
 
         def refund_and_track():
             seller.reload()
@@ -317,6 +410,34 @@ def main():
             expect(jess_card.get_by_text("9400E2E0001")).to_be_visible(timeout=10000)
 
         step("refund (double submit refunds once) and tracking on jess's cart", refund_and_track, seller)
+
+        def webhooks():
+            c = charge_of(show, "jess")
+            done = {"id": "WH-E2E-CAP", "event_type": "PAYMENT.CAPTURE.COMPLETED", "resource_type": "capture",
+                    "resource": {"id": c["captureId"], "status": "COMPLETED", "supplementary_data": {"related_ids": {"order_id": c["orderId"]}}}}
+            raw, headers = signed(done, "e2e-1")
+            status, body = post_raw("/api/paypal/webhook", raw, headers)
+            assert (status, body.get("matched")) == (200, 1), (status, body)
+            status, body = post_raw("/api/paypal/webhook", raw, headers)
+            assert status == 200 and body.get("duplicate") is True, (status, body)
+            status, body = post_raw("/api/paypal/webhook", raw.replace("COMPLETED", "REVERSED", 1), headers)
+            assert status == 401, (status, body)
+            status, body = post_raw("/api/paypal/webhook", raw, {})
+            assert status == 401, (status, body)
+            refund = {"id": "WH-E2E-REF", "event_type": "PAYMENT.CAPTURE.REFUNDED", "resource_type": "refund",
+                      "resource": {"id": "E2EREFUND", "links": [{"rel": "up", "href": f"https://api.sandbox.paypal.com/v2/payments/captures/{c['captureId']}"}]}}
+            status, body = post_raw("/api/paypal/webhook", *signed(refund, "e2e-2"))
+            assert (status, body.get("matched")) == (200, 1), (status, body)
+            jess_card = seller.locator("li", has=seller.get_by_text("jess", exact=True)).first
+            expect(jess_card.get_by_text(re.compile(r"confirmed by PayPal · refund confirmed by PayPal"))).to_be_visible(timeout=10000)
+            reversal = {"id": "WH-E2E-REV", "event_type": "PAYMENT.CAPTURE.REVERSED", "resource_type": "refund",
+                        "resource": {"id": "E2EREVERSAL", "links": [{"rel": "up", "href": f"https://api.sandbox.paypal.com/v2/payments/captures/{c['captureId']}"}]}}
+            status, body = post_raw("/api/paypal/webhook", *signed(reversal, "e2e-3"))
+            assert (status, body.get("matched")) == (200, 1), (status, body)
+            expect(jess_card.get_by_role("alert").filter(has_text="PayPal reversed the payment")).to_be_visible(timeout=10000)
+            jess_card.screenshot(path=str(OUT / "09b-webhooks.png"))
+
+        step("signed PayPal webhooks: confirmation, refund, reversal reach the cart; replays dedupe, forgeries get 401", webhooks, seller)
 
         def buyer_receipt():
             jess.reload()

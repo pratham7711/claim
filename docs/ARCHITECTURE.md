@@ -235,7 +235,7 @@ The demo seed parses its three transcripts with rules only.
 
 ## 4. Payment flow
 
-Every step below is wired into the web app except webhooks, which exist only in `@claim/paypal`. None of it has run against a live PayPal sandbox; in mock mode the same calls go to the in-memory mock gateway.
+Every step below is wired into the web app. The Claim Pass save, the vault close-out charge with the wallet's ship-to address, refunds and tracking have run against a live PayPal sandbox; in mock mode the same calls go to the in-memory mock gateway.
 
 ```mermaid
 sequenceDiagram
@@ -268,7 +268,8 @@ sequenceDiagram
   W->>E: endShow, then finalizeCarts
   E-->>W: carts (invoiceId, requestId, combined shipping)
   loop each vault cart
-    W->>P: POST /v2/checkout/orders (vault_id, PayPal-Request-Id = requestId)
+    W->>P: GET /v3/vault/payment-tokens/{id} (the wallet's ship-to address)
+    W->>P: POST /v2/checkout/orders (vault_id, shipping, PayPal-Request-Id = requestId)
     alt COMPLETED
       W->>E: recordCharge completed (units charged)
     else DECLINED (e.g. INSTRUMENT_DECLINED)
@@ -287,7 +288,9 @@ sequenceDiagram
   Note over B,P: After the sale
   W->>P: POST /v2/payments/captures/{id}/refund (PayPal-Request-Id per refund key)
   W->>P: POST /v2/checkout/orders/{id}/track (notify_payer)
-  Note over P,W: Package only: webhooks (verify-webhook-signature). No webhook route exists yet.
+  P->>W: POST /api/paypal/webhook (capture, refund, reversal, wallet deleted)
+  W->>P: POST /v1/notifications/verify-webhook-signature
+  W->>E: revokeClaimPass when the buyer deletes the saved wallet
 ```
 
 The decline handling is defensive. `chargeOne` turns a thrown error (a missing vault, a network failure) into a decline, so a single failure moves that cart to pay-now instead of aborting the whole close-out. In mock mode, a vault the mock forgot on restart is re-saved once and retried.

@@ -25,6 +25,8 @@ import type {
   TrackingRecord,
   TwitchStatus,
   UnitView,
+  ViewScope,
+  WebhookRecord,
 } from "./types";
 
 export interface CommentRecord {
@@ -60,6 +62,7 @@ export interface ShowData {
   charges: ChargeRecord[];
   refunds: RefundRecord[];
   tracking: TrackingRecord[];
+  webhooks: WebhookRecord[];
   twitch: TwitchStatus;
   simulation?: { scenario: string; label: string; startedAt: number };
 }
@@ -188,7 +191,7 @@ function intentOutcome(data: ShowData, key: string, intent: ClaimIntent, unitsBy
 
 const PRIORITY: Outcome["tone"][] = ["review", "settling", "granted", "held", "sold", "waitlist", "released", "rejected", "pending", "question", "chatter"];
 
-export function buildView(data: ShowData, env: ViewEnv, now: number): ShowView {
+export function buildView(data: ShowData, env: ViewEnv, now: number, scope: ViewScope = "public"): ShowView {
   const { engine } = data;
   const state = engine.state;
   const board = itemBoard(state, now);
@@ -332,9 +335,10 @@ export function buildView(data: ShowData, env: ViewEnv, now: number): ShowView {
     })),
     carts: buyerCarts(state, now),
     orders: [...data.orders.values()],
-    charges: data.charges,
+    charges: scope === "seller" ? data.charges : data.charges.map(({ shipTo: _address, ...c }) => c),
     refunds: data.refunds,
     tracking: data.tracking,
+    webhooks: data.webhooks,
     kpis: kpis(data, now),
     config: {
       currency: state.config.currency,

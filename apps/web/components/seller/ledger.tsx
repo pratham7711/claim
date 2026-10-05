@@ -6,7 +6,7 @@ import { AllCommunityModule, ModuleRegistry, themeQuartz, type ColDef, type GetR
 import { AgGridReact } from "ag-grid-react";
 import type { UnitStatus } from "@claim/core";
 import type { ShowView, UnitView } from "../../lib/types";
-import { baseCommentId, clockMs, money } from "../../lib/stats";
+import { baseCommentId, clockMs, money, shipToText } from "../../lib/stats";
 import { useShow } from "../use-show";
 import { Icon, Logo, MockBanner, ThemeToggle, cx } from "../ui";
 
@@ -55,6 +55,7 @@ interface LedgerRow {
   comment?: string;
   why?: string;
   cart?: string;
+  shipTo?: string;
 }
 
 interface TotalsRow {
@@ -95,6 +96,7 @@ function statusOf(u: UnitView): { label: string; tone: Tone } {
 
 function toRows(v: ShowView): LedgerRow[] {
   const comments = new Map(v.comments.map((c) => [c.id, c]));
+  const shipTo = new Map(v.charges.flatMap((c) => (c.status === "COMPLETED" && c.shipTo ? [[c.cartId, shipToText(c.shipTo)] as const] : [])));
   return v.units.map((u) => {
     const c = u.commentId ? comments.get(baseCommentId(u.commentId)) : undefined;
     const intent = c?.intents.find((i) => i.itemCode === u.itemCode) ?? c?.intents[0];
@@ -116,6 +118,7 @@ function toRows(v: ShowView): LedgerRow[] {
       comment: c?.text,
       why: u.status === "released" ? u.releaseCause : intent?.rationale,
       cart: u.cartId,
+      shipTo: u.cartId ? shipTo.get(u.cartId) : undefined,
     };
   });
 }
@@ -145,7 +148,7 @@ const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
 const fmtMoney = (p: ValueFormatterParams<LedgerRow, number>) => (p.value == null ? "" : money(p.value));
 
 export function Ledger({ initial }: { initial: ShowView }) {
-  const { view: v, connected } = useShow(initial.showId, initial);
+  const { view: v, connected } = useShow(initial.showId, initial, "seller");
   const grid = useRef<AgGridReact<LedgerRow>>(null);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
@@ -177,6 +180,7 @@ export function Ledger({ initial }: { initial: ShowView }) {
       { field: "priceCents", headerName: "Price", width: 100, type: "rightAligned", valueFormatter: fmtMoney, cellClass: ["num", "ag-right-aligned-cell"], filter: "agNumberColumnFilter" },
       { field: "statusLabel", headerName: "Status", width: 150, cellRenderer: StatusCell, enableCellChangeFlash: true },
       { field: "via", headerName: "Payment", width: 130, enableCellChangeFlash: true },
+      { field: "shipTo", headerName: "Ship to", width: 230, cellClass: "text-ink-2", tooltipField: "shipTo", enableCellChangeFlash: true },
       { field: "decidedBy", headerName: "Decided by", width: 140, cellRenderer: DecidedCell, tooltipField: "why" },
       { field: "comment", headerName: "Comment", flex: 1, minWidth: 180, cellClass: "text-ink-2", tooltipField: "comment" },
       { field: "cart", headerName: "Cart", width: 120, cellClass: "num font-mono text-[11.5px] text-muted", valueFormatter: (p) => (p.value ? String(p.value).slice(-8) : "") },

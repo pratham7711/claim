@@ -1,4 +1,4 @@
-import type { CartChargeInput, ChargeResult, PayNowOrder, PaymentsGateway } from "@claim/core";
+import type { CartChargeInput, ChargeResult, PayNowOrder, PaymentsGateway, ShipTo } from "@claim/core";
 import { fnv1a, lowerHeaders, validateCart, verifyWebhookBody } from "./bodies.js";
 import { PayPalError } from "./errors.js";
 import { chargeFromError } from "./parse.js";
@@ -189,6 +189,11 @@ export function createMockGateway(opts: MockGatewayOptions = {}): MockGateway {
       return { vaultId: v.id, customerId: v.customerId };
     },
 
+    async walletShipTo(vaultId) {
+      const v = vaults.get(vaultId);
+      return v && !v.deleted ? mockShipTo(v.buyerKey) : undefined;
+    },
+
     async deletePaymentToken(vaultId) {
       const v = vaults.get(vaultId);
       if (v) v.deleted = true;
@@ -212,7 +217,7 @@ export function createMockGateway(opts: MockGatewayOptions = {}): MockGateway {
         if (scripted) throw fail("chargeVaulted", 422, scripted);
         const order = newOrder("vault", cart, v.buyerKey);
         capture(order, "chargeVaulted");
-        result = { orderId: order.id, captureId: order.captureId!, status: "COMPLETED", debugId: debugId() };
+        result = { orderId: order.id, captureId: order.captureId!, status: "COMPLETED", debugId: debugId(), ...(cart.shipTo ? { shipTo: cart.shipTo } : {}) };
       } catch (e) {
         try {
           result = chargeFromError(e);
@@ -255,7 +260,7 @@ export function createMockGateway(opts: MockGatewayOptions = {}): MockGateway {
         const scripted = scriptedDecline({ op: "captureOrder", ...(o.buyerKey ? { buyerKey: o.buyerKey } : {}), orderId, cart: o.cart });
         if (scripted) throw fail("captureOrder", 422, scripted);
         capture(o, "captureOrder");
-        return { orderId, captureId: o.captureId!, status: "COMPLETED", debugId: debugId() };
+        return { orderId, captureId: o.captureId!, status: "COMPLETED", debugId: debugId(), ...(o.buyerKey ? { shipTo: mockShipTo(o.buyerKey) } : {}) };
       } catch (e) {
         return chargeFromError(e, orderId);
       }
@@ -304,4 +309,18 @@ export function createMockGateway(opts: MockGatewayOptions = {}): MockGateway {
 
     orders: () => [...orders.values()].map((o) => ({ ...o, trackers: [...o.trackers] })),
   };
+}
+
+/** The sandbox personal account's default address, with the street number and name taken from the buyer key. */
+export function mockShipTo(buyerKey: string): ShipTo {
+  // Room keys end in a random tag ("room:jess-5vsg8"); a label wants the handle without it.
+  const handle =
+    buyerKey
+      .slice(buyerKey.lastIndexOf(":") + 1)
+      .replace(/-(?=[a-z0-9]*\d)[a-z0-9]{4,}$/i, "")
+      .replace(/[-_.]+/g, " ")
+      .trim() || "Buyer";
+  const name = handle.replace(/\b\w/g, (c) => c.toUpperCase());
+  const number = 100 + (parseInt(fnv1a(buyerKey), 36) % 900);
+  return { name, line1: `${number} Main St`, city: "San Jose", state: "CA", postalCode: "95131", countryCode: "US" };
 }

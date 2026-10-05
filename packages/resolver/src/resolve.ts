@@ -61,6 +61,32 @@ function keepForReview(rule: RuleIntent[], got: RuleIntent[], text: string, ctx:
   return rule.map((r) => ({ ...r, confidence: Math.min(r.confidence, REVIEW_CAP), rationale: r.rationale ? `${r.rationale}; ${note}` : note }));
 }
 
+/**
+ * The model can confirm a claim yet leave out what the rules already read off the screen: "M wala mera"
+ * while #12 is on air comes back as a claim with no item. When the model gives exactly one claim and the
+ * rules read exactly one, the model's blanks are filled from the rule claim for the same item, so the
+ * review card arrives ready to approve. The llmCap applied afterwards still holds it below the grant line.
+ */
+function fillFromRule(rule: RuleIntent[], got: RuleIntent[]): RuleIntent[] {
+  const ruleClaims = rule.filter((r) => (r.kind === "claim" || r.kind === "change") && r.itemCode);
+  const gotClaims = got.filter((g) => g.kind === "claim" || g.kind === "change");
+  if (ruleClaims.length !== 1 || gotClaims.length !== 1) return got;
+  const r = ruleClaims[0]!;
+  return got.map((g) => {
+    if (g !== gotClaims[0] || g.kind !== r.kind || (g.itemCode && g.itemCode !== r.itemCode)) return g;
+    const filled: RuleIntent = { ...g };
+    const took: string[] = [];
+    for (const key of ["itemCode", "size", "color"] as const) {
+      if (filled[key] === undefined && r[key] !== undefined) {
+        filled[key] = r[key];
+        took.push(key === "itemCode" ? "item" : key);
+      }
+    }
+    if (!took.length) return g;
+    return { ...filled, confidence: Math.max(g.confidence, r.confidence), rationale: `${g.rationale ?? "llm"}; ${took.join(", ")} from the rules` };
+  });
+}
+
 async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
   const out: R[] = new Array(items.length);
   let next = 0;
@@ -112,7 +138,8 @@ export async function resolveBatch(comments: CommentLike[], source: ContextSourc
         }
         const cap = outcomes[i]!.llmCap;
         const why = outcomes[i]!.capReason ?? "rules asked for review";
-        const capped = cap === undefined ? got : got.map((g) => (g.confidence > cap ? { ...g, confidence: cap, rationale: `${g.rationale} (capped: ${why})` } : g));
+        const merged = fillFromRule(outcomes[i]!.intents, got);
+        const capped = cap === undefined ? merged : merged.map((g) => (g.confidence > cap ? { ...g, confidence: cap, rationale: `${g.rationale} (capped: ${why})` } : g));
         results[i] = toClaimIntents(comments[i]!.id, capped, "llm");
       });
     } catch (error) {

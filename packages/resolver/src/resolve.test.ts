@@ -119,6 +119,37 @@ describe("resolveBatch", () => {
     expect(out![0]!.confidence).toBeLessThan(0.8);
   });
 
+  it("fills the item and size the LLM left out of a claim from the rules, still below the grant line", async () => {
+    const llm = createMockClient({ fallback: { results: [result("c1", "claim", [], 0.4)] } });
+    const [out] = await resolveBatch([{ id: "a", text: "12 L pakka" }], ctxOn("12"), { llm });
+    expect(out).toHaveLength(1);
+    expect(out![0]).toMatchObject({ kind: "claim", itemCode: "12", size: "L", method: "llm" });
+    expect(out![0]!.confidence).toBeLessThan(0.8);
+    expect(out![0]!.rationale).toContain("item, size from the rules");
+  });
+
+  it("restores the rule's item when the LLM names one the comment never mentions", async () => {
+    const llm = createMockClient({ fallback: { results: [result("c1", "claim", [{ code: "7" }], 0.7)] } });
+    const [out] = await resolveBatch([{ id: "a", text: "12 L pakka" }], ctxOn("12"), { llm });
+    expect(out).toHaveLength(1);
+    expect(out![0]).toMatchObject({ kind: "claim", itemCode: "12", size: "L", method: "llm" });
+    expect(out![0]!.confidence).toBeLessThan(0.8);
+  });
+
+  it("does not fill from the rules when the LLM gives several claims", async () => {
+    const llm = createMockClient({ fallback: { results: [result("c1", "claim", [{ code: "7" }, { code: "8" }], 0.7)] } });
+    const [out] = await resolveBatch([{ id: "a", text: "7 and 8 pakka" }], ctxOn("12"), { llm });
+    expect(out!.map((i) => i.itemCode)).toEqual(["7", "8"]);
+    expect(out!.every((i) => !i.rationale?.includes("from the rules"))).toBe(true);
+  });
+
+  it("leaves an LLM claim alone when the rules read no claim to fill from", async () => {
+    const llm = createMockClient({ fallback: { results: [result("c1", "claim", [], 0.4)] } });
+    const [out] = await resolveBatch([{ id: "a", text: "M wala mera" }], ctxOn("12"), { llm });
+    expect(out![0]!.itemCode).toBeUndefined();
+    expect(out![0]!.rationale).not.toContain("from the rules");
+  });
+
   it("routes everything to the LLM in llm mode, and nothing in rules mode", async () => {
     const llm = createMockClient({ fallback: { results: [] } });
     await resolveBatch([{ id: "a", text: "sold 7 black M" }], FULL, { llm, mode: "llm" });

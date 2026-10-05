@@ -68,6 +68,17 @@ export interface ClaimIntent {
 
 /* ---------- Payments: implemented by @claim/paypal (sandbox) and a mock for demos and tests ---------- */
 
+/** A ship-to address as PayPal holds it on a saved wallet or an order. */
+export interface ShipTo {
+  name?: string;
+  line1: string;
+  line2?: string;
+  city?: string;
+  state?: string;
+  postalCode?: string;
+  countryCode: string;
+}
+
 export interface ChargeResult {
   /** Absent when PayPal refused before creating an order (a 422 decline on create). */
   orderId?: string;
@@ -76,6 +87,8 @@ export interface ChargeResult {
   /** PayPal issue code on a decline, e.g. INSTRUMENT_DECLINED. */
   declineCode?: string;
   debugId?: string;
+  /** Where the order ships, as recorded on the PayPal order. */
+  shipTo?: ShipTo;
 }
 
 export interface PayNowOrder {
@@ -91,6 +104,8 @@ export interface CartChargeInput {
   shippingCents: number;
   totalCents: number;
   customId?: string;
+  /** Sent as the order's shipping. A vault charge without one uses the address saved on the wallet. */
+  shipTo?: ShipTo;
 }
 
 export interface PaymentsGateway {
@@ -102,6 +117,13 @@ export interface PaymentsGateway {
   /** Claim Pass, step 2: exchange the approved setup token for a vault id. */
   createPaymentToken(setupTokenId: string): Promise<{ vaultId: string; customerId: string }>;
   deletePaymentToken(vaultId: string): Promise<void>;
+  /**
+   * The address the buyer keeps on a saved wallet, read at close-out so a change made since saving the
+   * pass is honoured. A vault_id order does not copy it onto the order by itself (measured in the
+   * sandbox), so the caller passes it as the cart's shipTo. Undefined when there is none or the lookup
+   * fails; it never throws, so a missing address cannot block a charge.
+   */
+  walletShipTo(vaultId: string): Promise<ShipTo | undefined>;
   /** End-show close-out: merchant-initiated order against a saved wallet, no buyer present. */
   chargeVaulted(vaultId: string, cart: CartChargeInput): Promise<ChargeResult>;
   /** Fallback for buyers without a Claim Pass. */

@@ -1,4 +1,4 @@
-import type { CartChargeInput, ChargeResult, PayNowOrder, PaymentsGateway } from "@claim/core";
+import type { CartChargeInput, ChargeResult, PayNowOrder, PaymentsGateway, ShipTo } from "@claim/core";
 import {
   WEBHOOK_EVENTS,
   payNowOrderBody,
@@ -12,7 +12,7 @@ import {
 } from "./bodies.js";
 import { PayPalError, clientError } from "./errors.js";
 import { createHttp, type AccessToken, type FetchLike } from "./http.js";
-import { chargeFromError, chargeFromOrder, linkHref, trackerIdFrom, type OrderJson } from "./parse.js";
+import { chargeFromError, chargeFromOrder, linkHref, shipToFrom, trackerIdFrom, type OrderJson, type PaymentTokenJson } from "./parse.js";
 
 export type GatewayOp =
   | "chargeVaulted"
@@ -183,6 +183,20 @@ export function createSandboxGateway(opts: SandboxGatewayOptions): SandboxGatewa
         // Already gone is the outcome we wanted.
         if (e instanceof PayPalError && e.status === 404) return;
         throw e;
+      }
+    },
+
+    async walletShipTo(vaultId): Promise<ShipTo | undefined> {
+      try {
+        const res = await http.call<PaymentTokenJson>({
+          op: "getPaymentToken",
+          method: "GET",
+          path: `/v3/vault/payment-tokens/${enc(vaultId)}`,
+          idempotent: true,
+        });
+        return shipToFrom(res.body?.payment_source?.paypal?.shipping);
+      } catch {
+        return undefined;
       }
     },
 
