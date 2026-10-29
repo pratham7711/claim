@@ -230,7 +230,7 @@ export interface ShowView {
     shipping: { firstItemCents: number; perExtraItemCents: number; freeOverCents?: number };
   };
   payments: { mode: "sandbox" | "mock"; label: string };
-  llm: { provider: string; model: string };
+  llm: { provider: string; model: string; escalateModel?: string };
   twitch: TwitchStatus;
   simulation?: { scenario: string; label: string; startedAt: number };
 }

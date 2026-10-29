@@ -150,6 +150,47 @@ describe("resolveBatch", () => {
     expect(out![0]!.rationale).not.toContain("from the rules");
   });
 
+  it("asks the escalation model when the fast model is unsure, and keeps the surer answer", async () => {
+    const llm = createMockClient({ model: "nano", fallback: { results: [result("c1", "claim", [{ code: "7", size: "M", color: "black" }], 0.6)] } });
+    const escalate = createMockClient({ model: "super", fallback: { results: [result("c1", "claim", [{ code: "7", size: "M", color: "black" }], 0.9)] } });
+    const seen: boolean[] = [];
+    const [out] = await resolveBatch([{ id: "a", text: "7 black M yaar" }], ctxOn("7"), { llm, escalate, onLlmCall: (i) => seen.push(Boolean(i.escalated)) });
+    expect(escalate.calls).toHaveLength(1);
+    expect(seen).toEqual([false, true]);
+    expect(out![0]).toMatchObject({ kind: "claim", itemCode: "7", size: "M", method: "llm", confidence: 0.75 });
+    expect(out![0]!.rationale).toContain("escalated to super");
+  });
+
+  it("does not escalate a confident fast answer", async () => {
+    const llm = createMockClient({ fallback: { results: [result("c1", "claim", [{ code: "7", size: "M", color: "black" }], 0.9)] } });
+    const escalate = createMockClient();
+    await resolveBatch([{ id: "a", text: "7 black M yaar" }], ctxOn("7"), { llm, escalate });
+    expect(escalate.calls).toHaveLength(0);
+  });
+
+  it("keeps the fast answer when the escalation model is no surer or fails", async () => {
+    const fast = { results: [result("c1", "claim", [{ code: "7", size: "M", color: "black" }], 0.6)] };
+    const unsure = createMockClient({ fallback: { results: [result("c1", "other", [], 0.5)] } });
+    const [a] = await resolveBatch([{ id: "a", text: "7 black M yaar" }], ctxOn("7"), { llm: createMockClient({ fallback: fast }), escalate: unsure });
+    expect(a![0]).toMatchObject({ kind: "claim", confidence: 0.6, method: "llm" });
+    const down = createMockClient({ replies: [new LlmError("down", 503, true)] });
+    const [b] = await resolveBatch([{ id: "a", text: "7 black M yaar" }], ctxOn("7"), { llm: createMockClient({ fallback: fast }), escalate: down });
+    expect(b![0]).toMatchObject({ kind: "claim", confidence: 0.6, method: "llm" });
+  });
+
+  it("escalates a comment the fast model could not answer", async () => {
+    const escalate = createMockClient({ fallback: { results: [result("c1", "claim", [{ code: "7", size: "M", color: "black" }], 0.9)] } });
+    const [out] = await resolveBatch([{ id: "a", text: "7 black M yaar" }], ctxOn("7"), { llm: createMockClient({ replies: [new LlmError("down", 503, true)] }), escalate });
+    expect(out![0]).toMatchObject({ kind: "claim", itemCode: "7", method: "llm" });
+  });
+
+  it("does not escalate a comment the rules hold for review anyway", async () => {
+    const llm = createMockClient({ fallback: { results: [result("c1", "claim", [{ code: "12", size: "12" }], 0.6)] } });
+    const escalate = createMockClient();
+    await resolveBatch([{ id: "a", text: "12" }], FULL, { llm, escalate });
+    expect(escalate.calls).toHaveLength(0);
+  });
+
   it("routes everything to the LLM in llm mode, and nothing in rules mode", async () => {
     const llm = createMockClient({ fallback: { results: [] } });
     await resolveBatch([{ id: "a", text: "sold 7 black M" }], FULL, { llm, mode: "llm" });

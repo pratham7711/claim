@@ -15,6 +15,13 @@ import { VoiceListing } from "./voice-listing";
 
 type Filter = "all" | "claims" | "review" | "other";
 
+/** "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B" -> "Nemotron Nano"; other ids keep their last path segment. */
+const modelName = (m: string) => {
+  const id = m.split("/").pop() ?? m;
+  const tier = /nemotron.*?(nano|super|ultra)/i.exec(id);
+  return tier ? `Nemotron ${tier[1]![0]!.toUpperCase()}${tier[1]!.slice(1).toLowerCase()}` : id;
+};
+
 export function SellerConsole({ initial }: { initial: ShowView }) {
   const { view: v, act, offset, connected } = useShow(initial.showId, initial);
   const { toasts, push } = useToasts();
@@ -131,7 +138,7 @@ export function SellerConsole({ initial }: { initial: ShowView }) {
       <section aria-label="Show metrics" className="grid shrink-0 grid-cols-3 border-b border-line bg-surface min-[960px]:grid-cols-6">
         <Kpi label="Comments / min" value={String(k.commentsPerMin)} sub={`${k.totalComments} total`} />
         <Kpi label="Auto-resolved" value={k.autoResolved === null ? "–" : `${Math.round(k.autoResolved * 100)}%`} sub={`${k.claims} claims`} />
-        <Kpi label="p95 resolve" value={k.p95LatencyMs === null ? "–" : k.p95LatencyMs < 10 ? `${k.p95LatencyMs.toFixed(1)}ms` : `${Math.round(k.p95LatencyMs)}ms`} sub={v.llm.provider === "mock" || v.llm.provider === "none" ? "rules · LLM off" : `rules + ${v.llm.provider}`} />
+        <Kpi label="p95 resolve" value={k.p95LatencyMs === null ? "–" : k.p95LatencyMs < 10 ? `${k.p95LatencyMs.toFixed(1)}ms` : `${Math.round(k.p95LatencyMs)}ms`} sub={v.llm.provider === "mock" || v.llm.provider === "none" ? "rules · LLM off" : v.llm.provider === "nebius" ? `rules → ${modelName(v.llm.model)}${v.llm.escalateModel ? ` → ${modelName(v.llm.escalateModel)}` : ""}` : `rules + ${v.llm.provider}`} />
         <Kpi label="Held" value={money(k.heldCents, v.config.currency)} sub={k.chargedCents ? `${money(k.chargedCents)} charged` : "not yet charged"} />
         <Kpi label="Oversold" value={String(k.oversold)} tone={k.oversold === 0 ? "good" : "bad"} sub="units over stock" />
         <Kpi label="Needs you" value={String(k.reviewOpen)} tone={k.reviewOpen ? "review" : undefined} sub="in review" />

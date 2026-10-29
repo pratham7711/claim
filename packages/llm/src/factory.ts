@@ -7,7 +7,7 @@ import type { LlmClient } from "./types.js";
 
 export type Env = Record<string, string | undefined>;
 
-export const LLM_PROVIDERS = ["anthropic", "openai", "groq", "gemini", "openai-compat", "claude-cli", "mock"] as const;
+export const LLM_PROVIDERS = ["anthropic", "openai", "groq", "gemini", "nebius", "openai-compat", "claude-cli", "mock"] as const;
 export type LlmProvider = (typeof LLM_PROVIDERS)[number];
 
 export interface FactoryExtras {
@@ -26,8 +26,8 @@ function required(env: Env, key: string, provider: string): string {
 /**
  * Build the configured client from env:
  * LLM_PROVIDER (default mock), LLM_MODEL, LLM_TIMEOUT_MS, LLM_RETRIES, plus the provider's key.
- * openai-compat additionally takes LLM_BASE_URL, LLM_API_KEY and LLM_JSON_MODE. The openai, groq and gemini
- * presets also take LLM_REASONING_EFFORT and LLM_FALLBACK_MODELS (comma list; empty turns fallback off).
+ * openai-compat additionally takes LLM_BASE_URL, LLM_API_KEY and LLM_JSON_MODE. The openai, groq, gemini and
+ * nebius presets also take LLM_REASONING_EFFORT and LLM_FALLBACK_MODELS (comma list; empty turns fallback off).
  */
 export function createLlmClient(env: Env = process.env, extras: FactoryExtras = {}): LlmClient {
   const provider = (env.LLM_PROVIDER || "mock").trim().toLowerCase();
@@ -50,7 +50,8 @@ export function createLlmClient(env: Env = process.env, extras: FactoryExtras = 
       });
     case "openai":
     case "groq":
-    case "gemini": {
+    case "gemini":
+    case "nebius": {
       const preset = OPENAI_COMPAT_PRESETS[provider];
       const apiKey = required(env, preset.keyEnv, provider);
       const primary = model ?? preset.model;
@@ -94,4 +95,29 @@ export function createLlmClient(env: Env = process.env, extras: FactoryExtras = 
     default:
       throw new Error(`Unknown LLM_PROVIDER "${provider}"; expected one of ${LLM_PROVIDERS.join(", ")}`);
   }
+}
+
+/**
+ * The larger reasoning model behind the fast one: LLM_ESCALATE_MODEL, else the preset's escalateModel
+ * (nebius: Nemotron Super behind Nemotron Nano). Undefined when neither is set, or LLM_ESCALATE_MODEL is empty.
+ */
+export function createEscalationClient(env: Env = process.env, extras: FactoryExtras = {}): LlmClient | undefined {
+  const provider = (env.LLM_PROVIDER || "mock").trim().toLowerCase();
+  if (provider !== "openai" && provider !== "groq" && provider !== "gemini" && provider !== "nebius") return undefined;
+  const preset = OPENAI_COMPAT_PRESETS[provider];
+  const model = env.LLM_ESCALATE_MODEL !== undefined ? env.LLM_ESCALATE_MODEL.trim() : preset.escalateModel;
+  if (!model) return undefined;
+  const timeoutMs = num(env.LLM_ESCALATE_TIMEOUT_MS) ?? num(env.LLM_TIMEOUT_MS);
+  const retries = num(env.LLM_RETRIES);
+  return createOpenAiCompatClient({
+    provider,
+    apiKey: required(env, preset.keyEnv, provider),
+    baseUrl: env.LLM_BASE_URL || preset.baseUrl,
+    model,
+    jsonMode: (env.LLM_JSON_MODE as JsonMode | undefined) ?? preset.jsonMode,
+    maxTokensField: preset.maxTokensField,
+    ...(timeoutMs !== undefined && { timeoutMs }),
+    ...(retries !== undefined && { retries }),
+    ...(extras.fetchImpl && { fetchImpl: extras.fetchImpl }),
+  });
 }

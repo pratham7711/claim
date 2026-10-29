@@ -1,5 +1,5 @@
 /**
- * npm run eval [-- --llm claude-cli] [--sets synthetic,real,dev-real2,dev-real2-claims,dev-real3] [--skip llm-only,mock]
+ * npm run eval [-- --llm claude-cli|nebius] [--sets synthetic,real,dev-real2,dev-real2-claims,dev-real3] [--skip llm-only,mock,escalate]
  *                 [--budget 120] [--batch 20] [--latency-sample 12] [--no-cache]
  *
  * Scores the resolver on the dev sets (default; all were read while writing the rules) or on a
@@ -10,7 +10,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { parseArgs } from "node:util";
 import type { ResolverContext } from "@claim/core";
-import { createLlmClient, createMockClient, type CompletionResult, type LlmClient } from "@claim/llm";
+import { createEscalationClient, createLlmClient, createMockClient, type CompletionResult, type LlmClient } from "@claim/llm";
 import { resolveBatch, ruleResolve, type ResolvedIntent, type ResolveMode } from "@claim/resolver";
 import { DEV_SETS, loadSets, type Dataset, type Example } from "./lib/data.js";
 import { withBudget, withCache, withRateLimitWait, type CallLog } from "./lib/llm-wrappers.js";
@@ -65,7 +65,7 @@ function ruleLatencies(ds: Dataset): Map<string, number> {
   return out;
 }
 
-async function runResolver(ds: Dataset, config: string, ruleMs: Map<string, number>, opts: { llm?: LlmClient; mode: ResolveMode; batchSize: number; concurrency: number }): Promise<ConfigResult> {
+async function runResolver(ds: Dataset, config: string, ruleMs: Map<string, number>, opts: { llm?: LlmClient; escalate?: LlmClient; mode: ResolveMode; batchSize: number; concurrency: number }): Promise<ConfigResult> {
   const byShow = new Map<string, Example[]>();
   for (const ex of ds.examples) byShow.set(ex.show, [...(byShow.get(ex.show) ?? []), ex]);
   const rows: Scored[] = [];
@@ -89,7 +89,7 @@ async function runResolver(ds: Dataset, config: string, ruleMs: Map<string, numb
         onLlmCall: ({ indices, completion, error }) => {
           if (completion) account(completion);
           if (error) console.error(`  ${config}: LLM call failed: ${String((error as Error).message ?? error).slice(0, 160)}`);
-          for (const i of indices) callMs.set(i, completion?.latencyMs ?? 0);
+          for (const i of indices) callMs.set(i, (callMs.get(i) ?? 0) + (completion?.latencyMs ?? 0));
         },
       },
     );
@@ -162,10 +162,16 @@ async function main() {
   const log: CallLog = { calls: 0, cacheHits: 0, refused: 0, rateLimitWaits: 0 };
   const provider = args.llm ?? (process.env.LLM_PROVIDER && process.env.LLM_PROVIDER !== "mock" ? process.env.LLM_PROVIDER : undefined);
   let llm: LlmClient | undefined;
-  if (provider) {
-    const base = createLlmClient({ ...process.env, LLM_PROVIDER: provider, LLM_TIMEOUT_MS: process.env.LLM_TIMEOUT_MS ?? "120000" });
+  let escalate: LlmClient | undefined;
+  const wrap = (base: LlmClient) => {
     const budgeted = withBudget(withRateLimitWait(base, log), Number(args.budget), log);
-    llm = args["no-cache"] ? budgeted : withCache(budgeted, join(ROOT, ".cache"), log);
+    return args["no-cache"] ? budgeted : withCache(budgeted, join(ROOT, ".cache"), log);
+  };
+  if (provider) {
+    const env = { ...process.env, LLM_PROVIDER: provider, LLM_TIMEOUT_MS: process.env.LLM_TIMEOUT_MS ?? "120000" };
+    llm = wrap(createLlmClient(env));
+    const esc = skip.has("escalate") ? undefined : createEscalationClient(env);
+    if (esc) escalate = wrap(esc);
   }
 
   for (const ds of datasets) {
@@ -177,7 +183,11 @@ async function main() {
     if (!skip.has("mock")) results.push(await runResolver(ds, "rules + mock LLM (abstains)", ruleMs, { llm: createMockClient(), mode: "auto", batchSize, concurrency }));
     if (llm) {
       console.log(`  rules + ${provider} ...`);
-      results.push(await runResolver(ds, `rules + ${provider}`, ruleMs, { llm, mode: "auto", batchSize, concurrency }));
+      results.push(await runResolver(ds, `rules + ${provider} (${llm.model})`, ruleMs, { llm, mode: "auto", batchSize, concurrency }));
+      if (escalate) {
+        console.log(`  rules + ${llm.model} -> ${escalate.model} ...`);
+        results.push(await runResolver(ds, `rules + ${llm.model} -> ${escalate.model}`, ruleMs, { llm, escalate, mode: "auto", batchSize, concurrency }));
+      }
       if (!skip.has("llm-only")) {
         console.log(`  ${provider} only ...`);
         results.push(await runResolver(ds, `${provider} only`, ruleMs, { llm, mode: "llm", batchSize: Number(args["llm-batch"]), concurrency }));

@@ -39,6 +39,8 @@ export interface ShowServiceOptions {
   store: ShowStore;
   gateway: { gateway: PaymentsGateway; label: string };
   llm?: LlmClient;
+  /** Larger reasoning model: second opinion on comments the fast model leaves for review, and voice listings. */
+  escalate?: LlmClient;
   now?: () => number;
   /** Clock tick for leases and settle windows. `false` in tests that drive time by hand. */
   tickMs?: number | false;
@@ -96,9 +98,10 @@ export function createShowService(opts: ShowServiceOptions) {
     });
   const llm = opts.llm;
   const llmLive = Boolean(llm && llm.provider !== "mock");
+  const escalate = llmLive ? opts.escalate : undefined;
   const env: ViewEnv = {
     payments: { mode: gateway.mode, label: paymentsLabel },
-    llm: { provider: llm?.provider ?? "none", model: llm?.model ?? "" },
+    llm: { provider: llm?.provider ?? "none", model: llm?.model ?? "", ...(escalate ? { escalateModel: escalate.model } : {}) },
   };
   const shows = new Map<string, Show>();
 
@@ -311,7 +314,7 @@ export function createShowService(opts: ShowServiceOptions) {
     const started = performance.now();
     let intents: ClaimIntent[];
     try {
-      intents = await resolveIntents(comment, resolverContext(show), { ...(llmLive ? { llm, mode: "auto" as const } : { mode: "rules" as const }) });
+      intents = await resolveIntents(comment, resolverContext(show), { ...(llmLive ? { llm, mode: "auto" as const, ...(escalate ? { escalate } : {}) } : { mode: "rules" as const }) });
     } catch {
       intents = [{ commentId: comment.id, kind: "other", confidence: 0, method: "rule", rationale: "resolver failed" }];
     }
@@ -826,7 +829,7 @@ export function createShowService(opts: ShowServiceOptions) {
           const result = await parseListing(
             transcript,
             { currency: "USD", existingCodes: show.engine.state.itemOrder, nextCode: nextCode(show) },
-            llmLive ? llm : undefined,
+            llmLive ? (escalate ?? llm) : undefined,
           );
           return { ok: true, data: result };
         }

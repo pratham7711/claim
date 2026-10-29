@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { createAnthropicClient } from "./anthropic.js";
 import { buildCliArgs, createClaudeCliClient } from "./claude-cli.js";
-import { createLlmClient } from "./factory.js";
+import { createTokenBudget, withTokenBudget } from "./budget.js";
+import { createEscalationClient, createLlmClient } from "./factory.js";
 import { createFallbackClient } from "./fallback.js";
 import { backoffMs, LlmError, postJson, retryAfterMs } from "./http.js";
 import { parseJsonLoose } from "./json.js";
@@ -33,6 +34,29 @@ function fakeFetch(responses: (Response | Error)[]) {
 const ok = (body: unknown) => new Response(JSON.stringify(body), { status: 200 });
 const status = (code: number, headers: Record<string, string> = {}) => new Response("err", { status: code, headers });
 const noSleep = async () => {};
+
+describe("nebius preset", () => {
+  it("runs Nemotron Nano on Token Factory with Super as the escalation model", async () => {
+    const f = fakeFetch([ok({ model: "m", choices: [{ message: { content: '{"ok":true}' } }] })]);
+    const c = createLlmClient({ LLM_PROVIDER: "nebius", NEBIUS_API_KEY: "k", LLM_FALLBACK_MODELS: "" }, { fetchImpl: f.impl });
+    expect(c.provider).toBe("nebius");
+    expect(c.model).toMatch(/nemotron.*nano/i);
+    expect((await c.complete(req)).json).toEqual({ ok: true });
+    expect(f.calls[0]!.url).toBe("https://api.tokenfactory.nebius.com/v1/chat/completions");
+    expect(createEscalationClient({ LLM_PROVIDER: "nebius", NEBIUS_API_KEY: "k" })!.model).toMatch(/nemotron.*super/i);
+  });
+
+  it("needs NEBIUS_API_KEY", () => {
+    expect(() => createLlmClient({ LLM_PROVIDER: "nebius" })).toThrow(/NEBIUS_API_KEY/);
+  });
+
+  it("lets LLM_ESCALATE_MODEL pick or switch off the escalation model", () => {
+    expect(createEscalationClient({ LLM_PROVIDER: "nebius", NEBIUS_API_KEY: "k", LLM_ESCALATE_MODEL: "x/y" })!.model).toBe("x/y");
+    expect(createEscalationClient({ LLM_PROVIDER: "nebius", NEBIUS_API_KEY: "k", LLM_ESCALATE_MODEL: "" })).toBeUndefined();
+    expect(createEscalationClient({ LLM_PROVIDER: "groq", GROQ_API_KEY: "k" })).toBeUndefined();
+    expect(createEscalationClient({ LLM_PROVIDER: "mock" })).toBeUndefined();
+  });
+});
 
 describe("createLlmClient", () => {
   it("defaults to mock", () => {
@@ -299,5 +323,50 @@ describe("parseJsonLoose", () => {
     expect(parseJsonLoose('Sure:\n```json\n{"a":2}\n```')).toEqual({ a: 2 });
     expect(parseJsonLoose('Here you go {"a":3} thanks')).toEqual({ a: 3 });
     expect(parseJsonLoose("nope")).toBeUndefined();
+  });
+});
+
+describe("withTokenBudget", () => {
+  const reply = (inputTokens: number, outputTokens: number): CompletionResult => ({ text: "{}", json: {}, model: "m", latencyMs: 1, usage: { inputTokens, outputTokens }, attempts: 1 });
+  const client = (n: { calls: number }, usage = reply(100, 50)): LlmClient => ({
+    provider: "nebius",
+    model: "m",
+    async complete() {
+      n.calls++;
+      return usage;
+    },
+  });
+
+  it("counts real usage and stops calling the provider once the allowance is spent", async () => {
+    const n = { calls: 0 };
+    const budget = createTokenBudget({}, { maxTokens: 400 });
+    const c = withTokenBudget(client(n), budget);
+    await c.complete({ ...req, maxTokens: 10 });
+    expect(budget.used).toBe(150);
+    await c.complete({ ...req, maxTokens: 10 });
+    await c.complete({ ...req, maxTokens: 10 });
+    await expect(c.complete({ ...req, maxTokens: 10 })).rejects.toThrow(/budget spent/);
+    expect(n.calls).toBe(3);
+  });
+
+  it("shares one allowance between clients and honours LLM_TOKEN_BUDGET", async () => {
+    const budget = createTokenBudget({ LLM_TOKEN_BUDGET: "200" }, { maxTokens: 1_000_000 });
+    const n = { calls: 0 };
+    await withTokenBudget(client(n), budget).complete({ ...req, maxTokens: 10 });
+    await withTokenBudget(client(n), budget).complete({ ...req, maxTokens: 10 });
+    await expect(withTokenBudget(client(n), budget).complete({ ...req, maxTokens: 10 })).rejects.toThrow(/budget spent/);
+    expect(n.calls).toBe(2);
+  });
+
+  it("makes no calls on or after LLM_DISABLE_AFTER, and keeps the reservation of a failed call", async () => {
+    const budget = createTokenBudget({ LLM_DISABLE_AFTER: "2026-11-27T00:00:00Z" }, { maxTokens: 1_000_000 });
+    const n = { calls: 0 };
+    const late = withTokenBudget(client(n), budget, () => Date.parse("2026-11-27T00:00:00Z"));
+    await expect(late.complete(req)).rejects.toThrow(/LLM_DISABLE_AFTER/);
+    expect(n.calls).toBe(0);
+    const failing: LlmClient = { provider: "nebius", model: "m", complete: async () => { throw new Error("timeout"); } };
+    const b2 = createTokenBudget({}, { maxTokens: 1_000_000 });
+    await expect(withTokenBudget(failing, b2).complete({ ...req, maxTokens: 100 })).rejects.toThrow("timeout");
+    expect(b2.used).toBeGreaterThan(100);
   });
 });

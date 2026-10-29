@@ -13,4 +13,5 @@ export {
 export { createClaudeCliClient, buildCliArgs, type ClaudeCliOptions, type RunResult } from "./claude-cli.js";
 export { createFallbackClient, type FallbackOptions } from "./fallback.js";
 export { createMockClient, type MockClient, type MockOptions, type MockReply } from "./mock.js";
-export { createLlmClient, LLM_PROVIDERS, type LlmProvider, type Env } from "./factory.js";
+export { createEscalationClient, createLlmClient, LLM_PROVIDERS, type LlmProvider, type Env } from "./factory.js";
+export { budgetExhausted, createTokenBudget, withTokenBudget, type TokenBudget } from "./budget.js";

@@ -28,10 +28,12 @@ export interface OpenAiPreset {
   reasoningEffort?: ReasoningEffort;
   /** Tried in order when the model ahead is rate-limited. Groq's free tier limits each model separately. */
   fallbackModels?: string[];
+  /** A larger reasoning model for the comments the fast model cannot settle, and for listings. */
+  escalateModel?: string;
 }
 
 /** Default models are starting points; set LLM_MODEL to pin one. */
-export const OPENAI_COMPAT_PRESETS: Record<"openai" | "groq" | "gemini", OpenAiPreset> = {
+export const OPENAI_COMPAT_PRESETS: Record<"openai" | "groq" | "gemini" | "nebius", OpenAiPreset> = {
   openai: {
     baseUrl: "https://api.openai.com/v1",
     keyEnv: "OPENAI_API_KEY",
@@ -54,6 +56,14 @@ export const OPENAI_COMPAT_PRESETS: Record<"openai" | "groq" | "gemini", OpenAiP
     model: "gemini-2.5-flash-lite",
     jsonMode: "json_schema",
     maxTokensField: "max_tokens",
+  },
+  nebius: {
+    baseUrl: "https://api.tokenfactory.nebius.com/v1",
+    keyEnv: "NEBIUS_API_KEY",
+    model: "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    jsonMode: "json_schema",
+    maxTokensField: "max_tokens",
+    escalateModel: "nvidia/nemotron-3-super-120b-a12b",
   },
 };
 
@@ -84,7 +94,7 @@ export function buildChatBody(req: CompletionRequest, opts: OpenAiCompatOptions)
   return body;
 }
 
-/** One adapter for OpenAI, Groq and Gemini's OpenAI-compatible endpoint. */
+/** One adapter for OpenAI, Groq, Gemini and Nebius Token Factory's OpenAI-compatible endpoints. */
 export function createOpenAiCompatClient(opts: OpenAiCompatOptions): LlmClient {
   const url = `${opts.baseUrl.replace(/\/$/, "")}/chat/completions`;
   const headers = { authorization: `Bearer ${opts.apiKey}` };

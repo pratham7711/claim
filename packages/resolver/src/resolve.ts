@@ -21,11 +21,22 @@ export interface ResolveOptions {
   /** Abort a single LLM call after this long and keep the rule answer. Default 20s. */
   llmTimeoutMs?: number;
   /** Called once per LLM call; indices point into the comments passed to resolveBatch. */
-  onLlmCall?: (info: { indices: number[]; completion?: CompletionResult; error?: unknown }) => void;
+  onLlmCall?: (info: { indices: number[]; completion?: CompletionResult; error?: unknown; escalated?: boolean }) => void;
+  /**
+   * A larger reasoning model. Comments the fast model was unsure about (below escalateBelow) or could not
+   * answer are asked again here before they reach the seller's review lane; the more confident answer wins.
+   */
+  escalate?: LlmClient;
+  /** Fast-model confidence under which a comment is escalated. Default 0.7, under the validator's 0.75 review caps. */
+  escalateBelow?: number;
+  /** Abort an escalation call after this long. Default 30s. */
+  escalateTimeoutMs?: number;
 }
 
 /** Below this the engine should not grant; the comment goes to the seller's review lane. */
 export const GRANT_THRESHOLD = 0.8;
+/** Below this the fast model's answer is a guess, and an escalation model (if any) is asked too. */
+export const ESCALATE_BELOW = 0.7;
 /** A comment that yields several intents is never auto-granted from resolve()'s single answer. */
 const MULTI_INTENT_CAP = 0.6;
 
@@ -123,6 +134,22 @@ export async function resolveBatch(comments: CommentLike[], source: ContextSourc
   for (let i = 0; i < routed.length; i += size) batches.push(routed.slice(i, i + size));
 
   const llm = opts.llm;
+  const best = (xs: RuleIntent[] | ResolvedIntent[]) => Math.max(0, ...xs.map((x) => x.confidence));
+  /** Merge one model answer into results[i]; returns whether the model's reading was used. */
+  const apply = (i: number, got: RuleIntent[], tag?: string): boolean => {
+    const kept = keepForReview(outcomes[i]!.intents, got, comments[i]!.text, ctxs[i]!);
+    if (kept) {
+      results[i] = toClaimIntents(comments[i]!.id, kept, "rule");
+      return false;
+    }
+    const cap = outcomes[i]!.llmCap;
+    const why = outcomes[i]!.capReason ?? "rules asked for review";
+    const merged = fillFromRule(outcomes[i]!.intents, got).map((g) => (tag ? { ...g, rationale: `${g.rationale ?? "llm"} [${tag}]` } : g));
+    const capped = cap === undefined ? merged : merged.map((g) => (g.confidence > cap ? { ...g, confidence: cap, rationale: `${g.rationale} (capped: ${why})` } : g));
+    results[i] = toClaimIntents(comments[i]!.id, capped, "llm");
+    return true;
+  };
+  const fast = new Map<number, RuleIntent[]>();
   await mapLimit(batches, Math.max(1, opts.concurrency ?? 2), async (batch) => {
     const payload = batch.map((i, n) => ({ id: `c${n + 1}`, text: comments[i]!.text, ctx: ctxs[i]! }));
     try {
@@ -130,20 +157,39 @@ export async function resolveBatch(comments: CommentLike[], source: ContextSourc
       opts.onLlmCall?.({ indices: batch, completion });
       batch.forEach((i, n) => {
         const got = intents[n];
-        if (!got?.length) return;
-        const kept = keepForReview(outcomes[i]!.intents, got, comments[i]!.text, ctxs[i]!);
-        if (kept) {
-          results[i] = toClaimIntents(comments[i]!.id, kept, "rule");
-          return;
-        }
-        const cap = outcomes[i]!.llmCap;
-        const why = outcomes[i]!.capReason ?? "rules asked for review";
-        const merged = fillFromRule(outcomes[i]!.intents, got);
-        const capped = cap === undefined ? merged : merged.map((g) => (g.confidence > cap ? { ...g, confidence: cap, rationale: `${g.rationale} (capped: ${why})` } : g));
-        results[i] = toClaimIntents(comments[i]!.id, capped, "llm");
+        if (got?.length && apply(i, got)) fast.set(i, got);
       });
     } catch (error) {
       opts.onLlmCall?.({ indices: batch, error });
+    }
+  });
+
+  // Escalate what the fast model could not settle. A rule cap below the grant line means the rules want a
+  // human regardless, so a bigger model cannot change the outcome there and is not asked.
+  const escalate = opts.escalate;
+  if (!escalate) return results;
+  const hard = routed.filter((i) => {
+    const cap = outcomes[i]!.llmCap;
+    if (cap !== undefined && cap < GRANT_THRESHOLD) return false;
+    const got = fast.get(i);
+    return !got || best(got) < (opts.escalateBelow ?? ESCALATE_BELOW);
+  });
+  const hardBatches: number[][] = [];
+  for (let i = 0; i < hard.length; i += size) hardBatches.push(hard.slice(i, i + size));
+  await mapLimit(hardBatches, Math.max(1, opts.concurrency ?? 2), async (batch) => {
+    const payload = batch.map((i, n) => ({ id: `c${n + 1}`, text: comments[i]!.text, ctx: ctxs[i]! }));
+    try {
+      const { intents, completion } = await llmResolveBatch(payload, escalate, { signal: AbortSignal.timeout(opts.escalateTimeoutMs ?? 30_000) });
+      opts.onLlmCall?.({ indices: batch, completion, escalated: true });
+      batch.forEach((i, n) => {
+        const got = intents[n];
+        if (!got?.length) return;
+        const before = fast.get(i);
+        if (before && best(got) <= best(before)) return;
+        apply(i, got, `escalated to ${escalate.model}`);
+      });
+    } catch (error) {
+      opts.onLlmCall?.({ indices: batch, error, escalated: true });
     }
   });
   return results;

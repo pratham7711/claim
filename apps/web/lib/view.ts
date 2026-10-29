@@ -69,7 +69,7 @@ export interface ShowData {
 
 export interface ViewEnv {
   payments: { mode: "sandbox" | "mock"; label: string };
-  llm: { provider: string; model: string };
+  llm: { provider: string; model: string; escalateModel?: string };
 }
 
 const ACTIONABLE = new Set(["claim", "cancel", "change", "waitlist"]);
