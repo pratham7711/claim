@@ -16,6 +16,8 @@ export interface OpenAiCompatOptions extends Omit<RetryOptions, "signal"> {
   maxTokensField?: "max_tokens" | "max_completion_tokens";
   /** Reasoning models (gpt-oss) think before answering; "low" keeps a comment batch inside the latency budget. */
   reasoningEffort?: ReasoningEffort;
+  /** Provider-specific fields merged into the request body. */
+  extraBody?: Record<string, unknown>;
 }
 
 export interface OpenAiPreset {
@@ -30,6 +32,8 @@ export interface OpenAiPreset {
   fallbackModels?: string[];
   /** A larger reasoning model for the comments the fast model cannot settle, and for listings. */
   escalateModel?: string;
+  /** Provider-specific request fields. Nemotron 3 reasons by default; its chat template takes enable_thinking. */
+  extraBody?: Record<string, unknown>;
 }
 
 /** Default models are starting points; set LLM_MODEL to pin one. */
@@ -64,6 +68,7 @@ export const OPENAI_COMPAT_PRESETS: Record<"openai" | "groq" | "gemini" | "nebiu
     jsonMode: "json_schema",
     maxTokensField: "max_tokens",
     escalateModel: "nvidia/nemotron-3-super-120b-a12b",
+    extraBody: { chat_template_kwargs: { enable_thinking: false } },
   },
 };
 
@@ -91,7 +96,7 @@ export function buildChatBody(req: CompletionRequest, opts: OpenAiCompatOptions)
   if (req.maxTokens !== undefined) body[opts.maxTokensField ?? "max_tokens"] = req.maxTokens;
   if (req.temperature !== undefined) body.temperature = req.temperature;
   if (opts.reasoningEffort) body.reasoning_effort = opts.reasoningEffort;
-  return body;
+  return { ...body, ...opts.extraBody };
 }
 
 /** One adapter for OpenAI, Groq, Gemini and Nebius Token Factory's OpenAI-compatible endpoints. */

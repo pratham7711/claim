@@ -1,6 +1,7 @@
 /** Parse a model reply that should be JSON but may be fenced or wrapped in prose. */
 export function parseJsonLoose(text: string): unknown {
-  const trimmed = text.trim();
+  // Reasoning models may put their thinking ahead of the answer, braces and all.
+  const trimmed = text.replace(/^\s*<think>[\s\S]*?<\/think>/i, "").trim();
   try {
     return JSON.parse(trimmed);
   } catch {

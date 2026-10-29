@@ -68,6 +68,7 @@ export function createLlmClient(env: Env = process.env, extras: FactoryExtras = 
           jsonMode: (env.LLM_JSON_MODE as JsonMode | undefined) ?? preset.jsonMode,
           maxTokensField: preset.maxTokensField,
           ...(effort && m.includes("gpt-oss") ? { reasoningEffort: effort } : {}),
+          ...(preset.extraBody && { extraBody: preset.extraBody }),
           ...chainHttp,
         }),
       );
@@ -116,6 +117,7 @@ export function createEscalationClient(env: Env = process.env, extras: FactoryEx
     model,
     jsonMode: (env.LLM_JSON_MODE as JsonMode | undefined) ?? preset.jsonMode,
     maxTokensField: preset.maxTokensField,
+    ...(preset.extraBody && { extraBody: preset.extraBody }),
     ...(timeoutMs !== undefined && { timeoutMs }),
     ...(retries !== undefined && { retries }),
     ...(extras.fetchImpl && { fetchImpl: extras.fetchImpl }),

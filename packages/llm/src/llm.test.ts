@@ -46,6 +46,15 @@ describe("nebius preset", () => {
     expect(createEscalationClient({ LLM_PROVIDER: "nebius", NEBIUS_API_KEY: "k" })!.model).toMatch(/nemotron.*super/i);
   });
 
+  it("turns Nemotron's reasoning off on both clients and skips a leading think block", async () => {
+    const reply = () => ok({ choices: [{ message: { content: '<think>maybe {"kind":"other"}</think>\n{"ok":true}' } }] });
+    const f = fakeFetch([reply(), reply()]);
+    const env = { LLM_PROVIDER: "nebius", NEBIUS_API_KEY: "k", LLM_FALLBACK_MODELS: "" };
+    expect((await createLlmClient(env, { fetchImpl: f.impl }).complete(req)).json).toEqual({ ok: true });
+    expect((await createEscalationClient(env, { fetchImpl: f.impl })!.complete(req)).json).toEqual({ ok: true });
+    for (const c of f.calls) expect(JSON.parse(String(c.init?.body)).chat_template_kwargs).toEqual({ enable_thinking: false });
+  });
+
   it("needs NEBIUS_API_KEY", () => {
     expect(() => createLlmClient({ LLM_PROVIDER: "nebius" })).toThrow(/NEBIUS_API_KEY/);
   });
