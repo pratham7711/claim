@@ -7,7 +7,10 @@ An AI live-sale desk for independent boutiques. A host sells clothes on a live v
 - decides who got each unit, fairly and with an audit trail;
 - after the show, bills each buyer once through PayPal.
 
-This is the PayPal AI Hackathon entry (due Nov 12-13, 2026).
+Entered in two hackathons:
+
+- the **Nebius × NVIDIA Global AI Hackathon** (Best Apps and Agents), running on NVIDIA Nemotron through Nebius Token Factory; see [Nemotron on Nebius Token Factory](#nemotron-on-nebius-token-factory);
+- the **PayPal AI Hackathon** (due Nov 12-13, 2026), with the PayPal sandbox integration.
 
 ## The problem
 
@@ -107,7 +110,7 @@ flowchart LR
 - `packages/core`: the shared contract (`ChatComment`, `ClaimIntent`, `ShowItem`, `PaymentsGateway`) and the event-sourced claim engine. Pure TypeScript, no I/O.
 - `packages/resolver`: comment to intent. Deterministic rules first, then an optional LLM stage whose answers are checked against the comment text and capped.
 - `packages/listing`: host utterance to item draft.
-- `packages/llm`: provider adapters: `anthropic`, `openai`, `groq`, `gemini`, `openai-compat`, `claude-cli` and `mock`.
+- `packages/llm`: provider adapters: `anthropic`, `openai`, `groq`, `gemini`, `nebius`, `openai-compat`, `claude-cli` and `mock`, plus the token budget that caps spend on a paid key.
 - `packages/paypal`: the PayPal sandbox gateway and a deterministic mock, behind the same interface.
 - `apps/web`: a Next.js 16 app. One long-running Node process holds every show in memory and appends each event to `<CLAIM_DATA_DIR>/<showId>.jsonl`. On restart, a show is rebuilt by replaying its log; this was measured across a container restart.
 
@@ -221,6 +224,42 @@ The dev sets are not quoted as accuracy here: they were read while writing the r
 - an unavailable variant is capped at 0.6, and an underspecified one at 0.75.
 
 So the LLM can only lower confidence or fill a gap; it cannot push an unclear comment over the grant line.
+
+## Nemotron on Nebius Token Factory
+
+`LLM_PROVIDER=nebius` runs every model call on NVIDIA Nemotron 3 through Nebius Token Factory's OpenAI-compatible API (`https://api.tokenfactory.nebius.com/v1`, `NEBIUS_API_KEY`).
+
+| step | model | what it does |
+|---|---|---|
+| 1. rules | none | Clear claims ("sold 9 S", "#12 M") resolve in under a millisecond with no model call. |
+| 2. fast pass | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` | Every comment the rules cannot settle: slang, Hinglish, a size without an item, a question that looks like a claim. Batched, JSON-schema output. |
+| 3. second look | `nvidia/nemotron-3-super-120b-a12b` | Only comments where Nano returned nothing or its best answer is below 0.7 confidence, and only when the rules allow the comment to be granted at all. The surer of the two answers is kept, and its rationale is tagged `[escalated to …]`. |
+| voice listing | `nvidia/nemotron-3-super-120b-a12b` | The host's spoken description becomes an item draft. Anything the model guessed is flagged, and nothing goes on air until the seller confirms. |
+
+Both answers pass the same validator as every other provider, so Super can lower confidence or fill a gap but cannot push an unclear comment over the grant line.
+
+The code:
+- `packages/llm/src/openai-compat.ts`: the `nebius` preset (base URL, key, Nano as the default model, Super as `escalateModel`);
+- `packages/llm/src/factory.ts`: `createEscalationClient`;
+- `packages/resolver/src/resolve.ts`: the escalation step;
+- `apps/web/lib/server.ts`: one shared budget wraps both clients.
+
+**Spend guard.** Token Factory bills per token, and a public demo URL can be called by anyone. `withTokenBudget` (`packages/llm/src/budget.ts`) reserves each call's worst case before sending it, then corrects to the usage the API reports. Once `LLM_TOKEN_BUDGET` tokens are spent (default 300,000 per process), or after `LLM_DISABLE_AFTER`, calls fail at once without reaching the provider, and comments resolve on the rules alone. The hosted demo runs with 60,000 tokens per process.
+
+Prices read from Token Factory's price list on 2026-10-29, per million tokens: Nano $0.06 in / $0.24 out, Super $0.30 in / $0.90 out.
+
+<!-- NEBIUS-EVAL -->
+
+Configuration:
+
+```bash
+LLM_PROVIDER=nebius
+NEBIUS_API_KEY=...
+# optional
+LLM_ESCALATE_MODEL=nvidia/Nemotron-3-Ultra-550b-a55b   # empty turns escalation off
+LLM_TOKEN_BUDGET=60000
+LLM_DISABLE_AFTER=2026-12-16T00:00:00Z
+```
 
 ## Limitations and what is not yet verified
 
