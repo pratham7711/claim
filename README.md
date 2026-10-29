@@ -227,6 +227,8 @@ So the LLM can only lower confidence or fill a gap; it cannot push an unclear co
 
 ## Nemotron on Nebius Token Factory
 
+**Live demo:** https://claim-nemotron.onrender.com (free host, so the first load after idle can take about a minute; press **Start a demo show**).
+
 `LLM_PROVIDER=nebius` runs every model call on NVIDIA Nemotron 3 through Nebius Token Factory's OpenAI-compatible API (`https://api.tokenfactory.nebius.com/v1`, `NEBIUS_API_KEY`).
 
 | step | model | what it does |

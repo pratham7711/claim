@@ -1,12 +1,12 @@
 # Devpost submission: Nebius × NVIDIA Global AI Hackathon (draft)
 
-Track: **Best Apps and Agents**. Paste each section into the matching Devpost field. Replace `<RENDER_URL>`, `<VIDEO_URL>` and the `<EVAL …>` numbers before submitting.
+Track: **Best Apps and Agents**. Paste each section into the matching Devpost field. Replace https://claim-nemotron.onrender.com, `<VIDEO_URL>` and the `<EVAL …>` numbers before submitting.
 
 **Name:** Claim!
 
 **Tagline (under 200 characters):** An AI desk for live-sale boutiques. NVIDIA Nemotron on Nebius Token Factory turns "sold 12 M" chat chaos into fair, audited sales.
 
-**Try it:** `<RENDER_URL>`. Press **Start a demo show**. The seller console and a buyer's phone open side by side. The free host sleeps when idle, so the first load can take about a minute. Payments are simulated in this build.
+**Try it:** https://claim-nemotron.onrender.com. Press **Start a demo show**. The seller console and a buyer's phone open side by side. The free host sleeps when idle, so the first load can take about a minute. Payments are simulated in this build.
 **Code:** https://github.com/pratham7711/claim
 **Video:** `<VIDEO_URL>`
 
