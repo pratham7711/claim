@@ -1,6 +1,6 @@
 # Devpost submission: Nebius × NVIDIA Global AI Hackathon (draft)
 
-Track: **Best Apps and Agents**. Paste each section into the matching Devpost field. Replace https://claim-nemotron.onrender.com, `<VIDEO_URL>` and the `<EVAL …>` numbers before submitting.
+Track: **Best Apps and Agents**. Paste each section into the matching Devpost field. Replace `<VIDEO_URL>` and the `<EVAL …>` numbers before submitting.
 
 **Name:** Claim!
 
