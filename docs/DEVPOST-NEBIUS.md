@@ -1,6 +1,6 @@
 # Devpost submission: Nebius × NVIDIA Global AI Hackathon (draft)
 
-Track: **Best Apps and Agents**. Paste each section into the matching Devpost field. Replace `<VIDEO_URL>` before submitting.
+Track: **Best Apps and Agents**. Paste each section into the matching Devpost field.
 
 **Name:** Claim!
 
@@ -8,7 +8,7 @@ Track: **Best Apps and Agents**. Paste each section into the matching Devpost fi
 
 **Try it:** https://claim-nemotron.onrender.com. Press **Start a demo show**. The seller console and a buyer's phone open side by side. The free host sleeps when idle, so the first load can take about a minute. Payments are simulated in this build.
 **Code:** https://github.com/pratham7711/claim
-**Video:** `<VIDEO_URL>`
+**Video:** https://youtu.be/Vz7HtodA-lA
 
 ---
 
