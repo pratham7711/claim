@@ -236,7 +236,7 @@ So the LLM can only lower confidence or fill a gap; it cannot push an unclear co
 | 1. rules | none | Clear claims ("sold 9 S", "#12 M") resolve in under a millisecond with no model call. |
 | 2. fast pass | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` | Every comment the rules cannot settle: slang, Hinglish, a size without an item, a question that looks like a claim. Batched, JSON-schema output. |
 | 3. second look | `nvidia/nemotron-3-super-120b-a12b` | Only comments where Nano returned nothing or its best answer is below 0.7 confidence, and only when the rules allow the comment to be granted at all. The surer of the two answers is kept, and its rationale is tagged `[escalated to …]`. |
-| voice listing | `nvidia/nemotron-3-super-120b-a12b` | The host's spoken description becomes an item draft. Anything the model guessed is flagged, and nothing goes on air until the seller confirms. |
+| voice listing | `nvidia/nemotron-3-super-120b-a12b` | When the rules miss a field of the host's description, or are less than 0.7 sure, Super fills it in. Every field it fills is flagged, and nothing goes on air until the seller confirms. |
 
 Both answers pass the same validator as every other provider, so Super can lower confidence or fill a gap but cannot push an unclear comment over the grant line.
 
@@ -250,7 +250,21 @@ The code:
 
 Prices read from Token Factory's price list on 2026-10-29, per million tokens: Nano $0.06 in / $0.24 out, Super $0.30 in / $0.90 out.
 
-<!-- NEBIUS-EVAL -->
+**Measured on held-out v3** (2026-10-30; 350 comments, the same set as above, scored once with Nemotron and not tuned on; raw result `eval/results/2026-10-29T20-22-30.md`, git-ignored):
+
+| config | kind accuracy | auto-grants | harmful grants | grant recall (n=49) | review lane: real claims / noise |
+|---|---|---|---|---|---|
+| rules only | .743 | 10 | 0 | .204 | 20 / 23 |
+| rules + Nemotron 3 Nano | .649 | 11 | 1 | .204 | 22 / 28 |
+| rules + Nano, escalating to Nemotron 3 Super | .649 | 11 | 1 | .204 | 21 / 27 |
+| Nano only | .711 | 5 | 1 | .082 | 26 / 19 |
+
+- The review-lane column counts actionable intents (claim, change, cancel, waitlist) below the 0.8 grant line, from the run's predictions file; 55 comments in the set are actionable.
+- **Latency fits the fairness window.** A single comment through Nano took p50 711 ms, p95 1,359 ms (n=12), inside the 1.5 s budget, which neither the `claude` CLI (p50 3.4 s) nor Groq (p95 8.9 s) met. Batched (up to 20 comments a call), LLM-routed comments took p50 1,360 ms, p95 7,953 ms.
+- **On comments, Nemotron did not beat the rules here.** It added one auto-grant, and that grant is harmful: "did you get me for 35 pink stone hinged bracelet" is a question, read as a claim on #35. Kind accuracy fell because Nano labelled 33 chatter comments as questions; a question is never sold, so that costs review time, not money.
+- **Super changed 40 of Nano's answers,** mostly raising confidence on chatter, which took one noise card out of the review lane. It did not change any grant.
+- **Voice listings are where the model does work the rules cannot** (spot check, 6 hand-written host lines, not a held-out set). For "number fourteen maroon kurta, M mein do piece, L mein ek, price pachaas", the rules alone reach confidence 0.45 with price and counts missing; Super filled in $50, M ×2, L ×1 in 1.3 s. Four of the six lines came back fully right. In the other two, one field was wrong: "saadhe chaar sau" read as $640 once, and "do medium" read as one medium once. That is why every field the model fills is flagged, and nothing is listed until the seller confirms.
+- **Cost.** The whole run (four configs plus the latency sample: 39 calls, about 102,000 tokens) came to about $0.015 at the list prices above.
 
 Configuration:
 
@@ -272,7 +286,7 @@ LLM_DISABLE_AFTER=2026-12-16T00:00:00Z
   - The webhook route is tested with signed deliveries against the mock (unit and browser tests). Real PayPal deliveries need a public HTTPS URL; see [docs/DEPLOY.md](docs/DEPLOY.md).
   - In sandbox mode, simulated buyers have no Claim Pass, so the scripted decline (dana) and the simulated Claim Pass charges only happen in mock mode. The demo video is recorded in sandbox with one real buyer-room Claim Pass; see [docs/DEMO-SCRIPT.md](docs/DEMO-SCRIPT.md).
   - Pay-now in the app: the return to `/pay` was checked up to PayPal refusing an order nobody had approved (`ORDER_NOT_APPROVED`, 2026-10-06). The order stays open and the page sends the buyer back to PayPal. A complete in-app checkout payment has not been recorded yet.
-- **Groq is the only provider run with a real API key** (free tier, `openai/gpt-oss-20b`, 2026-10-05). On all five dev sets, rules + Groq made zero harmful grants, and on dev-real3 it raised grant recall from 0.522 to 0.565. These sets were read while writing the rules, so the numbers are in-sample; no held-out set has been scored with Groq. The `anthropic`, `openai` and `gemini` adapters are unit-tested against fakes only, and the held-out numbers above come from the local `claude` CLI.
+- **Groq and Nebius Token Factory are the providers run with real API keys.** Nemotron's held-out numbers are in [Nemotron on Nebius Token Factory](#nemotron-on-nebius-token-factory). Groq: free tier, `openai/gpt-oss-20b`, 2026-10-05. On all five dev sets, rules + Groq made zero harmful grants, and on dev-real3 it raised grant recall from 0.522 to 0.565. These sets were read while writing the rules, so the numbers are in-sample; no held-out set has been scored with Groq. The `anthropic`, `openai` and `gemini` adapters are unit-tested against fakes only, and the held-out numbers above come from the local `claude` CLI.
 - **Measured LLM latency is far above the settle window's budget.** With the `claude` CLI, a single comment took p50 3.4 s against the 1.5 s budget. Through Groq, a single comment took p50 788 ms and p95 8,894 ms (n=12), so the median fits the budget and the tail does not. When a live LLM is configured, a comment the rules route to it is applied when the answer returns. It can then pre-empt only a grant made less than 2 s before that moment; a grant made earlier is already final, so the comment queues on the waitlist instead. Rule-resolved comments are unaffected: the "p95 resolve" KPI read 4.57 ms after the measured demo run (4.74 ms in an earlier identical run), with rules only.
 - **Single process.** All state is in one Node process's memory, with a local append-only log. One instance per data directory; no horizontal scaling. Vercel-style serverless does not work as-is; see [docs/DEPLOY.md](docs/DEPLOY.md).
 - **No authentication.** Every route is open, so anyone with a show URL can act as the seller. Buyer rooms never receive ship-to addresses, but `?scope=seller` is a scope, not access control.
@@ -286,7 +300,7 @@ npm test             # vitest: packages, eval metrics, web service
 npm run typecheck    # tsc -b packages/*
 ```
 
-`npm test` measured 24 files and 540 tests passing (2026-10-06). The PayPal OpenAPI conformance suite reads PayPal's published specs from `PAYPAL_OPENAPI_DIR`. It defaults to a path outside this repo, and when the specs are absent the suite reports as skipped.
+`npm test` measured 24 files and 552 tests passing (2026-10-30). The PayPal OpenAPI conformance suite reads PayPal's published specs from `PAYPAL_OPENAPI_DIR`. It defaults to a path outside this repo, and when the specs are absent the suite reports as skipped.
 
 A Python Playwright script drives the real UI end to end: one seller and two buyers, close-out with a decline, pay-now, refund, tracking and reload persistence. Run it as `python apps/web/e2e/e2e.py <base-url> <out-dir>`. It needs Python `playwright`, Google Chrome, and a server in mock mode. It passed 23/23 checks on 2026-10-06, against a production build with mock payments and Groq live; the added checks cover ship-to addresses, the ledger's Ship to column and CSV, and signed webhooks.
 
