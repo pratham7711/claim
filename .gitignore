@@ -9,3 +9,5 @@ eval/.cache/
 eval/results/
 eval/raw/
 .DS_Store
+apps/web/AGENTS.md
+apps/web/CLAUDE.md
