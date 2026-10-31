@@ -35,7 +35,8 @@ export function summarize(drafts: ProposalDraft[], dropped: { reason: string }[]
         break;
     }
   }
-  const head = drafts.length ? `${plural(drafts.length, "action")}: ${parts.join(", ")}` : "Nothing to do: every bill is settled or already queued";
+  // With nothing queued, only claim the bills are settled when nothing was dropped either.
+  const head = drafts.length ? `${plural(drafts.length, "action")}: ${parts.join(", ")}` : dropped.length ? "No actions queued" : "Nothing to do: every bill is settled or already queued";
   const tail = dropped.length ? `. ${plural(dropped.length, "proposal")} dropped: ${dropped.slice(0, 2).map((d) => d.reason).join("; ")}${dropped.length > 2 ? "; …" : ""}` : "";
   return `${head}${tail}`;
 }

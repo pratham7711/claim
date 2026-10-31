@@ -150,7 +150,7 @@ describe("leases and the Claim Pass", () => {
     const a = unitsOf(eng.state, "alice")[0]!;
     const until = T0 + 24 * 60 * MIN;
     const ext = eng.execute({ type: "extendHolds", unitIds: [a.id], until, note: "invoice INV2-1 is open" }, T0 + MIN);
-    expect(ofType(ext, "leaseExtended")[0]!.reason).toContain("held for alice until");
+    expect(ofType(ext, "leaseExtended")[0]!.reason).toContain("held for alice until 2026-10-06 12:01:03.000: invoice INV2-1 is open");
     expect(eng.execute({ type: "extendHolds", unitIds: [a.id], until: T0 + 2 * MIN }, T0 + MIN)).toEqual([]);
 
     eng.execute({ type: "tick" }, T0 + 10 * MIN);

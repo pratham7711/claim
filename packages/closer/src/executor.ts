@@ -77,10 +77,16 @@ export const TOOLKIT_ACTIONS = {
 
 const HTTP_CODES: Record<number, string> = { 400: "INVALID_REQUEST", 401: "AUTH_FAILED", 403: "NOT_AUTHORIZED", 404: "NOT_FOUND", 409: "CONFLICT", 422: "UNPROCESSABLE", 429: "RATE_LIMITED" };
 
+/** The Toolkit joins PayPal's message and its first detail with ": ", which repeats the text when they match. */
+function once(message: string): string {
+  const m = /^(.+?)\.?: (.+)$/.exec(message);
+  return m && m[1]!.replace(/\.$/, "") === m[2]!.replace(/\.$/, "") ? m[2]! : message;
+}
+
 function toError(status: number | undefined, code: string | undefined, message: string | undefined): ExecError {
   const c = status ? (HTTP_CODES[status] ?? (status >= 500 ? "PAYPAL_UNAVAILABLE" : `HTTP_${status}`)) : code || "PAYPAL_ERROR";
   const hint = status === 403 ? " PayPal refused this call for the app's account; the feature may not be enabled on the sandbox account yet." : "";
-  return { ok: false, ...(status ? { status } : {}), code: c, message: `${(message || "PayPal returned an error").slice(0, 220)}${hint}` };
+  return { ok: false, ...(status ? { status } : {}), code: c, message: `${once(message || "PayPal returned an error").slice(0, 220)}${hint}` };
 }
 
 /**

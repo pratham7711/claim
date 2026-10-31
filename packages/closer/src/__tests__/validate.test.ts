@@ -149,5 +149,6 @@ describe("rule planner", () => {
       "4 actions: charge 2 Claim Pass carts, invoice 1 buyer, refund $5 to cleo. 1 proposal dropped: refund larger than the charge",
     );
     expect(summarize([])).toMatch(/^Nothing to do/);
+    expect(summarize([], [{ reason: "dana was invoiced 11s ago; wait 50s more between nudges" }])).toBe("No actions queued. 1 proposal dropped: dana was invoiced 11s ago; wait 50s more between nudges");
   });
 });

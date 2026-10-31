@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { CloserLogEntry } from "@claim/closer";
 import type { AuditEntry } from "@claim/core";
 import type { CommentView, UnitView } from "../../lib/types";
 import { baseCommentId, clockMs } from "../../lib/stats";
@@ -17,6 +18,41 @@ const TYPE_TONE: Record<string, string> = {
   cartDeclined: "text-danger",
   commandRejected: "text-danger",
 };
+
+const CLOSER_TONE: Record<CloserLogEntry["type"], string> = {
+  plan: "text-review",
+  proposed: "text-review",
+  approved: "text-held",
+  rejected: "text-muted",
+  done: "text-granted",
+  failed: "text-danger",
+  check: "text-held",
+  invoice: "text-granted",
+};
+
+const CLOSER_LABEL: Record<CloserLogEntry["type"], string> = {
+  plan: "closer plan",
+  proposed: "proposed",
+  approved: "approved",
+  rejected: "rejected",
+  done: "paypal ok",
+  failed: "paypal error",
+  check: "checked",
+  invoice: "invoice",
+};
+
+interface Row {
+  key: string;
+  at: number;
+  time: string;
+  tone?: string;
+  label: string;
+  seq?: number;
+  reason: string;
+}
+
+const fromEngine = (a: AuditEntry): Row => ({ key: `e${a.seq}`, at: a.at, time: a.time, tone: TYPE_TONE[a.type], label: TYPE_LABEL[a.type] ?? a.type, seq: a.seq, reason: a.reason });
+const fromCloser = (c: CloserLogEntry, i: number): Row => ({ key: `c${i}`, at: c.at, time: new Date(c.at).toISOString().slice(11, 23), tone: CLOSER_TONE[c.type], label: CLOSER_LABEL[c.type], reason: c.reason });
 
 const TYPE_LABEL: Record<string, string> = {
   itemListed: "listed",
@@ -39,10 +75,14 @@ const TYPE_LABEL: Record<string, string> = {
   cartsFinalized: "carts",
   cartCharged: "charged",
   cartDeclined: "declined",
+  leaseExtended: "extended",
 };
 
-/** The "why" of every decision, newest first, optionally narrowed to one comment and the units it touched. */
-export function AuditDrawer({ audit, comments, units, focus, onClose }: { audit: AuditEntry[]; comments: CommentView[]; units: UnitView[]; focus?: string; onClose: () => void }) {
+/**
+ * The "why" of every decision, newest first, optionally narrowed to one comment and the units it touched.
+ * Closer's proposals, the seller's approvals and PayPal's answers are merged in by time.
+ */
+export function AuditDrawer({ audit, comments, units, focus, closerLog, onClose }: { audit: AuditEntry[]; comments: CommentView[]; units: UnitView[]; focus?: string; closerLog?: CloserLogEntry[]; onClose: () => void }) {
   const [all, setAll] = useState(!focus);
   const closeRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
@@ -55,12 +95,19 @@ export function AuditDrawer({ audit, comments, units, focus, onClose }: { audit:
 
   const comment = focus ? comments.find((c) => c.id === focus) : undefined;
   const rows = useMemo(() => {
-    if (all || !focus) return [...audit].reverse();
+    if (all || !focus) {
+      const merged = [...audit.map(fromEngine), ...(closerLog ?? []).map(fromCloser)];
+      // Stable sort: entries at the same instant keep engine order, then Closer's.
+      return merged.sort((a, b) => a.at - b.at).reverse();
+    }
     // Everything decided in the same engine steps as this comment, plus later decisions about its units.
     const unitIds = new Set(units.filter((u) => u.commentId && baseCommentId(u.commentId) === focus).map((u) => u.id));
     const steps = new Set(audit.filter((a) => a.commentId && baseCommentId(a.commentId) === focus).map((a) => a.at));
-    return audit.filter((a) => steps.has(a.at) || (a.unitId && unitIds.has(a.unitId))).reverse();
-  }, [audit, units, all, focus]);
+    return audit
+      .filter((a) => steps.has(a.at) || (a.unitId && unitIds.has(a.unitId)))
+      .map(fromEngine)
+      .reverse();
+  }, [audit, units, all, focus, closerLog]);
 
   return (
     <div className="fixed inset-0 z-40" role="dialog" aria-modal="true" aria-labelledby="audit-title">
@@ -95,12 +142,12 @@ export function AuditDrawer({ audit, comments, units, focus, onClose }: { audit:
         <ol className="scroll-thin min-h-0 flex-1 overflow-y-auto px-5 py-3">
           {rows.length ? (
             rows.map((a) => (
-              <li key={a.seq} className="relative border-l-2 border-line py-2 pl-4">
-                <span className={cx("absolute -left-[5px] top-3.5 size-2 rounded-full bg-current", TYPE_TONE[a.type] ?? "text-line-strong")} />
+              <li key={a.key} className="relative border-l-2 border-line py-2 pl-4">
+                <span className={cx("absolute -left-[5px] top-3.5 size-2 rounded-full bg-current", a.tone ?? "text-line-strong")} />
                 <div className="flex items-baseline gap-2">
                   <span className="num font-mono text-[11px] text-muted">{a.time}</span>
-                  <span className={cx("font-mono text-[10.5px] font-semibold uppercase tracking-wider", TYPE_TONE[a.type] ?? "text-ink-2")}>{TYPE_LABEL[a.type] ?? a.type}</span>
-                  <span className="num ml-auto font-mono text-[10px] text-muted">#{a.seq}</span>
+                  <span className={cx("font-mono text-[10.5px] font-semibold uppercase tracking-wider", a.tone ?? "text-ink-2")}>{a.label}</span>
+                  <span className="num ml-auto font-mono text-[10px] text-muted">{a.seq === undefined ? "closer" : `#${a.seq}`}</span>
                 </div>
                 <p className="mt-0.5 text-[13px] leading-snug text-ink">{a.reason}</p>
               </li>

@@ -5,6 +5,8 @@ import { useCallback, useState } from "react";
 import type { BuyerCarts, Cart } from "@claim/core";
 import type { OrderRecord, ShowAction, ShowView } from "../lib/types";
 import { money, moneyExact, shipToLines } from "../lib/stats";
+import { AuditDrawer } from "./seller/audit-drawer";
+import { Closer } from "./seller/closer";
 import { Button, Icon, Logo, MockBanner, Stamp, ThemeToggle, Toasts, cx, inputCls } from "./ui";
 import { useFreshKeys, useShow, useToasts, type ActResult } from "./use-show";
 
@@ -80,6 +82,8 @@ export function Closeout({ initial }: { initial: ShowView }) {
   const { view: v, act } = useShow(initial.showId, initial, "seller");
   const { toasts, push } = useToasts();
   const [busy, setBusy] = useState<string | null>(null);
+  const [audit, setAudit] = useState(false);
+  const closeAudit = useCallback(() => setAudit(false), []);
   const run: Run = useCallback(
     async (key, a, okMsg) => {
       setBusy(key);
@@ -125,6 +129,9 @@ export function Closeout({ initial }: { initial: ShowView }) {
           <Link href={`/seller/${v.showId}/ledger`} className="inline-flex h-8 items-center gap-1.5 rounded-lg px-2 text-[13px] font-semibold text-ink-2 hover:bg-sunken">
             <Icon.Table size={15} /> <span className="hidden sm:inline">Ledger</span>
           </Link>
+          <button type="button" aria-label="Open the audit log" onClick={() => setAudit(true)} className="inline-flex h-8 min-w-8 items-center justify-center gap-1.5 rounded-lg px-2 text-[13px] font-semibold text-ink-2 hover:bg-sunken">
+            <Icon.Receipt size={15} /> <span className="hidden sm:inline">Audit</span>
+          </button>
           <span className="hidden md:inline-flex">
             <MockBanner label={v.payments.label} mode={v.payments.mode} />
           </span>
@@ -132,7 +139,7 @@ export function Closeout({ initial }: { initial: ShowView }) {
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1180px] px-5 pb-20 pt-8">
+      <main className="mx-auto max-w-[1280px] px-5 pb-20 pt-8">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <h1 className="display text-[40px] font-black leading-[0.95] tracking-tight sm:text-[44px]">Close-out</h1>
@@ -188,6 +195,8 @@ export function Closeout({ initial }: { initial: ShowView }) {
           <Stat label="Declines · refunds" value={`${declined} · ${money(refundedCents)}`} />
         </dl>
 
+        {ended && v.closer ? <Closer c={v.closer} run={run} busy={busy} notify={push} /> : null}
+
         {v.carts.length ? (
           <>
             {billable.length ? (
@@ -207,6 +216,7 @@ export function Closeout({ initial }: { initial: ShowView }) {
         )}
       </main>
       <Toasts toasts={toasts} />
+      {audit ? <AuditDrawer audit={v.audit} comments={v.comments} units={v.units} closerLog={v.closer?.log} onClose={closeAudit} /> : null}
     </div>
   );
 }

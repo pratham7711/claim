@@ -123,6 +123,9 @@ describe("toolkit executor", () => {
     });
     expect(parseToolkitResult(JSON.stringify({ ok: false, status: 503, code: "PAYPAL_API_HTTP_ERROR", message: "down" }))).toMatchObject({ code: "PAYPAL_UNAVAILABLE", status: 503 });
     expect(parseToolkitResult(JSON.stringify({ ok: false, code: "PAYPAL_API_NO_RESPONSE", message: "no answer" }))).toMatchObject({ code: "PAYPAL_API_NO_RESPONSE" });
+    // The live sandbox's 403 (2026-10-31) came back with the message repeated after ": ".
+    const repeated = { ok: false, status: 403, code: "PAYPAL_API_HTTP_ERROR", message: "Authorization failed due to insufficient permissions.: Authorization failed due to insufficient permissions." };
+    expect(parseToolkitResult(JSON.stringify(repeated))).toMatchObject({ code: "NOT_AUTHORIZED", message: expect.stringMatching(/^Authorization failed due to insufficient permissions\. PayPal refused/) });
     expect(parseToolkitResult("<html>")).toMatchObject({ ok: false, code: "BAD_RESPONSE" });
   });
 

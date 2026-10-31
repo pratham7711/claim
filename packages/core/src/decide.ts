@@ -640,7 +640,7 @@ function handle(ctx: Ctx, cmd: Command): void {
           type: "leaseExtended",
           unitId: id,
           leaseExpiresAt: cmd.until,
-          reason: `${label(s, u.itemCode, u.sku)} held for ${nameOf(s, u.buyerKey)} until ${fmtTs(cmd.until)}${cmd.note ? `: ${cmd.note}` : ""}`,
+          reason: `${label(s, u.itemCode, u.sku)} held for ${nameOf(s, u.buyerKey)} until ${new Date(cmd.until).toISOString().slice(0, 10)} ${fmtTs(cmd.until)}${cmd.note ? `: ${cmd.note}` : ""}`,
         });
       }
       return;
