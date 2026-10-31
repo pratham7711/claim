@@ -112,6 +112,7 @@ flowchart LR
 - `packages/listing`: host utterance to item draft.
 - `packages/llm`: provider adapters: `anthropic`, `openai`, `groq`, `gemini`, `nebius`, `openai-compat`, `claude-cli` and `mock`, plus the token budget that caps spend on a paid key.
 - `packages/paypal`: the PayPal sandbox gateway and a deterministic mock, behind the same interface.
+- `packages/closer`: Closer, the close-out agent: plans with tool calls, validates every proposal against the ledger, and runs approved actions through PayPal's Agent Toolkit. See [Closer](#closer-the-close-out-agent).
 - `apps/web`: a Next.js 16 app. One long-running Node process holds every show in memory and appends each event to `<CLAIM_DATA_DIR>/<showId>.jsonl`. On restart, a show is rebuilt by replaying its log; this was measured across a container restart.
 
 Details, including why it is single-process: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
@@ -186,6 +187,25 @@ Every call below is implemented in `packages/paypal/src/sandbox.ts` (request bod
 | Idempotency, duplicate invoice, over-refund | modelled | PayPal's own |
 
 The PayPal package has its own sandbox setup guide and a 16-step spike script (`npx tsx packages/paypal/scripts/spike.ts`); see [packages/paypal/README.md](packages/paypal/README.md). **None of the sandbox code has run against a real sandbox account yet.** It is unit-tested against a fake `fetch`, and request bodies are checked against PayPal's published OpenAPI specs.
+
+## Closer: the close-out agent
+
+After **End show**, the close-out page has a **Closer** panel. The seller types what they want ("Charge every Claim Pass, invoice everyone else", "Who still owes me? Nudge them, nicely", "Refund nora $5, the cardigan had a pulled thread") and presses **Plan**. An empty box plans the whole close-out.
+
+**The model proposes, the ledger validates, the seller approves.**
+- **Plan.** The model calls tools in a loop (`packages/closer/src/tools.ts`, `planner.ts`): charge Claim Pass carts, invoice a buyer, send a pay-now link, remind, refund, add tracking, release holds, and a read-only `check_invoices`. It sees a snapshot of the show's money with short refs (`c1`, `c2`, …) and whether each buyer has an email, never the address.
+- **Validate.** Every tool call is checked against that snapshot (`validate.ts`): the bill must exist, amounts come from the ledger and never from the model, a refund cannot exceed what is left of the charge, a reminder waits at least 60 s after the last one, and nothing is queued twice. A rejected call goes back to the model with the reason so it can correct itself; the plan's one-line summary is built from the queue, not from the model's text.
+- **Approve.** Proposals land in an approval queue (AG Grid): Approve or Reject per row, **Approve all**, and J/K/A/R keys. Invoice, reminder and refund notes can be edited in the grid. Nothing that moves money runs until the seller approves, and each approval is checked again against the current ledger before PayPal is called. Approving twice runs once.
+- **Run.** Claim Pass charges, pay-now links and hold releases go through the existing gateway. Invoices, reminders, invoice status, refunds and tracking go through PayPal's Agent Toolkit (`@paypal/agent-toolkit`: `create_invoice`, `send_invoice`, `send_invoice_reminder`, `get_invoice`, `create_refund`, `create_shipment_tracking`), each with `PayPal-Request-Id` set to `<proposal id>-<step>`. An open invoice keeps the buyer's held items for 24 hours. When PayPal reports it paid, through `get_invoice` or the `INVOICING.INVOICE.PAID` webhook, the cart is recorded as charged; the model never marks anything paid.
+- **Fallback.** With no model key, on a 429 or on a timeout, a rule-based planner queues the same kinds of actions with template notes, labelled "Rule-based plan (AI busy)". Planning is limited to one plan in flight and 6 a minute per show; one plan stops at 6 turns, 6,000 tokens or 8 seconds, keeping what it had queued.
+- **Audit.** Every plan, proposal, decision and PayPal result is a show record, replayed on restart, and listed in the Audit drawer beside the engine's own entries.
+
+Configuration: `CLOSER_PROVIDER` (defaults to `LLM_PROVIDER`; `openai`, `groq`, `gemini` or `nebius`, since it needs tool calling), `CLOSER_MODEL` (Groq default `openai/gpt-oss-120b`, then `openai/gpt-oss-20b`), `CLOSER_FALLBACK_MODELS`, `CLOSER_TIMEOUT_MS` (8,000). `JUDGE_BUYER_EMAIL` gives the buyer room's own buyer an email so an invoice can reach a real sandbox inbox. In mock mode the Toolkit calls are simulated, and the panel says so.
+
+What has been run (2026-10-31):
+- Planning against live Groq (`openai/gpt-oss-120b`) in the browser, with mock payments: the whole close-out, then "invoice everyone else", then "who still owes me?" (it read the open invoice, answered "1 unpaid: dana $42." and its reminder was held back by the 60 s rule), then a $5 refund. All four were model plans, not the rule fallback, and each took 1.1 to 1.9 s end to end (server log).
+- The Toolkit path is unit-tested with the real `@paypal/agent-toolkit` and a stubbed HTTP adapter: the request URL, bearer token and `PayPal-Request-Id` per step.
+- One live `create_invoice` against the sandbox app answered `403 NOT_AUTHORIZED` ("Authorization failed due to insufficient permissions"): Invoicing is not enabled for the sandbox app yet, so no invoice has been sent through PayPal.
 
 ## How good is the comment resolver
 

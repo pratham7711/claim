@@ -14,7 +14,9 @@ flowchart TD
   listing["@claim/listing<br/>utterance to item draft"]
   llm["@claim/llm<br/>provider adapters"]
   paypal["@claim/paypal<br/>gateway: sandbox + mock"]
-  web --> core & resolver & listing & llm & paypal
+  closer["@claim/closer<br/>close-out agent"]
+  web --> core & resolver & listing & llm & paypal & closer
+  closer --> core & llm
   resolver --> core & llm
   listing --> core & llm
   paypal --> core
@@ -27,6 +29,7 @@ flowchart TD
 | `packages/listing` | `rules.ts` / `numbers.ts` / `lexicon.ts` parse a spoken listing ("two mediums and one large, thirty four dollars"). `llm.ts` fills gaps. `confirmListing` applies the seller's edits. | Listing an item. The web app sends `listItem` to the engine only after the seller confirms. |
 | `packages/llm` | `LlmClient` with JSON-schema completions. Adapters: `anthropic` (default model `claude-haiku-4-5`); `openai` (`gpt-4.1-mini`), `groq` (`openai/gpt-oss-20b`, reasoning effort `low`) and `gemini` (`gemini-2.5-flash-lite`), all three through `openai-compat`; `claude-cli` (spawns the local `claude` binary, default `haiku`); and `mock`. `factory.ts` reads `LLM_PROVIDER`, which defaults to `mock`. | Prompting. The prompts live with their callers. |
 | `packages/paypal` | `sandbox.ts` (REST calls), `bodies.ts` (pure request-body builders), `http.ts` (OAuth, retries, timeouts), `errors.ts`, `money.ts`, `parse.ts`, `mock.ts` (deterministic in-memory gateway), `env.ts` (`createGateway`: sandbox or mock), `browser.ts` (the v6 JS SDK save session, loaded by the buyer room in sandbox mode; verified against a live sandbox on 2026-10-05), `webhook.ts` (reads the ids out of a webhook event). | Deciding what to charge. Carts come from the engine. |
+| `packages/closer` | `types.ts` (proposals, invoices, the ledger snapshot), `tools.ts` (tool specs and the prompt), `planner.ts` (the tool loop and its caps), `validate.ts` (every proposal checked against the ledger), `rules.ts` (the rule-based planner), `summary.ts`, `executor.ts` (PayPal Agent Toolkit executor and a mock). | Reading show state or moving money on its own. The web app builds the ledger and runs a proposal only after the seller approves it. |
 | `apps/web` | `lib/service.ts` (the show service: ingestion, simulator, Twitch, payments, actions), `lib/store.ts` (JSONL file store), `lib/view.ts` (the snapshot the UI renders), `lib/scenarios.ts`, `lib/twitch.ts`, `lib/seed.ts`. Routes: `GET`/`POST /api/shows`, `GET`/`POST /api/shows/[showId]`, `GET /api/shows/[showId]/stream` (SSE), `POST /api/paypal/webhook`. Pages: `/`, `/demo/[id]`, `/seller/[id]`, `/seller/[id]/closeout`, `/seller/[id]/ledger`, `/live/[id]`, `/pay/[id]` (in sandbox it captures when PayPal returns the buyer). | Fairness decisions. Every allocation goes through `@claim/core`. |
 
 **Every mutation goes through one endpoint.** `POST /api/shows/[showId]` takes `{ action, ... }`, and `ShowService.act` switches on it. The actions are:
@@ -37,6 +40,7 @@ flowchart TD
 | Comments and listings | `comment`, `parseListing`, `listItem`, `simulate`, `twitch`, `review` |
 | Claim Pass | `savePass` (mock only: setup token and payment token in one step, auto-approved); `clientToken`, `passSetup`, `passApprove` (sandbox: the v6 save session's three server calls) |
 | Payments | `finalize`, `chargeAll`, `payNowCart`, `payNowHolds`, `releaseHolds`, `capture`, `refund`, `tracking` |
+| Closer | `closerPlan` (instruction), `closerDecide` (approve, reject or edit one proposal), `closerApproveAll`, `closerCheck` (ask PayPal about open invoices) |
 
 ## 2. The engine: an event-sourced claim desk
 
@@ -294,6 +298,44 @@ sequenceDiagram
 ```
 
 The decline handling is defensive. `chargeOne` turns a thrown error (a missing vault, a network failure) into a decline, so a single failure moves that cart to pay-now instead of aborting the whole close-out. In mock mode, a vault the mock forgot on restart is re-saved once and retried.
+
+### Closer, the close-out agent
+
+Closer turns a seller's instruction into proposals for the same close-out steps, and runs only the ones the seller approves. The model proposes, the ledger validates, the seller approves.
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant S as Seller (close-out page)
+  participant W as service.ts
+  participant C as @claim/closer
+  participant M as Model (tool calling)
+  participant P as PayPal (gateway / Agent Toolkit)
+
+  S->>W: closerPlan (instruction)
+  W->>C: planCloseout(instruction, ledger())
+  loop at most 6 turns, 6,000 tokens, 8 s for the whole plan
+    C->>M: chat(messages, tools)
+    M-->>C: tool calls (refs, notes, amounts)
+    C->>C: validateDraft against the ledger
+    C-->>M: tool results (queued, or the reason it was dropped)
+  end
+  Note over C: no model, 429 or timeout: rulePlan, labelled
+  C-->>W: drafts + summary + answer
+  W->>W: proposal records (status proposed), older waiting rows superseded
+  S->>W: closerDecide approve / closerApproveAll
+  W->>C: validateDraft again against the current ledger
+  W->>P: charge (gateway) or create_invoice + send_invoice, reminder, refund, tracking (Toolkit)
+  P-->>W: ids or an error code
+  W->>W: result record (done / failed), engine commands (recordCharge, extendHolds, releaseHolds)
+```
+
+- **The ledger snapshot** (`apps/web/lib/closer.ts`, `buildLedger`) lists one bill per finalized cart (due or paid) and one per buyer's unpaid holds, with refs `c1`, `c2`, … in the order buyers first claimed. It carries amounts, shipping, cap headroom, the last decline code, open pay-now orders and the bill's invoice. The model sees whether a buyer has an email, never the address.
+- **Validation** (`validate.ts`) is the only way a tool call becomes a proposal. It resolves the ref, takes every amount from the bill, refuses refunds above what is left of the charge, invoices without an email, reminders within 60 s of the last, and duplicates of anything already queued or running. The same check runs again when the seller approves, so a stale proposal fails as `STALE` without a PayPal call.
+- **Execution** (`service.ts`, `execute`) runs one call per proposal at a time; a second approval while it runs gets the same promise. Toolkit calls carry `PayPal-Request-Id` `<proposal id>-<step>`, so a retry after a restart replays instead of creating a second invoice or refund. A proposal left `running` by a restart comes back as `approved` and can be run again.
+- **Invoices.** Sending one for unpaid holds sends `extendHolds` to the engine (`leaseExtended` events), so the items stay with the buyer for 24 hours instead of lapsing to the waitlist. A paid invoice, from `get_invoice` or the `INVOICING.INVOICE.PAID` webhook, either records the charge on the cart or confirms the held units and finalizes them into a cart.
+- **Persistence.** Plans, proposals, decisions, results, invoices and the Closer log are records in the show's JSONL file, folded back in by `hydrate`. The Audit drawer merges the Closer log with the engine audit by time.
+- **Limits.** One plan in flight and 6 a minute per show (`429` beyond that), on top of the shared LLM token budget.
 
 ## 5. Why single-process
 
