@@ -142,6 +142,27 @@ describe("leases and the Claim Pass", () => {
     expect(ofType(again, "commandRejected")[0]!.reason).toContain("already paid");
   });
 
+  it("extends an unpaid hold while an invoice is open, never shortens one, and replays the same", () => {
+    const eng = show({ leaseMs: 5 * MIN });
+    blueDress(eng, 1);
+    say(eng, { id: "a", user: "alice", ts: T0, item: "14", size: "M" }, T0);
+    say(eng, { id: "b", user: "bob", ts: T0 + 50, item: "14", size: "M" }, T0 + 60);
+    const a = unitsOf(eng.state, "alice")[0]!;
+    const until = T0 + 24 * 60 * MIN;
+    const ext = eng.execute({ type: "extendHolds", unitIds: [a.id], until, note: "invoice INV2-1 is open" }, T0 + MIN);
+    expect(ofType(ext, "leaseExtended")[0]!.reason).toContain("held for alice until");
+    expect(eng.execute({ type: "extendHolds", unitIds: [a.id], until: T0 + 2 * MIN }, T0 + MIN)).toEqual([]);
+
+    eng.execute({ type: "tick" }, T0 + 10 * MIN);
+    expect(statusOf(eng.state, "alice")).toEqual(["held"]);
+    expect(statusOf(eng.state, "bob")).toEqual(["waitlisted"]);
+    expect(replay(eng.state.config, eng.events).units[a.id]!.leaseExpiresAt).toBe(until);
+
+    eng.execute({ type: "confirmPayment", unitIds: [a.id] }, T0 + 20 * MIN);
+    const paid = eng.execute({ type: "extendHolds", unitIds: [a.id], until: until + MIN }, T0 + 21 * MIN);
+    expect(ofType(paid, "commandRejected")[0]!.reason).toContain("not an unpaid hold");
+  });
+
   it("checks the lease at capture time even when no tick has run", () => {
     const eng = show({ leaseMs: 1000 });
     blueDress(eng, 1);

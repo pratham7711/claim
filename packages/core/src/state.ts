@@ -152,6 +152,9 @@ export function mutate(s: EngineState, e: EngineEvent): void {
       delete u.cartId;
       return;
     }
+    case "leaseExtended":
+      unit(s, e.unitId).leaseExpiresAt = e.leaseExpiresAt;
+      return;
     case "unitReassigned": {
       upsertBuyer(s, e.to);
       const u = unit(s, e.unitId);

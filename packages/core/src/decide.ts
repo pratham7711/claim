@@ -626,6 +626,26 @@ function handle(ctx: Ctx, cmd: Command): void {
       return;
     }
 
+    case "extendHolds": {
+      if (!cmd.unitIds.length) return reject(ctx, cmd.type, "no units given");
+      for (const id of cmd.unitIds) {
+        const u = s.units[id];
+        if (!u) return reject(ctx, cmd.type, `unknown unit ${id}`);
+        if (u.status !== "held" || u.paid) return reject(ctx, cmd.type, `${id} is ${u.status}${u.paid ? " (already paid)" : ""}, not an unpaid hold`);
+      }
+      for (const id of cmd.unitIds) {
+        const u = s.units[id]!;
+        if (u.leaseExpiresAt !== undefined && u.leaseExpiresAt >= cmd.until) continue;
+        emit(ctx, {
+          type: "leaseExtended",
+          unitId: id,
+          leaseExpiresAt: cmd.until,
+          reason: `${label(s, u.itemCode, u.sku)} held for ${nameOf(s, u.buyerKey)} until ${fmtTs(cmd.until)}${cmd.note ? `: ${cmd.note}` : ""}`,
+        });
+      }
+      return;
+    }
+
     case "sellerGrant": {
       const item = s.items[cmd.itemCode];
       if (!item || !variantOf(s, cmd.itemCode, cmd.sku)) return reject(ctx, cmd.type, `no variant ${cmd.sku} on #${cmd.itemCode}`);

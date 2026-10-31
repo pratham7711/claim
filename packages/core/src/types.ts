@@ -203,6 +203,8 @@ export type Command =
   | { type: "saveClaimPass"; buyer: BuyerRef; capCents?: number }
   | { type: "revokeClaimPass"; buyerKey: string }
   | { type: "confirmPayment"; unitIds: string[]; orderId?: string }
+  /** Keeps pay-now holds with their buyer until `until`, e.g. while an invoice for them is open. Never shortens a lease. */
+  | { type: "extendHolds"; unitIds: string[]; until: number; note?: string }
   | { type: "sellerGrant"; buyer: BuyerRef; itemCode: string; sku: string; qty?: number; note?: string }
   | { type: "sellerRevoke"; unitId: string; note?: string }
   | { type: "sellerReassign"; unitId: string; to: BuyerRef; note?: string }
@@ -262,6 +264,7 @@ export type EngineEvent = Base &
     | { type: "unitReleased"; unitId: string; cause: ReleaseCause; refundDue: boolean; commentId?: string }
     | { type: "unitConfirmed"; unitId: string; via: "claim-pass" | "payment"; orderId?: string }
     | { type: "unitReverted"; unitId: string; leaseExpiresAt: number }
+    | { type: "leaseExtended"; unitId: string; leaseExpiresAt: number }
     | {
         type: "unitReassigned";
         unitId: string;
