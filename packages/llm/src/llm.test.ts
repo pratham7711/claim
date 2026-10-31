@@ -2,13 +2,13 @@ import { describe, expect, it } from "vitest";
 import { createAnthropicClient } from "./anthropic.js";
 import { buildCliArgs, createClaudeCliClient } from "./claude-cli.js";
 import { createTokenBudget, withTokenBudget } from "./budget.js";
-import { createEscalationClient, createLlmClient } from "./factory.js";
+import { createCloserClient, createEscalationClient, createLlmClient } from "./factory.js";
 import { createFallbackClient } from "./fallback.js";
 import { backoffMs, LlmError, postJson, retryAfterMs } from "./http.js";
 import { parseJsonLoose } from "./json.js";
 import { createMockClient } from "./mock.js";
-import { buildChatBody, createOpenAiCompatClient } from "./openai-compat.js";
-import type { CompletionRequest, CompletionResult, LlmClient } from "./types.js";
+import { buildChatBody, buildToolChatBody, createOpenAiCompatClient } from "./openai-compat.js";
+import type { CompletionRequest, CompletionResult, LlmClient, ToolChatRequest } from "./types.js";
 
 const schema = { name: "r", schema: { type: "object", properties: { ok: { type: "boolean" } }, required: ["ok"], additionalProperties: false } };
 const req: CompletionRequest = {
@@ -377,5 +377,82 @@ describe("withTokenBudget", () => {
     const b2 = createTokenBudget({}, { maxTokens: 1_000_000 });
     await expect(withTokenBudget(failing, b2).complete({ ...req, maxTokens: 100 })).rejects.toThrow("timeout");
     expect(b2.used).toBeGreaterThan(100);
+  });
+});
+
+describe("tool calling", () => {
+  const tools = [{ name: "send_reminder", description: "Remind a buyer", parameters: { type: "object", properties: { ref: { type: "string" } }, required: ["ref"] } }];
+  const chatReq: ToolChatRequest = {
+    messages: [
+      { role: "system", content: "close out" },
+      { role: "user", content: "nudge them" },
+      { role: "assistant", content: "", toolCalls: [{ id: "c1", name: "check_invoices", arguments: "{}" }] },
+      { role: "tool", toolCallId: "c1", content: '{"unpaid":1}' },
+    ],
+    tools,
+    maxTokens: 900,
+  };
+
+  it("sends tools, auto choice and the tool turn in OpenAI's wire shape", () => {
+    const body = buildToolChatBody(chatReq, { apiKey: "k", baseUrl: "u", model: "m", maxTokensField: "max_tokens", reasoningEffort: "low" });
+    expect(body).toMatchObject({ model: "m", tool_choice: "auto", parallel_tool_calls: true, max_tokens: 900, reasoning_effort: "low" });
+    expect(body.tools).toEqual([{ type: "function", function: tools[0] }]);
+    const messages = body.messages as Record<string, unknown>[];
+    expect(messages[2]).toEqual({ role: "assistant", content: null, tool_calls: [{ id: "c1", type: "function", function: { name: "check_invoices", arguments: "{}" } }] });
+    expect(messages[3]).toEqual({ role: "tool", tool_call_id: "c1", content: '{"unpaid":1}' });
+  });
+
+  it("parses tool calls, giving object arguments back as JSON text", async () => {
+    const f = fakeFetch([
+      ok({
+        model: "gpt-oss",
+        choices: [{ message: { content: null, tool_calls: [{ id: "x", function: { name: "send_reminder", arguments: '{"ref":"c1"}' } }, { function: { name: "send_reminder", arguments: { ref: "c2" } } }] } }],
+        usage: { prompt_tokens: 40, completion_tokens: 8 },
+      }),
+    ]);
+    const c = createOpenAiCompatClient({ apiKey: "k", baseUrl: "https://x/v1", model: "m", fetchImpl: f.impl, sleep: noSleep });
+    const res = await c.chat!(chatReq);
+    expect(res.text).toBe("");
+    expect(res.toolCalls).toEqual([
+      { id: "x", name: "send_reminder", arguments: '{"ref":"c1"}' },
+      { id: "call_1", name: "send_reminder", arguments: '{"ref":"c2"}' },
+    ]);
+    expect(res.usage).toEqual({ inputTokens: 40, outputTokens: 8 });
+  });
+
+  it("Closer runs gpt-oss-120b on Groq, falls to 20b on a 429, and never retries", async () => {
+    const reply = ok({ choices: [{ message: { content: "done" } }] });
+    const f = fakeFetch([status(429), reply]);
+    const c = createCloserClient({ LLM_PROVIDER: "groq", GROQ_API_KEY: "k" }, { fetchImpl: f.impl })!;
+    expect((await c.chat!(chatReq)).text).toBe("done");
+    expect(f.calls.map((x) => JSON.parse(x.init.body as string).model)).toEqual(["openai/gpt-oss-120b", "openai/gpt-oss-20b"]);
+    expect(JSON.parse(f.calls[0]!.init.body as string).reasoning_effort).toBe("low");
+  });
+
+  it("Closer has no model on mock, without a key, or with CLOSER_MODEL overriding", () => {
+    expect(createCloserClient({})).toBeUndefined();
+    expect(createCloserClient({ LLM_PROVIDER: "groq" })).toBeUndefined();
+    expect(createCloserClient({ LLM_PROVIDER: "claude-cli" })).toBeUndefined();
+    expect(createCloserClient({ CLOSER_PROVIDER: "groq", GROQ_API_KEY: "k", CLOSER_MODEL: "openai/gpt-oss-20b", CLOSER_FALLBACK_MODELS: "" })!.model).toBe("openai/gpt-oss-20b");
+  });
+
+  it("the mock scripts turns, records requests, and throws a scripted error", async () => {
+    const m = createMockClient({ toolTurns: [{ toolCalls: [{ name: "send_reminder", arguments: { ref: "c1" } }] }, new LlmError("HTTP 429", 429, true)] });
+    const first = await m.chat(chatReq);
+    expect(first.toolCalls).toEqual([{ id: "mock_0_0", name: "send_reminder", arguments: '{"ref":"c1"}' }]);
+    await expect(m.chat(chatReq)).rejects.toMatchObject({ status: 429 });
+    expect((await m.chat(chatReq)).toolCalls).toEqual([]);
+    expect(m.chatCalls).toHaveLength(3);
+  });
+
+  it("falls over and meters tool calls like completions", async () => {
+    const a = createMockClient({ toolTurns: [new LlmError("HTTP 429", 429, true)], model: "a" });
+    const b = createMockClient({ toolTurns: [{ text: "ok" }], model: "b" });
+    const budget = createTokenBudget({}, { maxTokens: 100_000 });
+    const c = withTokenBudget(createFallbackClient([a, b]), budget);
+    expect((await c.chat!(chatReq)).model).toBe("b");
+    expect(budget.used).toBeGreaterThan(0);
+    const noChat: LlmClient = { provider: "x", model: "x", complete: async () => ({ text: "", model: "x", latencyMs: 0 }) };
+    expect(createFallbackClient([a, noChat]).chat).toBeUndefined();
   });
 });

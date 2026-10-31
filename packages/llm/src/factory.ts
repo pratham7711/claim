@@ -98,6 +98,45 @@ export function createLlmClient(env: Env = process.env, extras: FactoryExtras = 
   }
 }
 
+/** Closer's tool-calling models on Groq, measured on a 4-cart ledger: 120b first, 20b when 120b is rate-limited. */
+export const CLOSER_GROQ_MODELS = ["openai/gpt-oss-120b", "openai/gpt-oss-20b"] as const;
+
+/**
+ * The close-out agent's model. It needs tool calling, so only the OpenAI-compatible presets qualify:
+ * CLOSER_PROVIDER, else LLM_PROVIDER. CLOSER_MODEL picks the model (Groq default openai/gpt-oss-120b) and
+ * CLOSER_FALLBACK_MODELS the ones tried on a 429 (Groq default openai/gpt-oss-20b; empty turns it off).
+ * Reasoning effort follows CLOSER_REASONING_EFFORT, then LLM_REASONING_EFFORT, then the preset, for gpt-oss
+ * models only. No retries: a busy model falls straight to the next one, then to Closer's rules.
+ * Undefined for mock, anthropic, claude-cli and openai-compat, which plan with the rules.
+ */
+export function createCloserClient(env: Env = process.env, extras: FactoryExtras = {}): LlmClient | undefined {
+  const provider = (env.CLOSER_PROVIDER || env.LLM_PROVIDER || "mock").trim().toLowerCase();
+  if (provider !== "openai" && provider !== "groq" && provider !== "gemini" && provider !== "nebius") return undefined;
+  const preset = OPENAI_COMPAT_PRESETS[provider];
+  const apiKey = env[preset.keyEnv];
+  if (!apiKey) return undefined;
+  const groq = provider === "groq";
+  const primary = env.CLOSER_MODEL || (groq ? CLOSER_GROQ_MODELS[0] : preset.model);
+  const fallbacks = (env.CLOSER_FALLBACK_MODELS !== undefined ? list(env.CLOSER_FALLBACK_MODELS) : groq ? [CLOSER_GROQ_MODELS[1]] : []).filter((m) => m !== primary);
+  const effort = ((env.CLOSER_REASONING_EFFORT || env.LLM_REASONING_EFFORT || undefined) as ReasoningEffort | undefined) ?? preset.reasoningEffort;
+  const timeoutMs = num(env.CLOSER_TIMEOUT_MS) ?? 8000;
+  const clients = [primary, ...fallbacks].map((m) =>
+    createOpenAiCompatClient({
+      provider,
+      apiKey,
+      baseUrl: env.LLM_BASE_URL || preset.baseUrl,
+      model: m,
+      maxTokensField: preset.maxTokensField,
+      ...(effort && m.includes("gpt-oss") ? { reasoningEffort: effort } : {}),
+      ...(preset.extraBody && { extraBody: preset.extraBody }),
+      timeoutMs,
+      retries: 0,
+      ...(extras.fetchImpl && { fetchImpl: extras.fetchImpl }),
+    }),
+  );
+  return createFallbackClient(clients);
+}
+
 /**
  * The larger reasoning model behind the fast one: LLM_ESCALATE_MODEL, else the preset's escalateModel
  * (nebius: Nemotron Super behind Nemotron Nano). Undefined when neither is set, or LLM_ESCALATE_MODEL is empty.

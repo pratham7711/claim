@@ -1,6 +1,6 @@
 import { postJson, type RetryOptions } from "./http.js";
 import { parseJsonLoose, schemaInstruction } from "./json.js";
-import type { ChatMessage, CompletionRequest, CompletionResult, LlmClient } from "./types.js";
+import type { ChatMessage, CompletionRequest, CompletionResult, LlmClient, ToolCall, ToolChatMessage, ToolChatRequest, ToolChatResult } from "./types.js";
 
 /** json_schema = native strict structured output; json_object = JSON mode with the schema in the prompt. */
 export type JsonMode = "json_schema" | "json_object" | "none";
@@ -72,10 +72,48 @@ export const OPENAI_COMPAT_PRESETS: Record<"openai" | "groq" | "gemini" | "nebiu
   },
 };
 
+interface WireToolCall {
+  id?: string;
+  function?: { name?: string; arguments?: unknown };
+}
+
 interface ChatResponse {
   model?: string;
-  choices?: { message?: { content?: string | null; refusal?: string | null } }[];
+  choices?: { message?: { content?: string | null; refusal?: string | null; tool_calls?: WireToolCall[] } }[];
   usage?: { prompt_tokens?: number; completion_tokens?: number };
+}
+
+function toWire(m: ToolChatMessage): Record<string, unknown> {
+  if (m.role === "tool") return { role: "tool", tool_call_id: m.toolCallId, content: m.content };
+  if (m.role === "assistant") {
+    // Some providers refuse an empty tool_calls array, and want null content beside calls.
+    const calls = m.toolCalls?.length ? m.toolCalls.map((c) => ({ id: c.id, type: "function", function: { name: c.name, arguments: c.arguments } })) : undefined;
+    return { role: "assistant", content: m.content || (calls ? null : ""), ...(calls ? { tool_calls: calls } : {}) };
+  }
+  return { role: m.role, content: m.content };
+}
+
+export function buildToolChatBody(req: ToolChatRequest, opts: OpenAiCompatOptions): Record<string, unknown> {
+  const body: Record<string, unknown> = {
+    model: opts.model,
+    messages: req.messages.map(toWire),
+    tools: req.tools.map((t) => ({ type: "function", function: { name: t.name, description: t.description, parameters: t.parameters } })),
+    tool_choice: req.toolChoice ?? "auto",
+    parallel_tool_calls: req.parallelToolCalls ?? true,
+  };
+  if (req.maxTokens !== undefined) body[opts.maxTokensField ?? "max_tokens"] = req.maxTokens;
+  if (req.temperature !== undefined) body.temperature = req.temperature;
+  if (opts.reasoningEffort) body.reasoning_effort = opts.reasoningEffort;
+  return { ...body, ...opts.extraBody };
+}
+
+function toolCallsFrom(calls: WireToolCall[] | undefined): ToolCall[] {
+  return (calls ?? []).flatMap((c, i) => {
+    const name = c.function?.name;
+    if (!name) return [];
+    const args = c.function?.arguments;
+    return [{ id: c.id || `call_${i}`, name, arguments: typeof args === "string" ? args : JSON.stringify(args ?? {}) }];
+  });
 }
 
 export function buildChatBody(req: CompletionRequest, opts: OpenAiCompatOptions): Record<string, unknown> {
@@ -114,6 +152,20 @@ export function createOpenAiCompatClient(opts: OpenAiCompatOptions): LlmClient {
       return {
         text,
         json: req.jsonSchema ? parseJsonLoose(text) : undefined,
+        model: res.model ?? opts.model,
+        latencyMs: performance.now() - started,
+        usage: { inputTokens: res.usage?.prompt_tokens, outputTokens: res.usage?.completion_tokens },
+        attempts,
+      };
+    },
+    async chat(req: ToolChatRequest): Promise<ToolChatResult> {
+      const started = performance.now();
+      const { json, attempts } = await postJson(url, buildToolChatBody(req, opts), headers, { ...opts, signal: req.signal });
+      const res = json as ChatResponse;
+      const message = res.choices?.[0]?.message;
+      return {
+        text: message?.content ?? "",
+        toolCalls: toolCallsFrom(message?.tool_calls),
         model: res.model ?? opts.model,
         latencyMs: performance.now() - started,
         usage: { inputTokens: res.usage?.prompt_tokens, outputTokens: res.usage?.completion_tokens },

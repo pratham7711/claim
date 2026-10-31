@@ -1,5 +1,5 @@
 import { LlmError } from "./http.js";
-import type { CompletionRequest, CompletionResult, LlmClient } from "./types.js";
+import type { CompletionRequest, CompletionResult, LlmClient, ToolChatRequest, ToolChatResult } from "./types.js";
 
 /**
  * A hard ceiling on what a pay-per-token provider can spend from one process. Shared by every client it
@@ -30,20 +30,37 @@ export function budgetExhausted(budget: TokenBudget, now = Date.now()): string |
 }
 
 export function withTokenBudget(client: LlmClient, budget: TokenBudget, now: () => number = Date.now): LlmClient {
+  async function metered<T extends { usage?: { inputTokens?: number; outputTokens?: number } }>(chars: number, maxTokens: number | undefined, call: () => Promise<T>): Promise<T> {
+    const stop = budgetExhausted(budget, now());
+    if (stop) throw new LlmError(stop, 402, false);
+    // Reserve the worst case up front so concurrent calls cannot overshoot together.
+    const reserve = Math.ceil(chars / 3) + (maxTokens ?? 1024);
+    budget.used += reserve;
+    // A failed or timed-out call may still have been billed, so its reservation is kept.
+    const res = await call();
+    const actual = (res.usage?.inputTokens ?? 0) + (res.usage?.outputTokens ?? 0);
+    budget.used += (actual || reserve) - reserve;
+    return res;
+  }
+  const chat = client.chat?.bind(client);
   return {
     provider: client.provider,
     model: client.model,
-    async complete(req: CompletionRequest): Promise<CompletionResult> {
-      const stop = budgetExhausted(budget, now());
-      if (stop) throw new LlmError(stop, 402, false);
-      // Reserve the worst case up front so concurrent calls cannot overshoot together.
-      const reserve = Math.ceil(req.messages.reduce((n, m) => n + m.content.length, 0) / 3) + (req.maxTokens ?? 1024);
-      budget.used += reserve;
-      // A failed or timed-out call may still have been billed, so its reservation is kept.
-      const res = await client.complete(req);
-      const actual = (res.usage?.inputTokens ?? 0) + (res.usage?.outputTokens ?? 0);
-      budget.used += (actual || reserve) - reserve;
-      return res;
-    },
+    complete: (req: CompletionRequest): Promise<CompletionResult> =>
+      metered(
+        req.messages.reduce((n, m) => n + m.content.length, 0),
+        req.maxTokens,
+        () => client.complete(req),
+      ),
+    ...(chat
+      ? {
+          chat: (req: ToolChatRequest): Promise<ToolChatResult> =>
+            metered(
+              req.messages.reduce((n, m) => n + m.content.length, 0) + JSON.stringify(req.tools).length,
+              req.maxTokens,
+              () => chat(req),
+            ),
+        }
+      : {}),
   };
 }

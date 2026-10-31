@@ -28,8 +28,50 @@ export interface CompletionResult {
   attempts?: number;
 }
 
+/** A function the model may call. `parameters` is a JSON Schema object. */
+export interface ToolSpec {
+  name: string;
+  description: string;
+  parameters: Record<string, unknown>;
+}
+
+export interface ToolCall {
+  id: string;
+  name: string;
+  /** The arguments as the model wrote them, JSON text; the caller parses and checks them. */
+  arguments: string;
+}
+
+export type ToolChatMessage =
+  | { role: "system" | "user"; content: string }
+  | { role: "assistant"; content: string; toolCalls?: ToolCall[] }
+  | { role: "tool"; toolCallId: string; content: string };
+
+export interface ToolChatRequest {
+  messages: ToolChatMessage[];
+  tools: ToolSpec[];
+  /** Defaults to "auto": the model may answer in text instead. */
+  toolChoice?: "auto" | "none" | "required";
+  /** Defaults to true: several calls in one turn. */
+  parallelToolCalls?: boolean;
+  temperature?: number;
+  maxTokens?: number;
+  signal?: AbortSignal;
+}
+
+export interface ToolChatResult {
+  text: string;
+  toolCalls: ToolCall[];
+  model: string;
+  latencyMs: number;
+  usage?: { inputTokens?: number; outputTokens?: number };
+  attempts?: number;
+}
+
 export interface LlmClient {
   readonly provider: string;
   readonly model: string;
   complete(req: CompletionRequest): Promise<CompletionResult>;
+  /** Tool calling. Only the OpenAI-compatible adapters and the mock have it. */
+  chat?(req: ToolChatRequest): Promise<ToolChatResult>;
 }
