@@ -164,7 +164,7 @@ export function createSandboxGateway(opts: SandboxGatewayOptions): SandboxGatewa
     },
 
     async createPaymentToken(setupTokenId) {
-      const res = await http.call<{ id?: string; customer?: { id?: string } }>({
+      const res = await http.call<{ id?: string; customer?: { id?: string }; payment_source?: { paypal?: { email_address?: string } } }>({
         op: "createPaymentToken",
         method: "POST",
         path: "/v3/vault/payment-tokens",
@@ -173,7 +173,8 @@ export function createSandboxGateway(opts: SandboxGatewayOptions): SandboxGatewa
         idempotent: true,
       });
       if (!res.body?.id) throw unexpected("createPaymentToken", res.status, res.debugId, "no payment token id");
-      return { vaultId: res.body.id, customerId: res.body.customer?.id ?? "" };
+      const email = res.body.payment_source?.paypal?.email_address;
+      return { vaultId: res.body.id, customerId: res.body.customer?.id ?? "", ...(email ? { email } : {}) };
     },
 
     async deletePaymentToken(vaultId) {

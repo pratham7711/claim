@@ -183,6 +183,12 @@ describe("vault: setup and payment tokens", () => {
     expect(c.headers["paypal-request-id"]).toBeTruthy();
   });
 
+  it("keeps the payer's email from the vault response, for invoices", async () => {
+    const { ff, gw } = setup();
+    ff.on("POST /v3/vault/payment-tokens", { status: 201, body: { id: "v1", customer: { id: "c1" }, payment_source: { paypal: { email_address: "buyer@example.com" } } } });
+    expect(await gw.createPaymentToken("ST1")).toEqual({ vaultId: "v1", customerId: "c1", email: "buyer@example.com" });
+  });
+
   it("throws a typed error when the buyer has not approved", async () => {
     const { ff, gw } = setup();
     ff.on("POST /v3/vault/payment-tokens", issue422("PAYER_ACTION_REQUIRED", "dbg-vault"));

@@ -114,8 +114,8 @@ export interface PaymentsGateway {
   clientToken(): Promise<string>;
   /** Claim Pass, step 1: setup token for a save-without-purchase session. */
   createSetupToken(input: { buyerKey: string; returnUrl: string; cancelUrl: string }): Promise<{ setupTokenId: string }>;
-  /** Claim Pass, step 2: exchange the approved setup token for a vault id. */
-  createPaymentToken(setupTokenId: string): Promise<{ vaultId: string; customerId: string }>;
+  /** Claim Pass, step 2: exchange the approved setup token for a vault id, and the payer's email when PayPal returns it. */
+  createPaymentToken(setupTokenId: string): Promise<{ vaultId: string; customerId: string; email?: string }>;
   deletePaymentToken(vaultId: string): Promise<void>;
   /**
    * The address the buyer keeps on a saved wallet, read at close-out so a change made since saving the

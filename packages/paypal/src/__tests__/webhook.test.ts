@@ -58,6 +58,21 @@ describe("readWebhookEvent", () => {
     });
   });
 
+  it("takes the invoice, its status and the paying transaction from an invoice event", () => {
+    const paid = {
+      id: "WH-8",
+      event_type: "INVOICING.INVOICE.PAID",
+      resource: { invoice: { id: "INV2-ABCD-EFGH", status: "PAID", payments: { transactions: [{ payment_id: "7AB12345CD678901E" }] } } },
+    };
+    expect(readWebhookEvent(body(paid))).toEqual({ id: "WH-8", type: "INVOICING.INVOICE.PAID", invoiceId: "INV2-ABCD-EFGH", invoiceStatus: "PAID", paymentId: "7AB12345CD678901E" });
+    expect(readWebhookEvent(body({ id: "WH-9", event_type: "INVOICING.INVOICE.PAID", resource: { id: "INV2-TOP", status: "MARKED_AS_PAID" } }))).toEqual({
+      id: "WH-9",
+      type: "INVOICING.INVOICE.PAID",
+      invoiceId: "INV2-TOP",
+      invoiceStatus: "MARKED_AS_PAID",
+    });
+  });
+
   it("refuses bodies that are not events", () => {
     for (const raw of ["", "not json", "[]", "null", body({ id: "WH-6" }), body({ event_type: "PAYMENT.CAPTURE.COMPLETED" }), body({ id: 7, event_type: "X" })]) {
       expect(readWebhookEvent(raw)).toBeUndefined();

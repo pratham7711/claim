@@ -13,6 +13,7 @@ export const WEBHOOK_EVENTS = [
   "CHECKOUT.ORDER.APPROVED",
   "VAULT.PAYMENT-TOKEN.CREATED",
   "VAULT.PAYMENT-TOKEN.DELETED",
+  "INVOICING.INVOICE.PAID",
 ] as const;
 
 /** Refuses carts PayPal would 422 (ITEM_TOTAL_MISMATCH, AMOUNT_MISMATCH, bad ids) before any call. */
