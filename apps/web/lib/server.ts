@@ -1,6 +1,8 @@
 import path from "node:path";
-import { createEscalationClient, createLlmClient, createTokenBudget, withTokenBudget } from "@claim/llm";
-import { selectGateway } from "./payments";
+import { createMockExecutor, createToolkitExecutor } from "@claim/closer";
+import type { PaymentsGateway } from "@claim/core";
+import { createCloserClient, createEscalationClient, createLlmClient, createTokenBudget, withTokenBudget } from "@claim/llm";
+import { MOCK_LABEL, selectGateway } from "./payments";
 import { createShowService, type ShowService } from "./service";
 import { createFileStore } from "./store";
 import type { ViewScope } from "./types";
@@ -28,14 +30,41 @@ export function getService(): ShowService {
     } catch {
       escalate = undefined;
     }
+    let closerLlm;
+    try {
+      const c = createCloserClient(process.env);
+      closerLlm = c ? withTokenBudget(c, budget) : undefined;
+    } catch {
+      closerLlm = undefined;
+    }
+    const gateway = selectGateway(process.env);
+    const judgeBuyerEmail = process.env.JUDGE_BUYER_EMAIL?.trim();
     g.__claimShows = createShowService({
       store: createFileStore(process.env.CLAIM_DATA_DIR ?? path.join(process.cwd(), ".data")),
-      gateway: selectGateway(process.env),
+      gateway,
       ...(llm ? { llm } : {}),
       ...(escalate ? { escalate } : {}),
+      ...(closerLlm ? { closerLlm } : {}),
+      closerExecutor: closerExecutor(gateway.gateway),
+      ...(judgeBuyerEmail ? { judgeBuyerEmail } : {}),
     });
   }
   return g.__claimShows;
+}
+
+/**
+ * Closer runs approved actions through PayPal's Agent Toolkit when the gateway is the real sandbox, reusing
+ * the gateway's cached OAuth token; in mock mode it simulates them, and the UI says so.
+ */
+function closerExecutor(gateway: PaymentsGateway) {
+  const clientId = process.env.PAYPAL_CLIENT_ID?.trim();
+  const clientSecret = process.env.PAYPAL_CLIENT_SECRET?.trim();
+  const sandbox = gateway as PaymentsGateway & { accessToken?: () => Promise<{ token: string }> };
+  if (gateway.mode !== "sandbox" || !clientId || !clientSecret) return { executor: createMockExecutor(), label: MOCK_LABEL };
+  return {
+    executor: createToolkitExecutor({ clientId, clientSecret, ...(sandbox.accessToken ? { accessToken: async () => (await sandbox.accessToken!()).token } : {}) }),
+    label: "PayPal sandbox via Agent Toolkit",
+  };
 }
 
 /**

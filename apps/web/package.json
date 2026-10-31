@@ -10,6 +10,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@claim/closer": "*",
     "@claim/core": "*",
     "@claim/listing": "*",
     "@claim/llm": "*",

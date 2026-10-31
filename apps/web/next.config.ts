@@ -7,7 +7,9 @@ const root = path.join(import.meta.dirname, "../..");
 const stripJsExt = path.join(import.meta.dirname, "build/strip-js-ext.cjs");
 
 const config: NextConfig = {
-  transpilePackages: ["@claim/core", "@claim/listing", "@claim/resolver", "@claim/llm", "@claim/paypal"],
+  transpilePackages: ["@claim/core", "@claim/listing", "@claim/resolver", "@claim/llm", "@claim/paypal", "@claim/closer"],
+  // The Agent Toolkit is CommonJS with its own axios and zod; Node loads it as is rather than the bundler.
+  serverExternalPackages: ["@paypal/agent-toolkit"],
   outputFileTracingRoot: root,
   devIndicators: false,
   turbopack: {

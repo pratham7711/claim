@@ -10,6 +10,7 @@ import type {
   ShowItem,
   UnitStatus,
 } from "@claim/core";
+import type { CloserLogEntry, InvoiceRecord, PlanRecord, Proposal } from "@claim/closer";
 
 /** What a resolved comment turned into, as the seller sees it on the stream. */
 export type OutcomeTone = "granted" | "held" | "sold" | "settling" | "waitlist" | "review" | "released" | "question" | "chatter" | "rejected" | "pending";
@@ -132,7 +133,8 @@ export interface ChargeRecord {
   status: ChargeResult["status"];
   declineCode?: string;
   amountCents: number;
-  via: "vault" | "pay-now";
+  /** "invoice": a Closer invoice PayPal reports paid; the capture id is the invoice's payment transaction. */
+  via: "vault" | "pay-now" | "invoice";
   at: number;
   /** Where the order ships. A buyer's address, so only the seller-scoped view carries it. */
   shipTo?: ShipTo;
@@ -196,6 +198,24 @@ export interface TwitchStatus {
   lagP50Ms?: number;
 }
 
+/** Closer, the close-out agent, as the seller's close-out page shows it. Only the seller-scoped view carries it. */
+export interface CloserView {
+  /** "closer" when a model plans; "rules" when no model is configured. */
+  planner: "closer" | "rules";
+  model?: string;
+  executor: "toolkit" | "mock";
+  executorLabel: string;
+  planning: boolean;
+  /** Newest first. */
+  plans: PlanRecord[];
+  /** Every proposal not replaced by a newer plan, newest plan first. */
+  proposals: Proposal[];
+  /** Buyers' emails stay on the server. */
+  invoices: Omit<InvoiceRecord, "email">[];
+  log: CloserLogEntry[];
+  suggestions: string[];
+}
+
 export interface ShowView {
   showId: string;
   title: string;
@@ -233,6 +253,7 @@ export interface ShowView {
   llm: { provider: string; model: string; escalateModel?: string };
   twitch: TwitchStatus;
   simulation?: { scenario: string; label: string; startedAt: number };
+  closer?: CloserView;
 }
 
 export interface ShowSummary {
@@ -277,4 +298,8 @@ export type ShowAction =
   | { action: "releaseHolds"; buyerKey: string }
   | { action: "capture"; orderId: string }
   | { action: "refund"; cartId: string; amountCents?: number; note?: string; requestId?: string }
-  | { action: "tracking"; cartId: string; carrier: string; trackingNumber: string };
+  | { action: "tracking"; cartId: string; carrier: string; trackingNumber: string }
+  | { action: "closerPlan"; instruction?: string }
+  | { action: "closerDecide"; proposalId: string; decision: "approve" | "reject" | "edit"; note?: string }
+  | { action: "closerApproveAll" }
+  | { action: "closerCheck" };

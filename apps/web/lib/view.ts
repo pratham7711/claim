@@ -11,6 +11,7 @@ import {
   type EngineEvent,
   type Unit,
 } from "@claim/core";
+import type { CloserLogEntry, InvoiceRecord, PlanRecord, Proposal } from "@claim/closer";
 import { percentile } from "./stats";
 import type {
   ChargeRecord,
@@ -41,6 +42,20 @@ export interface PassRecord {
   capCents?: number;
   /** Buyer key the setup token was created with; lets mock mode re-vault after a restart. */
   setupKey?: string;
+  /** The payer's PayPal email, when the vault response carried it. */
+  email?: string;
+}
+
+/** Closer's state for one show, folded from its records. */
+export interface CloserState {
+  plans: PlanRecord[];
+  /** Insertion-ordered. */
+  proposals: Map<string, Proposal>;
+  /** By PayPal invoice id. */
+  invoices: Map<string, InvoiceRecord>;
+  log: CloserLogEntry[];
+  /** Last proposal number used. */
+  seq: number;
 }
 
 export interface ShowData {
@@ -65,6 +80,7 @@ export interface ShowData {
   webhooks: WebhookRecord[];
   twitch: TwitchStatus;
   simulation?: { scenario: string; label: string; startedAt: number };
+  closer: CloserState;
 }
 
 export interface ViewEnv {

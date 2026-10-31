@@ -21,11 +21,29 @@ import {
   type ResolverContext,
   type ShowItem,
 } from "@claim/core";
+import {
+  createMockExecutor,
+  isPaidInvoice,
+  owesAnswer,
+  planCloseout,
+  requestId as closerRequestId,
+  usd,
+  validateDraft,
+  type Bill,
+  type CloserExecutor,
+  type CloserLogEntry,
+  type Draft,
+  type InvoiceRecord,
+  type PlanRecord,
+  type Proposal,
+  type ProposalResult,
+} from "@claim/closer";
 import { confirmListing, parseListing, type ListingDraft, type ListingEdits } from "@claim/listing";
 import type { LlmClient } from "@claim/llm";
 import { readWebhookEvent, type WebhookEvent } from "@claim/paypal";
 import * as resolver from "@claim/resolver";
-import { DECLINE_PREFIX } from "./payments";
+import { blankCloser, buildLedger, closerView, foldCloser, INVOICE_HOLD_MS, logEntry, openInvoices, settleAfterRestart } from "./closer";
+import { DECLINE_PREFIX, MOCK_LABEL } from "./payments";
 import { buildScript, type HolderHint } from "./scenarios";
 import { DEMO_SHOP, DEMO_TRANSCRIPTS } from "./seed";
 import { percentile } from "./stats";
@@ -48,6 +66,14 @@ export interface ShowServiceOptions {
   broadcastMs?: number;
   schedule?: (fn: () => void, ms: number) => () => void;
   WebSocketImpl?: typeof WebSocket;
+  /** Closer's tool-calling model; without one Closer plans with its rules. */
+  closerLlm?: LlmClient;
+  /** Runs approved Closer actions against PayPal; defaults to the simulated executor. */
+  closerExecutor?: { executor: CloserExecutor; label: string };
+  /** The demo's hero buyer ("jess") is invoiced at this address, so a judge can pay it in the sandbox. */
+  judgeBuyerEmail?: string;
+  /** Closer plans allowed per show per minute. */
+  closerPlansPerMin?: number;
 }
 
 export type ActionResult = { ok: true; data?: unknown } | { ok: false; error: string; status?: number };
@@ -64,6 +90,8 @@ interface Show extends ShowData {
   twitchLags: number[];
   twitchWindow: number[];
   simCancels: (() => void)[];
+  closerPlanning: boolean;
+  closerPlanTimes: number[];
 }
 
 type ResolveFn = (comment: Pick<ChatComment, "id" | "text">, ctx: ResolverContext, opts: resolver.ResolveOptions) => Promise<ClaimIntent | ClaimIntent[]>;
@@ -130,6 +158,9 @@ export function createShowService(opts: ShowServiceOptions) {
       twitchLags: [],
       twitchWindow: [],
       simCancels: [],
+      closer: blankCloser(),
+      closerPlanning: false,
+      closerPlanTimes: [],
     };
   }
 
@@ -154,7 +185,13 @@ export function createShowService(opts: ShowServiceOptions) {
           show.comments.push({ comment: r.comment, intents: r.intents, latencyMs: r.latencyMs });
           break;
         case "pass":
-          show.passes.set(r.buyerKey, { vaultId: r.vaultId, customerId: r.customerId, ...(r.capCents !== undefined ? { capCents: r.capCents } : {}), ...(r.setupKey ? { setupKey: r.setupKey } : {}) });
+          show.passes.set(r.buyerKey, {
+            vaultId: r.vaultId,
+            customerId: r.customerId,
+            ...(r.capCents !== undefined ? { capCents: r.capCents } : {}),
+            ...(r.setupKey ? { setupKey: r.setupKey } : {}),
+            ...(r.email ? { email: r.email } : {}),
+          });
           break;
         case "order":
           show.orders.set(r.order.orderId, r.order);
@@ -174,8 +211,11 @@ export function createShowService(opts: ShowServiceOptions) {
         case "passRevoked":
           show.passes.delete(r.buyerKey);
           break;
+        default:
+          foldCloser(show.closer, r);
       }
     }
+    settleAfterRestart(show.closer);
     return show;
   }
 
@@ -220,7 +260,17 @@ export function createShowService(opts: ShowServiceOptions) {
   }
 
   function view(show: Show, scope: ViewScope = "public"): ShowView {
-    return buildView(show, env, now(), scope);
+    const v = buildView(show, env, now(), scope);
+    if (scope === "seller") {
+      v.closer = closerView(show, ledgerOf(show), {
+        planner: closerLlm?.chat ? "closer" : "rules",
+        ...(closerLlm?.chat ? { model: closerLlm.model } : {}),
+        executor: executor.mode,
+        executorLabel,
+        planning: show.closerPlanning,
+      });
+    }
+    return v;
   }
 
   function broadcast(show: Show): void {
@@ -343,8 +393,8 @@ export function createShowService(opts: ShowServiceOptions) {
   async function savePass(show: Show, buyer: BuyerRef, capCents: number | undefined, declines: boolean): Promise<void> {
     const key = declines ? `${DECLINE_PREFIX}${buyer.buyerKey}` : buyer.buyerKey;
     const { setupTokenId } = await gateway.createSetupToken({ buyerKey: key, returnUrl: "about:blank", cancelUrl: "about:blank" });
-    const { vaultId, customerId } = await gateway.createPaymentToken(setupTokenId);
-    storePass(show, buyer, key, vaultId, customerId, capCents);
+    const { vaultId, customerId, email } = await gateway.createPaymentToken(setupTokenId);
+    storePass(show, buyer, key, vaultId, customerId, capCents, email);
   }
 
   /** Setup tokens waiting for the buyer to approve in PayPal's save session (sandbox only). */
@@ -361,13 +411,13 @@ export function createShowService(opts: ShowServiceOptions) {
   async function passApprove(show: Show, setupTokenId: string): Promise<void> {
     const p = pendingPasses.get(setupTokenId);
     if (!p || p.showId !== show.showId) throw new Error("That PayPal approval has expired. Start the Claim Pass again.");
-    const { vaultId, customerId } = await gateway.createPaymentToken(setupTokenId);
+    const { vaultId, customerId, email } = await gateway.createPaymentToken(setupTokenId);
     pendingPasses.delete(setupTokenId);
-    storePass(show, p.buyer, p.buyer.buyerKey, vaultId, customerId, p.capCents);
+    storePass(show, p.buyer, p.buyer.buyerKey, vaultId, customerId, p.capCents, email);
   }
 
-  function storePass(show: Show, buyer: BuyerRef, key: string, vaultId: string, customerId: string, capCents: number | undefined): void {
-    const pass = { vaultId, customerId, setupKey: key, ...(capCents !== undefined ? { capCents } : {}) };
+  function storePass(show: Show, buyer: BuyerRef, key: string, vaultId: string, customerId: string, capCents: number | undefined, email?: string): void {
+    const pass = { vaultId, customerId, setupKey: key, ...(capCents !== undefined ? { capCents } : {}), ...(email ? { email } : {}) };
     persist(show, { k: "pass", buyerKey: buyer.buyerKey, ...pass });
     show.passes.set(buyer.buyerKey, pass);
     exec(show, { type: "saveClaimPass", buyer, ...(capCents !== undefined ? { capCents } : {}) });
@@ -550,6 +600,36 @@ export function createShowService(opts: ShowServiceOptions) {
     }
   }
 
+  /** One Claim Pass cart against the buyer's saved wallet: records the charge and tells the engine. Undefined when there is no vault. */
+  async function chargeCart(show: Show, cart: Cart): Promise<{ result: ChargeResult; totalCents: number } | undefined> {
+    const pass = show.passes.get(cart.buyerKey);
+    if (!pass) return undefined;
+    const shipTo = await gateway.walletShipTo(pass.vaultId);
+    const input = { ...cartInput(show, cart), ...(shipTo ? { shipTo } : {}) };
+    const result = await chargeOne(show, cart.buyerKey, pass.vaultId, input);
+    const ok = result.status === "COMPLETED";
+    const shipped = result.shipTo ?? shipTo;
+    record(show, {
+      cartId: cart.cartId,
+      ...(result.orderId ? { orderId: result.orderId } : {}),
+      ...(result.captureId ? { captureId: result.captureId } : {}),
+      status: result.status,
+      ...(result.declineCode ? { declineCode: result.declineCode } : {}),
+      amountCents: input.totalCents,
+      via: "vault",
+      at: now(),
+      ...(ok && shipped ? { shipTo: shipped } : {}),
+    });
+    exec(show, {
+      type: "recordCharge",
+      cartId: cart.cartId,
+      outcome: ok ? "completed" : "declined",
+      ...(result.orderId ? { orderId: result.orderId } : {}),
+      ...(ok ? {} : { note: result.declineCode ?? result.status }),
+    });
+    return { result, totalCents: input.totalCents };
+  }
+
   async function chargeAll(show: Show): Promise<{ charged: number; declined: number; skipped: number; totalCents: number }> {
     if (show.engine.state.phase !== "ended") throw new Error("End the show before charging carts.");
     ensureFinalized(show);
@@ -560,37 +640,11 @@ export function createShowService(opts: ShowServiceOptions) {
     let skipped = 0;
     let totalCents = 0;
     for (const cart of due) {
-      const pass = show.passes.get(cart.buyerKey);
-      if (!pass) {
-        skipped += 1;
-        continue;
-      }
-      const shipTo = await gateway.walletShipTo(pass.vaultId);
-      const input = { ...cartInput(show, cart), ...(shipTo ? { shipTo } : {}) };
-      const result = await chargeOne(show, cart.buyerKey, pass.vaultId, input);
-      const ok = result.status === "COMPLETED";
-      const shipped = result.shipTo ?? shipTo;
-      record(show, {
-        cartId: cart.cartId,
-        ...(result.orderId ? { orderId: result.orderId } : {}),
-        ...(result.captureId ? { captureId: result.captureId } : {}),
-        status: result.status,
-        ...(result.declineCode ? { declineCode: result.declineCode } : {}),
-        amountCents: input.totalCents,
-        via: "vault",
-        at: now(),
-        ...(ok && shipped ? { shipTo: shipped } : {}),
-      });
-      exec(show, {
-        type: "recordCharge",
-        cartId: cart.cartId,
-        outcome: ok ? "completed" : "declined",
-        ...(result.orderId ? { orderId: result.orderId } : {}),
-        ...(ok ? {} : { note: result.declineCode ?? result.status }),
-      });
-      if (ok) {
+      const r = await chargeCart(show, cart);
+      if (!r) skipped += 1;
+      else if (r.result.status === "COMPLETED") {
         charged += 1;
-        totalCents += input.totalCents;
+        totalCents += r.totalCents;
       } else declined += 1;
     }
     broadcast(show);
@@ -635,10 +689,11 @@ export function createShowService(opts: ShowServiceOptions) {
     return Math.max(0, shippingFor(pu + units, ps + subtotal, s.config.shipping) - psh);
   }
 
-  async function payNowHolds(show: Show, buyerKey: string, origin: string): Promise<OrderRecord> {
+  /** The pay-now input for a buyer's unpaid holds: items, plus combined shipping once the show has ended. */
+  function holdsInput(show: Show, buyerKey: string): { input: CartChargeInput; unitIds: string[] } | undefined {
     const s = show.engine.state;
     const held = s.unitOrder.map((id) => s.units[id]!).filter((u) => u.buyerKey === buyerKey && u.status === "held" && !u.paid);
-    if (!held.length) throw new Error("No holds waiting for payment.");
+    if (!held.length) return undefined;
     const lines = new Map<string, { name: string; sku: string; qty: number; unitCents: number }>();
     for (const u of held) {
       const k = `${u.itemCode}\u0000${u.sku}\u0000${u.priceCents}`;
@@ -649,7 +704,6 @@ export function createShowService(opts: ShowServiceOptions) {
     const subtotal = held.reduce((a, u) => a + u.priceCents, 0);
     // During the show only the items are taken; combined shipping is billed once at close-out.
     const shippingCents = s.phase === "ended" ? shippingForHolds(show, buyerKey, held.length, subtotal) : 0;
-    const displayName = s.buyers[buyerKey]?.buyer.displayName ?? buyerKey;
     const invoiceId = `${show.showId}-${buyerKey}-H${held.map((u) => u.id).join("-")}`.slice(0, 127);
     const input: CartChargeInput = {
       invoiceId,
@@ -660,15 +714,23 @@ export function createShowService(opts: ShowServiceOptions) {
       totalCents: subtotal + shippingCents,
       customId: buyerKey.slice(0, 127),
     };
+    return { input, unitIds: held.map((u) => u.id) };
+  }
+
+  async function payNowHolds(show: Show, buyerKey: string, origin: string): Promise<OrderRecord> {
+    const h = holdsInput(show, buyerKey);
+    if (!h) throw new Error("No holds waiting for payment.");
+    const { input, unitIds } = h;
+    const displayName = show.engine.state.buyers[buyerKey]?.buyer.displayName ?? buyerKey;
     const order = await gateway.createPayNowOrder(input, payUrls(show, origin));
     const rec: OrderRecord = {
       orderId: order.orderId,
       purpose: "holds",
       buyerKey,
       displayName,
-      unitIds: held.map((u) => u.id),
+      unitIds,
       amountCents: input.totalCents,
-      shippingCents,
+      shippingCents: input.shippingCents,
       lines: input.lines,
       approveUrl: order.approveUrl,
       createdAt: now(),
@@ -775,6 +837,370 @@ export function createShowService(opts: ShowServiceOptions) {
     persist(show, { k: "tracking", tracking: rec });
     broadcast(show);
     return rec;
+  }
+
+  // ---------- Closer ----------
+
+  const closerLlm = opts.closerLlm;
+  const { executor, label: executorLabel } = opts.closerExecutor ?? { executor: createMockExecutor(), label: MOCK_LABEL };
+  const plansPerMin = opts.closerPlansPerMin ?? 6;
+  /** Proposals executing now, so a double approve waits on the first run instead of starting a second. */
+  const running = new Map<string, Promise<Proposal>>();
+
+  /** An invoice needs an address: the payer's PayPal email from the vault, a synthetic one for simulated buyers, or the judge's for "jess". */
+  function emailFor(show: Show, buyerKey: string): string | undefined {
+    const b = show.engine.state.buyers[buyerKey]?.buyer;
+    if (opts.judgeBuyerEmail && b?.platform === "room" && b.displayName.trim().toLowerCase() === "jess") return opts.judgeBuyerEmail;
+    const pass = show.passes.get(buyerKey);
+    if (pass?.email) return pass.email;
+    if (buyerKey.startsWith("simulator:")) {
+      const handle = (b?.userId ?? buyerKey.slice("simulator:".length)).toLowerCase().replace(/[^a-z0-9._-]/g, "");
+      // RFC 2606 reserves example.com, so these can never reach a real inbox.
+      return handle ? `${handle}@buyers.example.com` : undefined;
+    }
+    return undefined;
+  }
+
+  function ledgerOf(show: Show, exclude?: string) {
+    const open = [...show.closer.proposals.values()].filter((p) => (p.status === "approved" || p.status === "running") && p.id !== exclude);
+    return buildLedger(show, {
+      now: now(),
+      emailFor: (bk) => emailFor(show, bk),
+      cartInput: (cart) => cartInput(show, cart),
+      holdsInput: (bk) => holdsInput(show, bk),
+      open,
+    });
+  }
+
+  function closerRecord(show: Show, rec: ShowRecord): void {
+    persist(show, rec);
+    foldCloser(show.closer, rec);
+  }
+
+  function closerLog(show: Show, type: CloserLogEntry["type"], reason: string, extra: { buyerKey?: string; proposalId?: string } = {}): void {
+    closerRecord(show, { k: "closerLog", entry: logEntry(type, reason, now(), extra) });
+  }
+
+  function saveInvoice(show: Show, invoice: InvoiceRecord): void {
+    closerRecord(show, { k: "invoice", invoice });
+  }
+
+  /** PayPal's invoice_number is at most 25 characters and unique per merchant; the proposal id is both. */
+  const invoiceNumberFor = (proposalId: string) => (proposalId.length <= 25 ? proposalId : proposalId.slice(-25));
+
+  async function closerPlan(show: Show, instruction: string): Promise<{ planId: string; summary: string; answer?: string; label?: string; proposals: number }> {
+    if (show.engine.state.phase !== "ended") throw new Error("End the show first; Closer plans the close-out.");
+    if (show.closerPlanning) throw new Error("Closer is already planning. One moment.");
+    const t = now();
+    show.closerPlanTimes = show.closerPlanTimes.filter((x) => t - x < 60_000);
+    if (show.closerPlanTimes.length >= plansPerMin) {
+      const wait = Math.ceil((show.closerPlanTimes[0]! + 60_000 - t) / 1000);
+      throw Object.assign(new Error(`Closer plans at most ${plansPerMin} times a minute. Try again in ${wait}s.`), { status: 429 });
+    }
+    show.closerPlanTimes.push(t);
+    show.closerPlanning = true;
+    broadcast(show);
+    try {
+      ensureFinalized(show);
+      // A new plan replaces whatever the last one left waiting; approved and finished rows stay.
+      for (const p of show.closer.proposals.values()) {
+        if (p.status === "proposed") closerRecord(show, { k: "decision", proposalId: p.id, decision: "superseded", at: now() });
+      }
+      const outcome = await planCloseout({
+        instruction,
+        ...(closerLlm ? { client: closerLlm } : {}),
+        ledger: () => ledgerOf(show),
+        checkInvoices: () => checkInvoices(show),
+      });
+      const planId = `${show.showId}-plan${show.closer.plans.length + 1}`;
+      const at = now();
+      const proposals: Proposal[] = outcome.drafts.map((d) => ({ ...d, id: `${show.showId}-cl${++show.closer.seq}`, planId, source: outcome.source, status: "proposed", createdAt: at }));
+      const plan: PlanRecord = {
+        id: planId,
+        at,
+        instruction,
+        source: outcome.source,
+        ...(outcome.label ? { label: outcome.label } : {}),
+        ...(outcome.fallbackReason ? { fallbackReason: outcome.fallbackReason } : {}),
+        summary: outcome.summary,
+        ...(outcome.answer ? { answer: outcome.answer } : {}),
+        proposalIds: proposals.map((p) => p.id),
+        dropped: outcome.dropped,
+        ...(outcome.modelText ? { modelText: outcome.modelText } : {}),
+        ...(outcome.usage ? { usage: outcome.usage } : {}),
+      };
+      const who = outcome.source === "closer" ? `Closer (${outcome.usage?.model ?? closerLlm?.model ?? "model"})` : `Rule-based planner${outcome.fallbackReason ? ` (${outcome.fallbackReason})` : ""}`;
+      closerRecord(show, { k: "closerPlan", plan });
+      closerLog(show, "plan", `${who} planned${instruction ? ` "${instruction.slice(0, 120)}"` : " the whole close-out"}: ${outcome.summary}${outcome.answer ? `. ${outcome.answer}` : ""}`);
+      for (const p of proposals) {
+        closerRecord(show, { k: "proposal", proposal: p });
+        closerLog(show, "proposed", `${outcome.source === "closer" ? "Closer" : "Rules"} proposed: ${actionText(p)} (${p.call}). Why: ${p.why}`, { buyerKey: p.buyerKey, proposalId: p.id });
+      }
+      if (outcome.checkError) closerLog(show, "check", `Could not check invoices with PayPal: ${outcome.checkError}`);
+      return { planId, summary: outcome.summary, ...(outcome.answer ? { answer: outcome.answer } : {}), ...(outcome.label ? { label: outcome.label } : {}), proposals: proposals.length };
+    } finally {
+      show.closerPlanning = false;
+      broadcast(show);
+    }
+  }
+
+  function actionText(p: Proposal): string {
+    switch (p.kind) {
+      case "charge":
+        return `charge ${p.buyer}'s Claim Pass ${usd(p.amountCents)}`;
+      case "invoice":
+        return `invoice ${p.buyer} ${usd(p.amountCents)}`;
+      case "paylink":
+        return `pay-now link for ${p.buyer}, ${usd(p.amountCents)}`;
+      case "reminder":
+        return `remind ${p.buyer} about ${usd(p.amountCents)}`;
+      case "refund":
+        return `refund ${usd(p.amountCents)} to ${p.buyer}`;
+      case "tracking":
+        return `add ${p.carrier} ${p.trackingNumber} to ${p.buyer}'s order`;
+      case "release":
+        return `release ${p.buyer}'s holds to the waitlist`;
+    }
+  }
+
+  function setResult(show: Show, p: Proposal, status: "running" | "done" | "failed", result?: Omit<ProposalResult, "at">): Proposal {
+    const res = result ? { at: now(), ...result } : undefined;
+    closerRecord(show, { k: "result", proposalId: p.id, status, ...(res ? { result: res } : {}), at: now() });
+    if (status !== "running") {
+      const said = res?.ok ? `${res.id ? ` ${res.id}` : ""}${res.detail ? ` (${res.detail})` : ""}` : ` ${res?.code ?? "FAILED"}: ${res?.message ?? ""}`;
+      closerLog(show, status, `PayPal ${status === "done" ? "did it" : "refused"}: ${actionText(p)}.${said}`, { buyerKey: p.buyerKey, proposalId: p.id });
+    }
+    broadcast(show);
+    return show.closer.proposals.get(p.id)!;
+  }
+
+  /** Checks the proposal again against the ledger as it is now, since the show may have moved since the plan. */
+  function stillValid(show: Show, p: Proposal): string | undefined {
+    const draft: Draft = {
+      kind: p.kind,
+      ref: p.billKey,
+      ...(p.note ? { note: p.note } : {}),
+      ...(p.kind === "refund" ? { amount: (p.amountCents / 100).toFixed(2) } : {}),
+      ...(p.carrier ? { carrier: p.carrier } : {}),
+      ...(p.trackingNumber ? { trackingNumber: p.trackingNumber } : {}),
+    };
+    const v = validateDraft(draft, ledgerOf(show, p.id), { sellerAskedRelease: true });
+    if (!v.ok) return v.reason;
+    if (p.kind !== "refund" && p.kind !== "tracking" && v.proposal.amountCents !== p.amountCents) return `the bill changed from ${usd(p.amountCents)} to ${usd(v.proposal.amountCents)}; plan again`;
+    return undefined;
+  }
+
+  function execute(show: Show, p: Proposal, origin: string): Promise<Proposal> {
+    const key = `${show.showId}:${p.id}`;
+    const inflight = running.get(key);
+    if (inflight) return inflight;
+    const run = executeOnce(show, p, origin).finally(() => running.delete(key));
+    running.set(key, run);
+    return run;
+  }
+
+  async function executeOnce(show: Show, p: Proposal, origin: string): Promise<Proposal> {
+    const stale = stillValid(show, p);
+    if (stale) return setResult(show, p, "failed", { ok: false, code: "STALE", message: stale });
+    setResult(show, p, "running");
+    const s = show.engine.state;
+    try {
+      switch (p.kind) {
+        case "charge": {
+          const cart = p.cartId ? s.carts[p.cartId] : undefined;
+          const r = cart ? await chargeCart(show, cart) : undefined;
+          if (!r) return setResult(show, p, "failed", { ok: false, code: "NO_VAULT", message: "No saved wallet for this buyer." });
+          if (r.result.status === "COMPLETED") return setResult(show, p, "done", { ok: true, ...(r.result.orderId ? { id: r.result.orderId } : {}), ...(r.result.captureId ? { detail: `capture ${r.result.captureId}` } : {}) });
+          return setResult(show, p, "failed", { ok: false, code: r.result.declineCode ?? r.result.status, message: "The card on file declined; the items are back on a pay-now hold." });
+        }
+        case "invoice": {
+          const bill = ledgerOf(show, p.id).bills.find((b) => b.key === p.billKey);
+          const email = emailFor(show, p.buyerKey);
+          if (!bill || !email) return setResult(show, p, "failed", { ok: false, code: "NO_EMAIL", message: "No email on file for this buyer." });
+          const res = await executor.sendInvoice({
+            proposalId: p.id,
+            invoiceNumber: invoiceNumberFor(p.id),
+            shopName: show.shopName,
+            buyer: p.buyer,
+            email,
+            lines: bill.lines,
+            shippingCents: bill.shippingCents,
+            ...(p.note ? { note: p.note } : {}),
+          });
+          if (!res.ok) return setResult(show, p, "failed", { ok: false, code: res.code, message: res.message, ...(res.partial?.invoiceId ? { id: res.partial.invoiceId, detail: "draft, not sent" } : {}) });
+          saveInvoice(show, {
+            invoiceId: res.invoiceId,
+            proposalId: p.id,
+            billKey: p.billKey,
+            buyerKey: p.buyerKey,
+            buyer: p.buyer,
+            email,
+            ...(p.cartId ? { cartId: p.cartId } : {}),
+            ...(p.unitIds?.length ? { unitIds: p.unitIds } : {}),
+            amountCents: bill.amountCents,
+            shippingCents: bill.shippingCents,
+            status: res.status,
+            ...(res.payerViewUrl ? { payerViewUrl: res.payerViewUrl } : {}),
+            sentAt: now(),
+            reminders: 0,
+          });
+          // Holds would lapse in minutes; while the invoice is open they stay with the buyer.
+          if (p.unitIds?.length) exec(show, { type: "extendHolds", unitIds: p.unitIds, until: now() + INVOICE_HOLD_MS, note: `invoice ${res.invoiceId} is open` });
+          return setResult(show, p, "done", { ok: true, id: res.invoiceId, ...(res.payerViewUrl ? { url: res.payerViewUrl } : {}) });
+        }
+        case "paylink": {
+          const order = p.cartId ? await payNowCart(show, p.cartId, origin) : await payNowHolds(show, p.buyerKey, origin);
+          return setResult(show, p, "done", { ok: true, id: order.orderId, url: order.approveUrl });
+        }
+        case "reminder": {
+          const inv = p.invoiceId ? show.closer.invoices.get(p.invoiceId) : undefined;
+          if (!inv) return setResult(show, p, "failed", { ok: false, code: "NO_INVOICE", message: "That invoice is not on file." });
+          const res = await executor.remind({ proposalId: p.id, invoiceId: inv.invoiceId, subject: `A reminder from ${show.shopName}`, ...(p.note ? { note: p.note } : {}) });
+          if (!res.ok) return setResult(show, p, "failed", { ok: false, code: res.code, message: res.message });
+          saveInvoice(show, { ...inv, remindedAt: now(), reminders: inv.reminders + 1 });
+          return setResult(show, p, "done", { ok: true, id: inv.invoiceId, detail: `reminder ${inv.reminders + 1}`, ...(inv.payerViewUrl ? { url: inv.payerViewUrl } : {}) });
+        }
+        case "refund": {
+          const charge = p.cartId ? lastCapture(show, p.cartId) : undefined;
+          if (!charge?.captureId || !p.cartId) return setResult(show, p, "failed", { ok: false, code: "NO_CAPTURE", message: "No captured payment on this cart." });
+          const reqId = closerRequestId(p.id, "refund");
+          const replay = show.refunds.find((r) => r.requestId === reqId);
+          if (replay) return setResult(show, p, "done", { ok: true, id: replay.refundId });
+          const res = await executor.refund({ proposalId: p.id, captureId: charge.captureId, amountCents: p.amountCents, ...(p.note ? { note: p.note } : {}) });
+          if (!res.ok) return setResult(show, p, "failed", { ok: false, code: res.code, message: res.message });
+          const rec = { cartId: p.cartId, refundId: res.refundId, requestId: reqId, amountCents: p.amountCents, status: res.status, ...(p.note ? { note: p.note.slice(0, 120) } : {}), at: now() };
+          show.refunds.push(rec);
+          persist(show, { k: "refund", refund: rec });
+          return setResult(show, p, "done", { ok: true, id: res.refundId });
+        }
+        case "tracking": {
+          const charge = p.cartId ? lastCapture(show, p.cartId) : undefined;
+          if (!charge?.captureId || !p.cartId || !p.carrier || !p.trackingNumber) return setResult(show, p, "failed", { ok: false, code: "NO_CAPTURE", message: "Charge the cart before adding tracking." });
+          const res = await executor.track({ proposalId: p.id, captureId: charge.captureId, carrier: p.carrier, trackingNumber: p.trackingNumber });
+          if (!res.ok) return setResult(show, p, "failed", { ok: false, code: res.code, message: res.message });
+          const rec = { cartId: p.cartId, trackerId: res.trackerId, carrier: p.carrier, trackingNumber: p.trackingNumber, at: now() };
+          show.tracking.push(rec);
+          persist(show, { k: "tracking", tracking: rec });
+          return setResult(show, p, "done", { ok: true, id: res.trackerId });
+        }
+        case "release": {
+          const n = releaseHolds(show, p.buyerKey);
+          return setResult(show, p, "done", { ok: true, detail: `${n} back to the waitlist` });
+        }
+      }
+    } catch (err) {
+      return setResult(show, p, "failed", { ok: false, code: (err as { issue?: string }).issue ?? "ERROR", message: err instanceof Error ? err.message.slice(0, 200) : String(err) });
+    }
+  }
+
+  async function closerDecide(show: Show, proposalId: string, decision: "approve" | "reject" | "edit", note: string | undefined, origin: string): Promise<Proposal> {
+    const p = show.closer.proposals.get(proposalId);
+    if (!p) throw new Error("No such proposal.");
+    if (decision === "edit") {
+      if (p.status !== "proposed") throw new Error("Only a proposal still waiting can be edited.");
+      if (!["invoice", "reminder", "refund"].includes(p.kind)) throw new Error("Only invoice, reminder and refund notes can be edited.");
+      closerRecord(show, { k: "decision", proposalId, decision: "edited", note: note ?? "", at: now() });
+      broadcast(show);
+      return show.closer.proposals.get(proposalId)!;
+    }
+    if (decision === "reject") {
+      if (p.status !== "proposed" && p.status !== "approved") return p;
+      if (running.has(`${show.showId}:${proposalId}`)) return p;
+      closerRecord(show, { k: "decision", proposalId, decision: "rejected", at: now() });
+      closerLog(show, "rejected", `Seller rejected: ${actionText(p)}.`, { buyerKey: p.buyerKey, proposalId });
+      broadcast(show);
+      return show.closer.proposals.get(proposalId)!;
+    }
+    // Approving twice, or approving a finished row, runs nothing new.
+    const inflight = running.get(`${show.showId}:${proposalId}`);
+    if (inflight) return inflight;
+    if (p.status !== "proposed" && p.status !== "approved") return p;
+    if (p.status === "proposed") {
+      closerRecord(show, { k: "decision", proposalId, decision: "approved", ...(note !== undefined && note !== p.note ? { note } : {}), at: now() });
+      closerLog(show, "approved", `Seller approved: ${actionText(p)}.`, { buyerKey: p.buyerKey, proposalId });
+    }
+    return execute(show, show.closer.proposals.get(proposalId)!, origin);
+  }
+
+  async function closerApproveAll(show: Show, origin: string): Promise<{ done: number; failed: number }> {
+    const waiting = [...show.closer.proposals.values()].filter((p) => p.status === "proposed");
+    if (!waiting.length) return { done: 0, failed: 0 };
+    for (const p of waiting) closerRecord(show, { k: "decision", proposalId: p.id, decision: "approved", at: now() });
+    closerLog(show, "approved", `Seller approved all ${waiting.length}: ${waiting.map(actionText).join("; ")}.`);
+    broadcast(show);
+    let done = 0;
+    let failed = 0;
+    // One at a time, in the plan's order: charges settle before anything that depends on them.
+    for (const p of waiting) {
+      const out = await execute(show, show.closer.proposals.get(p.id)!, origin);
+      if (out.status === "done") done += 1;
+      else failed += 1;
+    }
+    return { done, failed };
+  }
+
+  /**
+   * Asks PayPal for every open invoice's status. A paid one settles its bill: a cart is recorded as charged,
+   * held items are confirmed paid. Returns the bills found paid. Throws only when every lookup failed.
+   */
+  async function checkInvoices(show: Show): Promise<Bill[]> {
+    const open = openInvoices(show.closer);
+    if (!open.length) return [];
+    const paidIds: string[] = [];
+    let failed = 0;
+    let lastError = "";
+    for (const inv of open) {
+      const r = await executor.getInvoice(inv.invoiceId);
+      if (!r.ok) {
+        failed += 1;
+        lastError = `${r.code}: ${r.message}`;
+        continue;
+      }
+      const next: InvoiceRecord = { ...inv, status: r.status, checkedAt: now(), ...(r.payerViewUrl ? { payerViewUrl: r.payerViewUrl } : {}) };
+      saveInvoice(show, next);
+      if (isPaidInvoice(r.status)) {
+        settleInvoice(show, next, r.captureId);
+        paidIds.push(inv.invoiceId);
+      }
+    }
+    const stillOpen = open.length - paidIds.length - failed;
+    closerLog(show, "check", `Checked ${open.length} invoice${open.length === 1 ? "" : "s"} with PayPal (get_invoice): ${paidIds.length} paid, ${stillOpen} open${failed ? `, ${failed} could not be read (${lastError})` : ""}.`);
+    broadcast(show);
+    if (failed === open.length) throw new Error(lastError);
+    return ledgerOf(show).bills.filter((b) => b.invoice && paidIds.includes(b.invoice.invoiceId));
+  }
+
+  /** PayPal says an invoice is paid. Mirrors a pay-now capture: the cart is charged, or the held items are confirmed and their shipping recorded. */
+  function settleInvoice(show: Show, inv: InvoiceRecord, captureId: string | undefined): void {
+    const current = show.closer.invoices.get(inv.invoiceId) ?? inv;
+    if (current.paidAt) return;
+    const s = show.engine.state;
+    const charge = (cartId: string) => {
+      record(show, { cartId, ...(captureId ? { captureId } : {}), status: "COMPLETED", amountCents: inv.amountCents, via: "invoice", at: now() });
+      exec(show, { type: "recordCharge", cartId, outcome: "completed" });
+    };
+    let settled: Partial<InvoiceRecord> = {};
+    if (!inv.unitIds?.length && inv.cartId && s.carts[inv.cartId]?.status === "pending") {
+      charge(inv.cartId);
+    } else if (inv.unitIds?.length) {
+      const stale = inv.unitIds.filter((id) => s.units[id]?.status !== "held" || s.units[id]?.paid);
+      if (stale.length) {
+        settled = { problem: "PayPal says this invoice is paid, but the items were no longer held for the buyer. Refund it or sell them by hand." };
+      } else {
+        exec(show, { type: "confirmPayment", unitIds: inv.unitIds });
+        if (s.phase === "ended") {
+          ensureFinalized(show);
+          const st = show.engine.state;
+          const cart = [...st.cartOrder].reverse().map((id) => st.carts[id]!).find((c) => c.buyerKey === inv.buyerKey && c.status === "pending");
+          if (cart && cart.dueCents === inv.shippingCents) {
+            charge(cart.cartId);
+            settled = { cartId: cart.cartId };
+          }
+        }
+      }
+    }
+    saveInvoice(show, { ...current, ...settled, status: current.status === "MARKED_AS_PAID" ? current.status : "PAID", paidAt: now() });
+    closerLog(show, "invoice", `PayPal says ${inv.buyer} paid invoice ${inv.invoiceId} (${usd(inv.amountCents)}).${settled.problem ? ` ${settled.problem}` : ""}`, { buyerKey: inv.buyerKey });
   }
 
   // ---------- actions ----------
@@ -900,9 +1326,25 @@ export function createShowService(opts: ShowServiceOptions) {
           if (!carrier || !number) return { ok: false, error: "Add a carrier and a tracking number." };
           return { ok: true, data: await addTracking(show, a.cartId, carrier, number) };
         }
+        case "closerPlan":
+          return { ok: true, data: await closerPlan(show, str(a.instruction, 300) ?? "") };
+        case "closerDecide": {
+          const id = str(a.proposalId, 80);
+          if (!id || !["approve", "reject", "edit"].includes(a.decision)) return { ok: false, error: "Pick a proposal and approve or reject it." };
+          const note = typeof a.note === "string" ? a.note.trim().replace(/\s+/g, " ").slice(0, 400) : undefined;
+          const p = await closerDecide(show, id, a.decision, note, origin);
+          return { ok: true, data: { id: p.id, status: p.status, ...(p.result ? { result: p.result } : {}) } };
+        }
+        case "closerApproveAll":
+          return { ok: true, data: await closerApproveAll(show, origin) };
+        case "closerCheck": {
+          const paid = await checkInvoices(show);
+          return { ok: true, data: { paid: paid.length, answer: owesAnswer(ledgerOf(show), paid) } };
+        }
       }
     } catch (err) {
-      return { ok: false, error: err instanceof Error ? err.message : String(err) };
+      const status = (err as { status?: unknown }).status;
+      return { ok: false, error: err instanceof Error ? err.message : String(err), ...(typeof status === "number" ? { status } : {}) };
     }
     return { ok: false, error: "Unknown action." };
   }
@@ -940,6 +1382,18 @@ export function createShowService(opts: ShowServiceOptions) {
 
   function applyWebhook(show: Show, e: WebhookEvent): boolean {
     if (show.webhooks.some((h) => h.eventId === e.id)) return false;
+    const invoice = e.invoiceId ? show.closer.invoices.get(e.invoiceId) : undefined;
+    if (invoice) {
+      show.webhooks.push({ eventId: e.id, type: e.type, at: now(), summary: hookSummary(e) });
+      persist(show, { k: "webhook", hook: show.webhooks[show.webhooks.length - 1]! });
+      if (e.type === "INVOICING.INVOICE.PAID" && !invoice.paidAt) {
+        const next = { ...invoice, status: e.invoiceStatus && isPaidInvoice(e.invoiceStatus) ? e.invoiceStatus : "PAID" };
+        saveInvoice(show, next);
+        settleInvoice(show, next, e.paymentId);
+      }
+      broadcast(show);
+      return true;
+    }
     const passHolders = e.vaultId ? [...show.passes].filter(([, p]) => p.vaultId === e.vaultId).map(([buyerKey]) => buyerKey) : [];
     const hit =
       (e.captureId && show.charges.some((c) => c.captureId === e.captureId)) ||
@@ -1034,6 +1488,8 @@ function hookSummary(e: WebhookEvent): string {
       return "PayPal saved the buyer's wallet";
     case "VAULT.PAYMENT-TOKEN.DELETED":
       return "The buyer removed the saved wallet in PayPal, so the Claim Pass is revoked";
+    case "INVOICING.INVOICE.PAID":
+      return `PayPal says invoice ${e.invoiceId ?? ""} is paid`.trim();
     default:
       return e.type;
   }

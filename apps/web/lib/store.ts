@@ -1,5 +1,6 @@
 import { appendFileSync, existsSync, mkdirSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
+import type { CloserLogEntry, InvoiceRecord, PlanRecord, Proposal, ProposalResult } from "@claim/closer";
 import type { ChatComment, ClaimIntent, EngineConfig, EngineEvent } from "@claim/core";
 import type { ChargeRecord, OrderRecord, RefundRecord, TrackingRecord, WebhookRecord } from "./types";
 
@@ -10,13 +11,20 @@ export type ShowRecord =
   | { k: "item"; code: string; transcript?: string }
   | { k: "event"; e: EngineEvent }
   | { k: "comment"; comment: ChatComment; intents: ClaimIntent[]; latencyMs: number }
-  | { k: "pass"; buyerKey: string; vaultId: string; customerId: string; capCents?: number; setupKey?: string }
+  | { k: "pass"; buyerKey: string; vaultId: string; customerId: string; capCents?: number; setupKey?: string; email?: string }
   | { k: "order"; order: OrderRecord }
   | { k: "charge"; charge: ChargeRecord }
   | { k: "refund"; refund: RefundRecord }
   | { k: "tracking"; tracking: TrackingRecord }
   | { k: "webhook"; hook: WebhookRecord }
-  | { k: "passRevoked"; buyerKey: string; at: number };
+  | { k: "passRevoked"; buyerKey: string; at: number }
+  // Closer: a plan, each proposal it made, the seller's decision, what PayPal returned, invoices and the audit trail.
+  | { k: "closerPlan"; plan: PlanRecord }
+  | { k: "proposal"; proposal: Proposal }
+  | { k: "decision"; proposalId: string; decision: "approved" | "rejected" | "superseded" | "edited"; note?: string; at: number }
+  | { k: "result"; proposalId: string; status: "running" | "done" | "failed"; result?: ProposalResult; at: number }
+  | { k: "invoice"; invoice: InvoiceRecord }
+  | { k: "closerLog"; entry: CloserLogEntry };
 
 const SHOW_ID = /^[a-z0-9][a-z0-9-]{2,47}$/;
 
