@@ -661,6 +661,8 @@ export function createShowService(opts: ShowServiceOptions) {
     if (!cart || cart.status !== "pending") throw new Error(`Cart ${cartId} has nothing pending.`);
     const input = cartInput(show, cart);
     if (input.totalCents <= 0) throw new Error("Nothing is due on this cart.");
+    const invoiced = openInvoiceCovering(show, cartId, []);
+    if (invoiced) throw new Error(`Invoice ${invoiced.invoiceId} is already open for this cart. Send a reminder, or cancel it in PayPal first.`);
     const order = await gateway.createPayNowOrder(input, payUrls(show, origin));
     const rec: OrderRecord = {
       orderId: order.orderId,
@@ -721,6 +723,8 @@ export function createShowService(opts: ShowServiceOptions) {
     const h = holdsInput(show, buyerKey);
     if (!h) throw new Error("No holds waiting for payment.");
     const { input, unitIds } = h;
+    const invoiced = openInvoiceCovering(show, undefined, unitIds);
+    if (invoiced) throw new Error(`Invoice ${invoiced.invoiceId} is already open for these items. Send a reminder, or cancel it in PayPal first.`);
     const displayName = show.engine.state.buyers[buyerKey]?.buyer.displayName ?? buyerKey;
     const order = await gateway.createPayNowOrder(input, payUrls(show, origin));
     const rec: OrderRecord = {
@@ -794,11 +798,19 @@ export function createShowService(opts: ShowServiceOptions) {
     return captured;
   }
 
+  /** The open invoice already asking for this cart's or these items' money. A second request could see it paid twice. */
+  function openInvoiceCovering(show: Show, cartId: string | undefined, unitIds: string[]): InvoiceRecord | undefined {
+    return openInvoices(show.closer).find((i) => (cartId !== undefined && i.cartId === cartId) || (i.unitIds ?? []).some((id) => unitIds.includes(id)));
+  }
+
+  /** Gives a buyer's unpaid holds to the waitlist. Items on an invoice that is still open stay with the buyer, who may yet pay it. */
   function releaseHolds(show: Show, buyerKey: string): number {
     const s = show.engine.state;
     const held = s.unitOrder.map((id) => s.units[id]!).filter((u) => u.buyerKey === buyerKey && u.status === "held" && !u.paid && !u.cartId);
-    for (const u of held) exec(show, { type: "sellerRevoke", unitId: u.id, note: "released to the waitlist after a decline" });
-    return held.length;
+    const free = held.filter((u) => !openInvoiceCovering(show, undefined, [u.id]));
+    if (held.length && !free.length) throw new Error(`Invoice ${openInvoiceCovering(show, undefined, [held[0]!.id])!.invoiceId} is still open for these items. Cancel it in PayPal before releasing them.`);
+    for (const u of free) exec(show, { type: "sellerRevoke", unitId: u.id, note: "released to the waitlist after a decline" });
+    return free.length;
   }
 
   function lastCapture(show: Show, cartId: string): ChargeRecord | undefined {

@@ -210,8 +210,8 @@ export interface CloserView {
   plans: PlanRecord[];
   /** Every proposal not replaced by a newer plan, newest plan first. */
   proposals: Proposal[];
-  /** Buyers' emails stay on the server. */
-  invoices: Omit<InvoiceRecord, "email">[];
+  /** Buyers' emails stay on the server. `open` is true while PayPal still expects the payment. */
+  invoices: (Omit<InvoiceRecord, "email"> & { open: boolean })[];
   log: CloserLogEntry[];
   suggestions: string[];
 }

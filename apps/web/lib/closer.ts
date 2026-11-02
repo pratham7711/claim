@@ -223,7 +223,7 @@ export function closerView(
     ...env,
     plans: [...c.plans].reverse().slice(0, 5),
     proposals,
-    invoices: [...c.invoices.values()].map(({ email: _email, ...i }) => i),
+    invoices: [...c.invoices.values()].map(({ email: _email, ...i }) => ({ ...i, open: isOpenInvoice(i.status) })),
     log: c.log.slice(-200),
     suggestions: suggestions(ledger),
   };

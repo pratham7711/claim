@@ -99,6 +99,19 @@ describe("Closer in the show service", () => {
     expect(v.closer!.invoices[0]).toMatchObject({ invoiceId: "INV2-MOCK-TEST-0001", status: "SENT", buyer: "dana" });
     expect(v.closer!.invoices[0]).not.toHaveProperty("email");
 
+    // The manual release button cannot take items off an open invoice either.
+    expect(await svc.act(id, { action: "releaseHolds", buyerKey: v.units.find((u) => u.displayName === "dana")!.buyerKey })).toMatchObject({
+      ok: false,
+      error: "Invoice INV2-MOCK-TEST-0001 is still open for these items. Cancel it in PayPal before releasing them.",
+    });
+    expect(svc.view(id, "seller")!.units.filter((u) => u.displayName === "dana").map((u) => u.status)).toEqual(["held"]);
+    // Nor can a pay-now link ask for the same money a second time.
+    expect(await svc.act(id, { action: "payNowHolds", buyerKey: v.units.find((u) => u.displayName === "dana")!.buyerKey })).toMatchObject({
+      ok: false,
+      error: "Invoice INV2-MOCK-TEST-0001 is already open for these items. Send a reminder, or cancel it in PayPal first.",
+    });
+    expect(v.closer!.invoices[0]).toMatchObject({ open: true });
+
     // Who still owes? One open invoice: a reminder, and a one-line answer.
     const owes = await svc.act(id, { action: "closerPlan", instruction: "Who still owes me? Nudge them, nicely" });
     expect(owes).toMatchObject({ ok: true, data: { answer: "1 unpaid: dana $42.", summary: "1 action: remind 1 buyer" } });
@@ -188,6 +201,30 @@ describe("Closer in the show service", () => {
     // The new plan replaced the rows still waiting from the first.
     expect(rows(c)).toEqual(["charge:ava:proposed", "charge:dana:proposed", "charge:nora:proposed"]);
     expect(c.log.find((l) => l.type === "plan")!.reason).toMatch(/^Closer \(openai\/gpt-oss-120b\) planned the whole close-out/);
+  });
+
+  it("refuses a pay-now link for a cart that is already on an open invoice", async () => {
+    const client = createMockClient({
+      model: "openai/gpt-oss-120b",
+      toolTurns: [
+        (req) => {
+          const ref = new RegExp(`"ref":"(c\\d+)","buyer":"dana"`).exec(req.messages[1]!.content)![1]!;
+          return { toolCalls: [{ name: "invoice_buyer", arguments: { ref, note: "Thanks for shopping", why: "the seller asked to invoice dana" } }] };
+        },
+        { text: "Queued." },
+      ],
+    });
+    const { svc } = setup({ closerLlm: client });
+    const id = await endedShow(svc);
+    await svc.act(id, { action: "closerPlan", instruction: "Invoice dana" });
+    const inv = closer(svc, id).proposals[0]!;
+    expect(inv).toMatchObject({ kind: "invoice", buyer: "dana", cartId: expect.any(String) });
+    expect(await svc.act(id, { action: "closerDecide", proposalId: inv.id, decision: "approve" })).toMatchObject({ ok: true, data: { status: "done" } });
+    expect(await svc.act(id, { action: "payNowCart", cartId: inv.cartId! }, { origin: "http://x" })).toMatchObject({
+      ok: false,
+      error: "Invoice INV2-MOCK-TEST-0001 is already open for this cart. Send a reminder, or cancel it in PayPal first.",
+    });
+    expect(svc.view(id, "seller")!.orders).toHaveLength(0);
   });
 
   it("keeps proposals, decisions, results and invoices across a restart", async () => {

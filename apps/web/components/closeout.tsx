@@ -239,6 +239,8 @@ function BuyerCard({ b, v, run, busy, fresh }: { b: BuyerCarts; v: ShowView; run
   const orders = v.orders.filter((o) => o.buyerKey === b.buyerKey);
   const declinedCart = b.finalized.find((c) => c.status === "declined");
   const ended = v.phase === "ended";
+  const openInvoices = v.closer?.invoices.filter((i) => i.open && i.buyerKey === b.buyerKey) ?? [];
+  const holdsInvoice = openInvoices.find((i) => i.unitIds?.some((id) => holds.some((u) => u.id === id)));
 
   return (
     <li className="flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card">
@@ -268,6 +270,7 @@ function BuyerCard({ b, v, run, busy, fresh }: { b: BuyerCarts; v: ShowView; run
         const reversed = hooks.find((h) => h.type === "PAYMENT.CAPTURE.REVERSED" || h.type === "PAYMENT.CAPTURE.DECLINED");
         const confirmed = hooks.filter((h) => h.type === "PAYMENT.CAPTURE.COMPLETED" || h.type === "PAYMENT.CAPTURE.REFUNDED").map((h) => (h.type === "PAYMENT.CAPTURE.REFUNDED" ? "refund confirmed by PayPal" : "confirmed by PayPal"));
         const capPct = cart.capCents ? Math.min(100, (cart.totalCents / cart.capCents) * 100) : 0;
+        const cartInvoice = openInvoices.find((i) => i.cartId === cart.cartId);
         return (
           <section key={cart.cartId + (preview ? "-p" : "")} className="px-5 py-4" aria-label={`Cart ${cart.seq} for ${b.displayName}`}>
             <div className="flex items-start justify-between gap-3">
@@ -370,7 +373,8 @@ function BuyerCard({ b, v, run, busy, fresh }: { b: BuyerCarts; v: ShowView; run
               </>
             ) : null}
 
-            {!preview && cart.status === "pending" && cart.chargeMode === "pay-now" && cart.dueCents > 0 ? (
+            {!preview && cart.status === "pending" && cartInvoice ? <InvoiceOpen id={cartInvoice.invoiceId} /> : null}
+            {!preview && cart.status === "pending" && cart.chargeMode === "pay-now" && cart.dueCents > 0 && !cartInvoice ? (
               <div className="mt-3">
                 <Button size="sm" variant="outline" busy={busy === `pn-${cart.cartId}`} onClick={() => run(`pn-${cart.cartId}`, { action: "payNowCart", cartId: cart.cartId }, "Pay-now link ready")}>
                   <Icon.Send size={13} /> Create pay-now link
@@ -398,7 +402,8 @@ function BuyerCard({ b, v, run, busy, fresh }: { b: BuyerCarts; v: ShowView; run
               Waitlisted for {waiting.map((w) => `${w.label} (#${w.waitlistPos ?? "?"})`).join(", ")}
             </p>
           ) : null}
-          {holds.length && ended ? (
+          {holds.length && ended && holdsInvoice ? <InvoiceOpen id={holdsInvoice.invoiceId} /> : null}
+          {holds.length && ended && !holdsInvoice ? (
             <div className="mt-2.5 flex flex-wrap gap-2">
               <Button size="sm" variant="ink" busy={busy === `ph-${b.buyerKey}`} onClick={() => run(`ph-${b.buyerKey}`, { action: "payNowHolds", buyerKey: b.buyerKey }, "Pay-now link ready")}>
                 <Icon.Send size={13} /> {declinedCart ? "Offer a pay-now link" : "Send pay-now link"}
@@ -416,6 +421,15 @@ function BuyerCard({ b, v, run, busy, fresh }: { b: BuyerCarts; v: ShowView; run
         </section>
       ) : null}
     </li>
+  );
+}
+
+/** Stands in for the pay-now and release buttons: PayPal is already asking the buyer for this money. */
+function InvoiceOpen({ id }: { id: string }) {
+  return (
+    <p className="mt-2.5 text-[12.5px] text-ink-2">
+      On PayPal invoice <span className="font-mono">{id}</span>, held for the buyer until it is paid. Closer can send a reminder.
+    </p>
   );
 }
 
