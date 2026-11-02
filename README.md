@@ -186,7 +186,7 @@ Every call below is implemented in `packages/paypal/src/sandbox.ts` (request bod
 | Pay-now link | goes straight to `/pay/<showId>?token=...` | PayPal's checkout, which returns to `/pay/<showId>`; the page captures on arrival, with no second click |
 | Idempotency, duplicate invoice, over-refund | modelled | PayPal's own |
 
-The PayPal package has its own sandbox setup guide and a 16-step spike script (`npx tsx packages/paypal/scripts/spike.ts`); see [packages/paypal/README.md](packages/paypal/README.md). **None of the sandbox code has run against a real sandbox account yet.** It is unit-tested against a fake `fetch`, and request bodies are checked against PayPal's published OpenAPI specs.
+The PayPal package has its own sandbox setup guide and a 16-step spike script (`npx tsx packages/paypal/scripts/spike.ts`); see [packages/paypal/README.md](packages/paypal/README.md). It is unit-tested against a fake `fetch`, request bodies are checked against PayPal's published OpenAPI specs, and the runs against a real sandbox app are listed under [Limitations](#limitations-and-what-is-not-yet-verified).
 
 ## Closer: the close-out agent
 
