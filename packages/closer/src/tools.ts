@@ -4,7 +4,7 @@ import { isOpenInvoice } from "./validate.js";
 import type { Bill, CloserLedger } from "./types.js";
 
 const ref = { type: "string", description: "The bill's ref from the ledger, e.g. c1" };
-const why = { type: "string", description: "One short line the seller reads: why this action" };
+const why = { type: "string", description: "One plain sentence the seller reads, e.g. \"Jess hasn't paid the $42 for her cardigan yet.\"" };
 
 /**
  * Closer's tools. Each one only queues a proposal for the seller to approve; nothing here moves money.
@@ -19,7 +19,7 @@ export const CLOSER_TOOLS: ToolSpec[] = [
   {
     name: "invoice_buyer",
     description: "Queue a PayPal invoice for a bill that is owed and has email:true. The note goes to the buyer.",
-    parameters: { type: "object", properties: { ref, note: { type: "string", description: "Short, friendly note to the buyer" }, why }, required: ["ref", "note"] },
+    parameters: { type: "object", properties: { ref, note: { type: "string", description: "The buyer's first message with this invoice: thank them and name what they bought. It is not a reminder." }, why }, required: ["ref", "note"] },
   },
   {
     name: "send_pay_link",
@@ -63,7 +63,9 @@ export const CLOSER_SYSTEM = [
   "Rules: act only on refs in the ledger. Charge bills with pass:true and state due. Invoice other owed bills that have email:true; send a pay-now link when email:false.",
   "Remind only open invoices. Refund or track only paid bills. Release a hold only if the seller asked.",
   "If a tool answers ok:false, read the error and fix the call or skip that bill. Do not repeat a failed call unchanged.",
-  "Notes to buyers: one or two plain, friendly sentences. No pressure, no exclamation marks, no emojis.",
+  "Notes to buyers: one or two plain, friendly sentences, addressed to the buyer by name. No pressure, no exclamation marks, no emojis.",
+  "An invoice note is the first the buyer hears about payment: thank them for shopping the show and name what they bought. Only a reminder note may say the invoice is still open.",
+  "Write every why as a full, plain sentence about that buyer, never a label such as \"Invoice unpaid buyer\".",
   "When you are done, reply with one short line and no tool calls.",
 ].join("\n");
 

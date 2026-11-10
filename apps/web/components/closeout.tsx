@@ -103,6 +103,7 @@ export function Closeout({ initial }: { initial: ShowView }) {
     ...(b.preview && b.preview.chargeMode === "vault" ? [b.preview] : []),
   ]);
   const vaultDueCents = vaultDue.reduce((a, c) => a + c.dueCents, 0);
+  const passCharged = v.charges.some((c) => c.status === "COMPLETED" && c.via === "vault");
   const chargedCents = v.charges.filter((c) => c.status === "COMPLETED").reduce((a, c) => a + c.amountCents, 0);
   const refundedCents = v.refunds.reduce((a, r) => a + r.amountCents, 0);
   const shipSaved = all.reduce((a, c) => a + Math.max(0, c.units * v.config.shipping.firstItemCents - c.shippingCents), 0);
@@ -151,11 +152,11 @@ export function Closeout({ initial }: { initial: ShowView }) {
             </div>
           </div>
           {ended && !vaultDue.length ? (
-            <div role="status" className={cx("flex items-center gap-3 rounded-2xl px-4 py-3 text-[14px]", chargedCents ? "tone-bg-granted" : "border border-line-strong bg-surface-2 text-ink-2")}>
-              {chargedCents ? <Icon.Check size={18} /> : <Icon.Wallet size={18} />}
+            <div role="status" className={cx("flex items-center gap-3 rounded-2xl px-4 py-3 text-[14px]", passCharged ? "tone-bg-granted" : "border border-line-strong bg-surface-2 text-ink-2")}>
+              {passCharged ? <Icon.Check size={18} /> : <Icon.Wallet size={18} />}
               <div>
-                <div className="font-bold">{chargedCents ? "Every Claim Pass cart is charged" : "No Claim Pass carts to charge"}</div>
-                <div className="text-[12.5px] opacity-80">{chargedCents ? "Pay-now buyers and declines are below." : "Buyers without a Claim Pass pay through their own link."}</div>
+                <div className="font-bold">{passCharged ? "Every Claim Pass cart is charged" : "No Claim Pass carts to charge"}</div>
+                <div className="text-[12.5px] opacity-80">{passCharged ? "Invoices, pay-now links and declines are below." : "Everyone else pays by PayPal invoice or pay-now link."}</div>
               </div>
             </div>
           ) : ended ? (
