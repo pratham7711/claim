@@ -426,13 +426,16 @@ function AfterShow({ v, myKey, act, offset, onError }: { v: ShowView; myKey: str
       {charged.map((c) => {
         const shipped = v.tracking.filter((t) => t.cartId === c.cartId);
         const refunded = v.refunds.filter((r) => r.cartId === c.cartId).reduce((a, r) => a + r.amountCents, 0);
+        const invoiceCharge = [...v.charges].reverse().find((x) => x.cartId === c.cartId && x.via === "invoice" && x.status === "COMPLETED");
+        const invoicePaid = invoiceCharge?.amountCents ?? 0;
+        const paidInShow = invoicePaid ? Math.max(0, c.paidCents - (invoicePaid - c.dueCents)) : c.paidCents;
         return (
           <div key={c.cartId} className="rounded-xl border border-line-strong bg-surface-2 px-3.5 py-3 text-[13px]">
             <div className="flex items-center justify-between gap-3">
               <span className="inline-flex items-center gap-1.5 font-bold">
                 <Icon.Receipt size={15} /> Paid with PayPal
               </span>
-              <span className="num text-[15px] font-extrabold">{fmt(c.dueCents)}</span>
+              <span className="num text-[15px] font-extrabold">{fmt(invoicePaid || c.dueCents)}</span>
             </div>
             <ul className="mt-2 space-y-1 border-t border-line pt-2">
               {c.lines.map((l) => (
@@ -452,10 +455,10 @@ function AfterShow({ v, myKey, act, offset, onError }: { v: ShowView; myKey: str
                 <span>Shipping</span>
                 <span className="num">{c.shippingCents ? fmt(c.shippingCents) : "Free"}</span>
               </li>
-              {c.paidCents ? (
+              {paidInShow ? (
                 <li className="flex justify-between gap-3 text-muted">
                   <span>Paid during the show</span>
-                  <span className="num">−{fmt(c.paidCents)}</span>
+                  <span className="num">−{fmt(paidInShow)}</span>
                 </li>
               ) : null}
             </ul>

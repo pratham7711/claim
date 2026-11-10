@@ -271,6 +271,9 @@ function BuyerCard({ b, v, run, busy, fresh }: { b: BuyerCarts; v: ShowView; run
         const confirmed = hooks.filter((h) => h.type === "PAYMENT.CAPTURE.COMPLETED" || h.type === "PAYMENT.CAPTURE.REFUNDED").map((h) => (h.type === "PAYMENT.CAPTURE.REFUNDED" ? "refund confirmed by PayPal" : "confirmed by PayPal"));
         const capPct = cart.capCents ? Math.min(100, (cart.totalCents / cart.capCents) * 100) : 0;
         const cartInvoice = openInvoices.find((i) => i.cartId === cart.cartId);
+        const invoicePaid = charge?.via === "invoice" && charge.status === "COMPLETED" && cart.status === "charged" ? charge.amountCents : 0;
+        const paidInShow = invoicePaid ? Math.max(0, cart.paidCents - (invoicePaid - cart.dueCents)) : cart.paidCents;
+        const paidInvoiceId = invoicePaid ? v.closer?.invoices.find((i) => i.cartId === cart.cartId && i.paidAt)?.invoiceId : undefined;
         return (
           <section key={cart.cartId + (preview ? "-p" : "")} className="px-5 py-4" aria-label={`Cart ${cart.seq} for ${b.displayName}`}>
             <div className="flex items-start justify-between gap-3">
@@ -298,16 +301,22 @@ function BuyerCard({ b, v, run, busy, fresh }: { b: BuyerCarts; v: ShowView; run
                 </span>
                 <span className="num font-mono text-[12.5px]">{moneyExact(cart.shippingCents)}</span>
               </li>
-              {cart.paidCents ? (
+              {paidInShow ? (
                 <li className="flex items-baseline justify-between gap-3 text-[13px] text-granted">
                   <span>Paid during the show</span>
-                  <span className="num font-mono text-[12.5px]">−{moneyExact(cart.paidCents)}</span>
+                  <span className="num font-mono text-[12.5px]">−{moneyExact(paidInShow)}</span>
+                </li>
+              ) : null}
+              {invoicePaid ? (
+                <li className="flex items-baseline justify-between gap-3 text-[13px] text-granted">
+                  <span>Paid on PayPal invoice</span>
+                  <span className="num font-mono text-[12.5px]">−{moneyExact(invoicePaid)}</span>
                 </li>
               ) : null}
             </ul>
             <div className="mt-2 flex items-baseline justify-between border-t border-dashed border-line-strong pt-2">
-              <span className="text-[13px] font-bold">{cart.paidCents ? "Due" : "Total"}</span>
-              <span className="display-tight num text-[22px] font-extrabold">{moneyExact(cart.dueCents)}</span>
+              <span className="text-[13px] font-bold">{cart.paidCents || invoicePaid ? "Due" : "Total"}</span>
+              <span className="display-tight num text-[22px] font-extrabold">{moneyExact(invoicePaid ? 0 : cart.dueCents)}</span>
             </div>
 
             {cart.capCents ? (
@@ -324,9 +333,9 @@ function BuyerCard({ b, v, run, busy, fresh }: { b: BuyerCarts; v: ShowView; run
               </div>
             ) : null}
 
-            {cart.flags.length ? (
+            {cart.flags.some((f) => !(invoicePaid && f === "pay-now-balance")) ? (
               <div className="mt-2.5 flex flex-wrap gap-1.5">
-                {cart.flags.map((f) => (
+                {cart.flags.filter((f) => !(invoicePaid && f === "pay-now-balance")).map((f) => (
                   <span key={f} className={cx("rounded-full px-2 py-0.5 text-[11px] font-bold", f === "over-cap" ? "tone-bg-danger" : "tone-bg-waitlist")}>
                     {FLAG_LABEL[f] ?? f}
                   </span>
@@ -366,7 +375,7 @@ function BuyerCard({ b, v, run, busy, fresh }: { b: BuyerCarts; v: ShowView; run
                   </p>
                 ) : null}
                 <p className="mt-2 font-mono text-[11px] text-muted">
-                  {charge.via === "vault" ? "vault order" : "pay-now order"} {charge.orderId}
+                  {charge.via === "vault" ? `vault order ${charge.orderId ?? ""}` : charge.via === "invoice" ? `PayPal invoice ${paidInvoiceId ?? ""}` : `pay-now order ${charge.orderId ?? ""}`}
                   {charge.captureId ? ` · capture ${charge.captureId}` : ""}
                   {[...new Set(confirmed)].map((c) => ` · ${c}`).join("")}
                 </p>
