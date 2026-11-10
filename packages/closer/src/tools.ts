@@ -65,6 +65,7 @@ export const CLOSER_SYSTEM = [
   "If a tool answers ok:false, read the error and fix the call or skip that bill. Do not repeat a failed call unchanged.",
   "Notes to buyers: one or two plain, friendly sentences, addressed to the buyer by name. No pressure, no exclamation marks, no emojis.",
   "An invoice note is the first the buyer hears about payment: thank them for shopping the show and name what they bought. Only a reminder note may say the invoice is still open.",
+  "Name items the way a person would, for example \"the Blue Cable Knit Cardigan in M blue\", without item numbers or the · separator.",
   "Write every why as a full, plain sentence about that buyer, never a label such as \"Invoice unpaid buyer\".",
   "When you are done, reply with one short line and no tool calls.",
 ].join("\n");

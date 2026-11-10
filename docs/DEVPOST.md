@@ -44,7 +44,7 @@ Claim! runs the live sale, and its agent, **Closer**, runs the collecting afterw
 - **The approval queue** is an **AG Grid** table with keyboard shortcuts. Every plan, proposal, decision and PayPal result is an audit record.
 - **The app** uses **Next.js 16, React 19 and TypeScript** in npm workspaces. State is an append-only event log, pushed to the browser over server-sent events.
 - **Hosting:** **Render**, one Docker web service on the free plan.
-- **Tests:** 605 Vitest tests. Request bodies are checked against PayPal's published OpenAPI specs, and the Toolkit path is tested with the real `@paypal/agent-toolkit` and a stubbed HTTP layer.
+- **Tests:** 606 Vitest tests. Request bodies are checked against PayPal's published OpenAPI specs, and the Toolkit path is tested with the real `@paypal/agent-toolkit` and a stubbed HTTP layer.
 
 ## Challenges I ran into
 

@@ -50,17 +50,27 @@ export interface PlanOutcome {
 function whyFor(d: ProposalDraft): string {
   switch (d.kind) {
     case "charge":
-      return `Claim Pass on file; ${usd(d.amountCents)} due`;
+      return `${d.buyer} has a Claim Pass on file and owes ${usd(d.amountCents)}.`;
     case "invoice":
-      return `${usd(d.amountCents)} owed, email on file`;
+      return `${d.buyer} hasn't paid the ${usd(d.amountCents)} yet, and has an email on file.`;
     case "paylink":
-      return `${usd(d.amountCents)} owed, no email for an invoice`;
+      return `${d.buyer} owes ${usd(d.amountCents)} and has no email for an invoice.`;
     case "reminder":
-      return "invoice still open";
+      return `${d.buyer}'s invoice for ${usd(d.amountCents)} is still open.`;
     default:
-      return "seller asked";
+      return "The seller asked for this.";
   }
 }
+
+/** A model reason the seller can read: at least four words and not trailing off. */
+function usableWhy(why: string | undefined): why is string {
+  if (!why) return false;
+  const t = why.trim();
+  return !/(\.\.\.|…)$/.test(t) && t.split(/\s+/).length >= 4;
+}
+
+/** Notes to buyers stay calm: no exclamation marks, whatever the model wrote. */
+const calmNote = (note: string): string => note.replace(/!+/g, ".").replace(/\.\s*\./g, ".");
 
 /** The model is unavailable for this reason; said in the audit, not in the seller's label. */
 function unavailable(err: unknown): string {
@@ -104,7 +114,8 @@ export async function planCloseout(input: PlanInput): Promise<PlanOutcome> {
 
   /** Fills a template note where the planner left none, so the buyer never gets an empty invoice note. */
   const withNote = (p: ProposalDraft, ledger: CloserLedger): ProposalDraft => {
-    if (p.note || !["invoice", "reminder", "refund"].includes(p.kind)) return p;
+    if (p.note) return { ...p, note: calmNote(p.note) };
+    if (!["invoice", "reminder", "refund"].includes(p.kind)) return p;
     const bill = ledger.bills.find((b) => b.key === p.billKey);
     if (!bill) return p;
     const note = p.kind === "invoice" ? invoiceNote(bill, ledger.shopName) : p.kind === "reminder" ? reminderNote(bill, ledger.shopName) : refundNote(undefined, ledger.shopName);
@@ -118,7 +129,7 @@ export async function planCloseout(input: PlanInput): Promise<PlanOutcome> {
       dropped.push({ kind: d.kind, ref: String(d.ref ?? "").slice(0, 20), reason: v.reason });
       return { ok: false, ref: d.ref, error: v.reason };
     }
-    const p = withNote({ ...v.proposal, why: v.proposal.why || whyFor(v.proposal) }, ledger);
+    const p = withNote({ ...v.proposal, why: usableWhy(v.proposal.why) ? v.proposal.why.trim() : whyFor(v.proposal) }, ledger);
     drafts.push(p);
     return { ok: true, ref: d.ref, queued: `${p.kind} ${p.buyer} ${usd(p.amountCents)}` };
   };

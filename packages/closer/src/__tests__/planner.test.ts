@@ -8,6 +8,18 @@ const fixed = (l: CloserLedger) => () => l;
 const toolResults = (req: { messages: { role: string; content?: string }[] }) => req.messages.filter((m) => m.role === "tool").map((m) => JSON.parse(m.content!) as Record<string, unknown>);
 
 describe("planCloseout with a model", () => {
+  it("replaces a reason that trails off and calms exclamation marks in buyer notes", async () => {
+    const client = createMockClient({
+      toolTurns: [
+        { toolCalls: [{ name: "invoice_buyer", arguments: { ref: "c2", note: "Thank you for shopping the show, dana! Enjoy it!", why: "Dana..." } }] },
+        { text: "Done." },
+      ],
+    });
+    const out = await planCloseout({ instruction: "Invoice everyone who hasn't paid yet", client, ledger: fixed(ledger()) });
+    expect(out.drafts[0]!.why).toBe("dana hasn't paid the $42 yet, and has an email on file.");
+    expect(out.drafts[0]!.note).toBe("Thank you for shopping the show, dana. Enjoy it.");
+  });
+
   it("runs the tool loop, validates each call, and stops when the model answers in text", async () => {
     const client = createMockClient({
       toolTurns: [
@@ -26,7 +38,7 @@ describe("planCloseout with a model", () => {
     expect(out.label).toBeUndefined();
     expect(out.drafts.map((d) => `${d.kind}:${d.buyer}:${d.amountCents}`)).toEqual(["charge:ava:4200", "charge:nora:11100", "invoice:dana:4200", "paylink:hal:5600"]);
     expect(out.drafts[2]!.note).toBe("Thanks for shopping with us.");
-    expect(out.drafts[3]!.why).toBe("$56 owed, no email for an invoice");
+    expect(out.drafts[3]!.why).toBe("hal owes $56 and has no email for an invoice.");
     expect(out.summary).toBe("4 actions: charge 2 Claim Pass carts, invoice 1 buyer, send 1 pay-now link");
     expect(out.modelText).toBe("Queued 4 actions.");
     expect(out.usage).toMatchObject({ turns: 2, model: "mock-1" });
