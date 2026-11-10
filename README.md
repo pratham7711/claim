@@ -205,7 +205,12 @@ Configuration: `CLOSER_PROVIDER` (defaults to `LLM_PROVIDER`; `openai`, `groq`, 
 What has been run (2026-10-31):
 - Planning against live Groq (`openai/gpt-oss-120b`) in the browser, with mock payments: the whole close-out, then "invoice everyone else", then "who still owes me?" (it read the open invoice, answered "1 unpaid: dana $42." and its reminder was held back by the 60 s rule), then a $5 refund. All four were model plans, not the rule fallback, and each took 1.1 to 1.9 s end to end (server log).
 - The Toolkit path is unit-tested with the real `@paypal/agent-toolkit` and a stubbed HTTP adapter: the request URL, bearer token and `PayPal-Request-Id` per step.
-- One live `create_invoice` against the sandbox app answered `403 NOT_AUTHORIZED` ("Authorization failed due to insufficient permissions"): Invoicing is not enabled for the sandbox app yet, so no invoice has been sent through PayPal.
+- The first live `create_invoice` (2026-10-31) answered `403 NOT_AUTHORIZED` because Invoicing was not yet enabled on the sandbox app. It was enabled on 2026-11-10.
+
+What has been run against the PayPal sandbox, on the hosted demo (2026-11-10):
+- The full loop, four times: a buyer claims in the buyer room, the show ends, Closer plans "Invoice everyone who hasn't paid yet" on Groq `openai/gpt-oss-120b` (2.1 to 2.6 s per plan), the seller presses **Approve all**, and the Agent Toolkit's `create_invoice` + `send_invoice` send real sandbox invoices (two per run, $42 each).
+- The buyer room's invoice was paid in PayPal's own invoice page by a sandbox personal account (log in, **Complete Purchase**). PayPal's signed `INVOICING.INVOICE.PAID` webhook arrived and close-out marked the cart charged, with no seller action.
+- "Who still owes me? Nudge them, nicely" then planned one `send_invoice_reminder` for the buyer still unpaid, once the 60 s gap had passed.
 
 ## How good is the comment resolver
 
@@ -247,7 +252,7 @@ So the LLM can only lower confidence or fill a gap; it cannot push an unclear co
 
 ## Nemotron on Nebius Token Factory
 
-**Live demo:** https://claim-nemotron.onrender.com (free host, so the first load after idle can take about a minute; press **Start a demo show**).
+**Live demo:** https://claim-paypal.onrender.com (free host, so the first load after idle can take about a minute; press **Start a demo show**).
 **Video:** https://youtu.be/eME2m54IARw (2 min 31 s).
 
 `LLM_PROVIDER=nebius` runs every model call on NVIDIA Nemotron 3 through Nebius Token Factory's OpenAI-compatible API (`https://api.tokenfactory.nebius.com/v1`, `NEBIUS_API_KEY`).
