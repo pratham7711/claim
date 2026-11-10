@@ -208,7 +208,7 @@ What has been run (2026-10-31):
 - The first live `create_invoice` (2026-10-31) answered `403 NOT_AUTHORIZED` because Invoicing was not yet enabled on the sandbox app. It was enabled on 2026-11-10.
 
 What has been run against the PayPal sandbox, on the hosted demo (2026-11-10):
-- The full loop, four times: a buyer claims in the buyer room, the show ends, Closer plans "Invoice everyone who hasn't paid yet" on Groq `openai/gpt-oss-120b` (2.1 to 2.6 s per plan), the seller presses **Approve all**, and the Agent Toolkit's `create_invoice` + `send_invoice` send real sandbox invoices (two per run, $42 each).
+- The full loop, five times: a buyer claims in the buyer room, the show ends, Closer plans "Invoice everyone who hasn't paid yet" on Groq `openai/gpt-oss-120b` (2.1 to 4.1 s per plan), the seller presses **Approve all**, and the Agent Toolkit's `create_invoice` + `send_invoice` send real sandbox invoices (two per run, $42 each).
 - The buyer room's invoice was paid in PayPal's own invoice page by a sandbox personal account (log in, **Complete Purchase**). PayPal's signed `INVOICING.INVOICE.PAID` webhook arrived and close-out marked the cart charged, with no seller action.
 - "Who still owes me? Nudge them, nicely" then planned one `send_invoice_reminder` for the buyer still unpaid, once the 60 s gap had passed.
 

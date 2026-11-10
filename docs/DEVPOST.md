@@ -55,7 +55,7 @@ Claim! runs the live sale, and its agent, **Closer**, runs the collecting afterw
 
 ## Accomplishments that I'm proud of
 
-- **The whole loop runs on the PayPal sandbox, from the hosted demo:** claim in chat, end the show, Closer plans on gpt-oss-120b (2.1 to 2.6 s across four runs), **Approve all**, and the Agent Toolkit sends real invoices. A sandbox buyer pays one in PayPal's invoice page, and the `INVOICING.INVOICE.PAID` webhook settles the cart with no seller action. It is all in the video.
+- **The whole loop runs on the PayPal sandbox, from the hosted demo:** claim in chat, end the show, Closer plans on gpt-oss-120b (2.1 to 4.1 s across five runs), **Approve all**, and the Agent Toolkit sends real invoices. A sandbox buyer pays one in PayPal's invoice page, and the `INVOICING.INVOICE.PAID` webhook settles the cart with no seller action. It is all in the video.
 - **The AI is useful and fenced in at the same time.** The seller types one sentence and gets a reviewed plan, but a model mistake can, at worst, propose something the seller then rejects.
 - **Every action explains itself.** Each proposal carries the PayPal call it will make and the planner's reason, and the plan's summary is built from the queue, not from the model's prose.
 
